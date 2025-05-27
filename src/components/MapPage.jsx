@@ -1,5 +1,6 @@
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import { useEffect, useState } from 'react';
+const libraries = ['places'];
 
 const mapContainerStyle = {
 	width: '100%',
@@ -8,7 +9,7 @@ const mapContainerStyle = {
 export default function NearbyShopsMap() {
 	const { isLoaded } = useLoadScript({
 		googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-		libraries: ['places'],
+		libraries,
 	});
 
 	const [map, setMap] = useState(/** @type google.maps.Map*/ (null));

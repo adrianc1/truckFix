@@ -4,7 +4,7 @@ export default function Cards() {
 			<h1 className="font-bold text-center w-full my-4 text-2xl">
 				Featured Shops Nearby
 			</h1>
-			<div className="bg-gray-100 rounded-xl shadow hover:shadow-lg transition mt-8 h-auto">
+			<div className="bg-gray-100 rounded-xl shadow hover:shadow-lg transition mt-8 h-auto w-9/10 mx-auto">
 				<img
 					src="../../public/shop2-card.jpg"
 					alt="Project Portfolio"
@@ -27,7 +27,7 @@ export default function Cards() {
 				</div>
 			</div>
 
-			<div className="bg-gray-100 rounded-xl shadow hover:shadow-lg transition mt-8 h-auto">
+			<div className="bg-gray-100 rounded-xl shadow hover:shadow-lg transition mt-8 h-auto w-9/10 mx-auto">
 				<img
 					src="../../public/semi-truck-card.jpg"
 					alt="Project Portfolio"

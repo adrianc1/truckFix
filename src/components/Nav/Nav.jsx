@@ -25,15 +25,17 @@ function Nav({ showNav, onClick, showTitle }) {
 					</li>
 				</ul>
 			</div>
-			<div
+			{/* <div
 				className="text-[#FFD600] font-bold text-2xl transition-opacity duration-300 fixed top-4 px-5 z-51"
 				style={{ opacity: showTitle ? 1 : 0 }}
 			>
 				Find A Shop Today!
-			</div>
+			</div> */}
 
 			<div className="nav fixed top-0 right-0 w-full h-10 bg-white flex justify-between items-center px-6 py-8 z-50 border-b-4 border-amber-600">
-				Find A Shop Today!
+				<h1 className="text-2xl font-bold text-[#de8518]">
+					Find A Shop Today!
+				</h1>
 				{showNav ? (
 					<IoCloseSharp
 						className="text-black text-3xl cursor-pointer transition-all duration-400"
