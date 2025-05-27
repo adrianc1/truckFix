@@ -1,5 +1,6 @@
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 const libraries = ['places'];
 
 const mapContainerStyle = {
@@ -7,6 +8,9 @@ const mapContainerStyle = {
 	height: '500px',
 };
 export default function NearbyShopsMap() {
+	const location = useLocation();
+	const userLocation = location.state?.location;
+
 	const { isLoaded } = useLoadScript({
 		googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
 		libraries,
@@ -14,26 +18,39 @@ export default function NearbyShopsMap() {
 
 	const [map, setMap] = useState(/** @type google.maps.Map*/ (null));
 	const [markers, setMarkers] = useState([]);
-	const [userLocation, setUserLocation] = useState(null);
+	// const [currentLocation, setCurrentLocation] = { lat, lng };
 
+	// useEffect(() => {
+	// 	if (currentLocation) {
+	// 		const lat = currentLocation.lat;
+	// 		const lng = currentLocation.lng;
+	// 		setUserLocation({ lat, lng });
+	// 	} else {
+	// 		console.log(userLocation);
+	// 		setUserLocation({ lat: 30.0131, lng: 31.2089 });
+	// 	}
+	// }, [currentLocation]);
 	// Get current location
-	useEffect(() => {
-		navigator.geolocation.getCurrentPosition(
-			(position) => {
-				setUserLocation({
-					lat: position.coords.latitude,
-					lng: position.coords.longitude,
-				});
-			},
-			(error) => {
-				console.error('Error getting user location:', error);
-				// fallback location if permission denied
-				setUserLocation({ lat: 37.7749, lng: -122.4194 });
-			}
-		);
-	}, []);
+
+	// useEffect(() => {
+	// 	if (!locationString) {
+	// 		navigator.geolocation.getCurrentPosition(
+	// 			(position) => {
+	// 				setUserLocation({
+	// 					lat: position.coords.latitude,
+	// 					lng: position.coords.longitude,
+	// 				});
+	// 			},
+	// 			(error) => {
+	// 				console.error('Error getting user location:', error);
+	// 				setUserLocation({ lat: 37.7749, lng: -122.4194 });
+	// 			}
+	// 		);
+	// 	}
+	// }, []);
 
 	// Search nearby places when map and location are ready
+	console.log('im here');
 	useEffect(() => {
 		if (!map || !userLocation) return;
 
@@ -62,6 +79,7 @@ export default function NearbyShopsMap() {
 			}
 		});
 	}, [map, userLocation]);
+	console.log(isLoaded, userLocation);
 
 	if (!isLoaded || !userLocation) return <div>Loading Map...</div>;
 
