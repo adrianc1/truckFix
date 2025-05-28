@@ -4,35 +4,34 @@ import NearbyShopsMap from '../MapPage';
 
 const libraries = ['places'];
 function Hero({ navigate }) {
-	const { isLoaded, loadError } = useLoadScript({
-		googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-		libraries,
-	});
-	const [userLocation, setUserLocation] = useState({ lat: 0, lng: 0 });
+	// const { isLoaded, loadError } = useLoadScript({
+	// 	googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+	// 	libraries,
+	// });
+	const [locationInput, setLocationInput] = useState('');
+	const [userLocation, setUserLocation] = useState({ lat: '', lng: '' });
+	const [isLocating, setIsLocating] = useState(true);
+	const [inputValue, setInputValue] = useState('');
 
 	function useCurrentLocation() {
-		if (userLocation) {
-			navigator.geolocation.getCurrentPosition(
-				(position) => {
-					setUserLocation({
-						lat: position.coords.latitude,
-						lng: position.coords.longitude,
-					});
-				},
-				(error) => {
-					console.log('erro bur', error);
-					// setUserLocation({ lat: 37.7749, lng: -129.4194 });
-				}
-			);
-		}
-	}
+		navigator.geolocation.getCurrentPosition(
+			(position) => {
+				const lat = position.coords.latitude;
+				const lng = position.coords.longitude;
 
-	const [inputValue, setInputValue] = useState('');
+				setUserLocation({ lat, lng });
+				setLocationInput(`${lat}, ${lng}`);
+			},
+			(error) => {
+				console.log('error bur', error);
+			}
+		);
+	}
 
 	const autocompleteRef = useRef(null);
 
-	if (!isLoaded) return <div className="">Loading Maps...</div>;
-	if (loadError) return <div className="">Loading Maps...</div>;
+	// if (!isLoaded) return <div className="">Loading Maps...</div>;
+	// if (loadError) return <div className="">Loading Maps...</div>;
 
 	return (
 		<div className="flex flex-col justify-between pt-24 h-auto bg-[url(../../public/truck-hero.jpg)] bg-cover bg-no-repeat bg-center text-white gap-22">
@@ -58,26 +57,24 @@ function Hero({ navigate }) {
 				<label className="font-bold" htmlFor="">
 					Enter your location:{' '}
 				</label>
-				<Autocomplete
+				{/* <Autocomplete
 					onLoad={(ref) => (autocompleteRef.current = ref)}
 					onPlaceChanged={() => {
 						const place = autocompleteRef.current.getPlace();
 						console.log('selected place:', place);
 					}}
-				>
-					<input
-						type="text"
-						name="query"
-						placeholder="Enter city or location"
-						onKeyDown={(e) => setInputValue(inputValue + e.target.value || '')}
-						value={
-							!userLocation.lat
-								? inputValue
-								: `${userLocation.lat}, ${userLocation.lng}`
-						}
-						className="border-2 border-blue-800 rounded-md py-2 pl-2 w-full bg-white text-black"
-					/>
-				</Autocomplete>
+				> */}
+				<input
+					type="text"
+					name="query"
+					placeholder="Enter city or location"
+					value={locationInput}
+					onChange={(e) => {
+						setLocationInput(e.target.value);
+					}}
+					className="border-2 border-blue-800 rounded-md py-2 pl-2 w-full bg-white text-black"
+				/>
+				{/* </Autocomplete> */}
 				<p
 					className="flex justify-end text-blue-100 cursor-pointer"
 					onClick={useCurrentLocation}
