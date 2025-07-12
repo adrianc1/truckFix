@@ -1,13 +1,21 @@
 export default function MapWidget() {
 	return (
 		<div className="flex flex-col mx-auto items-center mt-4 w-full px-2 ">
-			<div className="map-container border rounded-t-xl w-full h-48 bg-gray-300">
-				Loading Map...
+			<div className="map-container border rounded-t-xl w-full h-96 bg-gray-200">
+				<span className="flex size-full justify-center items-center my-auto">
+					Loading Map...
+				</span>
 			</div>
-			<div className="location-container border rounded-b-xl w-full h-24 ">
-				<h5 className="font-bold">Location</h5>
-				<span className="text-gray-400">Dallas, TX (25 mile radius)</span>
-				<button className="border ml-24 rounded-xl">Change Radius</button>
+			<div className="location-container border rounded-b-xl w-full h-24 flex justify-around items-center ">
+				<div className="location-details">
+					<h5 className="font-bold">Location</h5>
+					<span className="text-gray-500">Dallas, TX (25 mile radius)</span>
+				</div>
+				<div className="btn-container">
+					<button className="border rounded-xl px-4 py-2 min-w-max">
+						Change Radius
+					</button>
+				</div>
 			</div>
 		</div>
 	);
