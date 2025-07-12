@@ -8,7 +8,7 @@ export default function ShopList() {
 			shopDistance: '0.8 miles',
 			shopTags: ['Engine', 'Brakes', '24/7'],
 			shopRating: 4.1,
-			isOpen: 'Open Now',
+			isOpen: true,
 		},
 		{
 			shopName: 'Interstate Truck Service',
@@ -16,7 +16,7 @@ export default function ShopList() {
 			shopDistance: '1.2 miles',
 			shopTags: ['Tires', 'Electrical'],
 			shopRating: 4.7,
-			isOpen: 'Open Now',
+			isOpen: true,
 		},
 		{
 			shopName: 'Diesel Doctors',
@@ -24,7 +24,7 @@ export default function ShopList() {
 			shopDistance: '2.5 miles',
 			shopTags: ['Engine', 'Diagnostics', 'Parts'],
 			shopRating: 3.8,
-			isOpen: 'Closed',
+			isOpen: false,
 		},
 	];
 
@@ -63,7 +63,13 @@ export default function ShopList() {
 								</div>
 								{shop.shopRating}
 							</span>
-							<span className="rating">{shop.isOpen}</span>
+							<span
+								className={`is-open ${
+									shop.isOpen ? 'text-green-600' : 'text-red-600'
+								}`}
+							>
+								{shop.isOpen ? 'Open Now' : 'Closed'}
+							</span>
 						</div>
 					</li>
 				))}
