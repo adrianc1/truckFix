@@ -1,12 +1,19 @@
+import { useEffect } from 'react';
 import { Clock, MapPin, Phone, Wrench } from 'lucide-react';
 import star from '../../assets/images/star.svg';
 
-export default function ShopDetailsPage({ selectedShop, closeModal }) {
-	console.log('hey');
+export default function ShopDetailsPage({
+	selectedShop,
+	closeModal,
+	setIsModalOpen,
+}) {
+	useEffect(() => {
+		setIsModalOpen(true); // Animate in AFTER the component mounts
+	}, []);
 	return (
-		<>
+		<div className="h-full">
 			{/* Shop Title and close Modal */}
-			<div className="bg-white size-full rounded-2xl border border-gray-400">
+			<div className="bg-white size-full rounded-2xl border border-gray-400 h-auto">
 				<div className="modal-heading flex justify-between px-4 font-bold">
 					<h2 className="selected-shop-name text-2xl my-4">
 						{selectedShop.name}
@@ -37,7 +44,7 @@ export default function ShopDetailsPage({ selectedShop, closeModal }) {
 					</span>
 				</div>
 				{/* address block */}
-				<div className="address-block flex flex-col w-full px-3 py-4 border-2 border-gray-800 rounded-xl h-auto mb-0.5">
+				<div className="address-block flex flex-col w-full px-3 py-4 border-2 border-gray-200 rounded-xl h-auto mb-0.5">
 					<MapPin />
 					<h6 className="font-bold">Address</h6>
 					<span>{selectedShop.vicinity}</span>
@@ -48,9 +55,9 @@ export default function ShopDetailsPage({ selectedShop, closeModal }) {
 				<div className="phone-block flex flex-col w-full px-3 py-4 border-2 border-gray-200 rounded-xl h-auto mb-0.5">
 					<Phone />
 					<h6 className="font-bold">Phone</h6>
-					<div className="flex justify-between pr-4">
+					<div className="flex justify-between items-center pr-4">
 						<span>{selectedShop.formatted_phone_number}</span>
-						<button className="border px-2 py-2 rounded-xl bg-black text-white">
+						<button className="border px-4 py-2 rounded-xl bg-black text-white">
 							Call
 						</button>
 					</div>
@@ -90,6 +97,6 @@ export default function ShopDetailsPage({ selectedShop, closeModal }) {
 					</ul>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }
