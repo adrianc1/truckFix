@@ -39,8 +39,11 @@ export default function RepairSearchForm() {
 
 			{/* Repair shop categories  */}
 			<div className="flex overflow-x-scroll w-full gap-2 px-2 pb-4">
-				{shopCategories.map((cat) => (
-					<button className="border border-gray-300 rounded-4xl px-4 py-2 min-w-max">
+				{shopCategories.map((cat, index) => (
+					<button
+						key={index}
+						className="border border-gray-300 rounded-4xl px-4 py-2 min-w-max"
+					>
 						{cat}
 					</button>
 				))}
