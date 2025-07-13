@@ -1,10 +1,13 @@
+import mockMap from '../../assets/images/mockMap.png';
 export default function MapWidget() {
 	return (
-		<div className="flex flex-col mx-auto items-center mt-4 w-full px-2 ">
-			<div className="map-container border border-gray-400 rounded-t-xl w-full h-96 bg-gray-200">
-				<span className="flex size-full justify-center items-center my-auto">
-					Loading Map...
-				</span>
+		<div className="flex flex-col mx-auto items-center mt-4 w-full px-2">
+			<div className="map-container border border-gray-400 rounded-t-xl w-full h-96 bg-gray-200 overflow-hidden">
+				<img
+					src={mockMap}
+					alt="Map showing nearby repair shops"
+					className="w-full h-full object-cover"
+				/>
 			</div>
 			<div className="location-container border border-gray-400 rounded-b-xl w-full h-24 flex justify-around items-center ">
 				<div className="location-details">

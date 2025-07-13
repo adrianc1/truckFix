@@ -1,4 +1,4 @@
-import star from './assets/images/star.svg';
+import star from '../../assets/images/star.svg';
 
 export default function ShopCard({ shop }) {
 	return (

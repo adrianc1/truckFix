@@ -1,4 +1,4 @@
-import settingsIcon from './assets/images/settings.svg';
+import settingsIcon from '../../assets/images/settings.svg';
 const Header = () => {
 	return (
 		<header className="flex justify-between my-4 px-2">
