@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Header from './components/layout/Header';
 import RepairSearchForm from './components/common/RepairSearchForm';
 import MapWidget from './components/common/MapWidget';

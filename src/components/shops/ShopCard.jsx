@@ -1,6 +1,5 @@
 import star from '../../assets/images/star.svg';
 export default function ShopCard({ shop, handleShowShopDetails }) {
-	const weekdayHours = shop.current_opening_hours?.weekday_text;
 	return (
 		<>
 			<div

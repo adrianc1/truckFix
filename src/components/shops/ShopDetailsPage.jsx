@@ -1,17 +1,19 @@
 import { Clock, MapPin, Phone, Wrench } from 'lucide-react';
 import star from '../../assets/images/star.svg';
 
-export default function ShopDetailsPage({ shop, selectedShop, closeModal }) {
+export default function ShopDetailsPage({ selectedShop, closeModal }) {
 	console.log('hey');
 	return (
 		<>
 			{/* Shop Title and close Modal */}
-			<div className="bg-gray-200 size-full rounded-2xl">
+			<div className="bg-white size-full rounded-2xl border border-gray-400">
 				<div className="modal-heading flex justify-between px-4 font-bold">
 					<h2 className="selected-shop-name text-2xl my-4">
 						{selectedShop.name}
 					</h2>
-					<span onClick={closeModal}>X</span>
+					<span className="py-2 text-lg text-gray-600" onClick={closeModal}>
+						X
+					</span>
 				</div>
 
 				<div className="flex justify-between px-4 mb-4">
