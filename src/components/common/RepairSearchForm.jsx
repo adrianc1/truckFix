@@ -21,7 +21,7 @@ export default function RepairSearchForm() {
 					<MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
 				</div>
 				{/* Get current location  */}
-				<span className="self-end flex justify-center items-center">
+				<span className="self-end gap-1 flex justify-center items-center">
 					<Navigation className="w-4" />
 					<a href="">Use Current Location</a>
 				</span>

@@ -1,11 +1,12 @@
 import star from '../../assets/images/star.svg';
-
-export default function ShopCard({ shop }) {
+export default function ShopCard({ shop, handleShowShopDetails }) {
+	const weekdayHours = shop.current_opening_hours?.weekday_text;
 	return (
 		<>
 			<div
 				key={shop.place_id}
 				className="flex w-full px-3 py-4 border-2 border-gray-200 rounded-xl h-auto mb-0.5"
+				onClick={handleShowShopDetails}
 			>
 				{/* SHOP GENERAL INFORMATION */}
 				<div className="shop-info flex-grow min-w-0 flex flex-col">
