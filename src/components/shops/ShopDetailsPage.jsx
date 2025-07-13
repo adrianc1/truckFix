@@ -20,7 +20,7 @@ export default function ShopDetailsPage({ shop, selectedShop, closeModal }) {
 						<div className="star w-4 h-4">
 							<img src={star} alt="" className="w-full h-full" />
 						</div>
-						{selectedShop.rating}({selectedShop.reviews.length} reviews)
+						{selectedShop.rating}({selectedShop.user_ratings_total} reviews)
 					</span>
 
 					{/* open or closed */}
