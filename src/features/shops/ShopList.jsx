@@ -1,12 +1,10 @@
 import { useState } from 'react';
-import useShops from '../hooks/useShops';
-import ShopDetailsPage from './ShopDetailsPage';
+import ShopDetailsPage from '../../pages/ShopDetailsPage';
 import ShopCard from './ShopCard';
 
-export default function ShopList() {
+export default function ShopList({ shops = [] }) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [selectedShop, setSelectedShop] = useState(null);
-	const shops = useShops();
 
 	const handleShowShopDetails = (shop) => {
 		setSelectedShop(shop); // Only mounts the modal wrapper
@@ -26,7 +24,7 @@ export default function ShopList() {
 				Nearby Repair Shops
 			</h2>
 			{
-				<div className="shop-list-container w-full">
+				<div className="shop-list-container w-full ">
 					{shops.map((shop) => (
 						<ShopCard
 							key={shop.place_id}

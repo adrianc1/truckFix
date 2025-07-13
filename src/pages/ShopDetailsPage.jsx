@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Clock, MapPin, Phone, Wrench } from 'lucide-react';
-import star from '../../assets/images/star.svg';
+import star from '../assets/images/star.svg';
 
 export default function ShopDetailsPage({
 	selectedShop,
@@ -71,7 +71,7 @@ export default function ShopDetailsPage({
 						{selectedShop.services.map((service, index) => (
 							<span
 								key={index}
-								className="border max-w-36 border-gray-300 rounded-full py-1 px-3 text-xs bg-gray-50 hover:bg-gray-100 transition-colors text-center flex justify-center"
+								className="border max-w-36 border-gray-300 rounded-full py-1 px-3 text-xs bg-gray-50 hover:bg-gray-100 transition-colors text-center flex justify-center items-center"
 								style={{ minWidth: '60px' }}
 							>
 								{service.length > 20
