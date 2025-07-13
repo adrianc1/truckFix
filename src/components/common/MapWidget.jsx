@@ -1,4 +1,4 @@
-import mockMap from '../../assets/images/mockMap.png';
+import mockMap from '../../assets/images/mockmap.png';
 export default function MapWidget({ mapHeight = 96 }) {
 	return (
 		<div className="flex flex-col mx-auto items-center mt-4 w-full px-2">
