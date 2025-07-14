@@ -1,10 +1,10 @@
 import star from '../../assets/images/star.svg';
-export default function ShopCard({ shop, onClick }) {
+export default function ShopCard({ shop, onShopSelect }) {
 	return (
 		<>
 			<div
 				key={shop.place_id}
-				onClick={onClick}
+				onClick={onShopSelect}
 				className="flex w-full px-3 py-4 border-2 border-gray-200 rounded-xl h-auto mb-0.5"
 			>
 				{/* SHOP GENERAL INFORMATION */}

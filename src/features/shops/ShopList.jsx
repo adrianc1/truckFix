@@ -17,7 +17,7 @@ export default function ShopList({ shops = [], handleShopSelect }) {
 						<ShopCard
 							key={shop.place_id}
 							shop={shop}
-							onClick={() => handleShopSelect(shop)}
+							onShopSelect={() => handleShopSelect(shop)}
 						/>
 					))}
 				</div>

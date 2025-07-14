@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import { Wrench, Navigation, MapPin } from 'lucide-react';
 
-export default function RepairSearchForm({ handleFilterTagClick }) {
+export default function RepairSearchForm({
+	handleFilterTagClick,
+	searchCity,
+	setSearchCity,
+	searchService,
+	setSearchService,
+}) {
 	const [shopCategories, setShopCategories] = useState([
 		{ category: 'All Services', value: '', isActive: false },
 		{ category: 'Diesel', value: 'Diesel', isActive: false },
@@ -19,6 +25,10 @@ export default function RepairSearchForm({ handleFilterTagClick }) {
 						type="text"
 						className="border w-full rounded-xl py-2 pl-10 pr-4"
 						placeholder="Enter City / Town"
+						value={searchCity}
+						onChange={(e) => {
+							setSearchCity(e.target.value);
+						}}
 					/>
 					<MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
 				</div>
@@ -35,6 +45,10 @@ export default function RepairSearchForm({ handleFilterTagClick }) {
 					type="text"
 					className="border w-full rounded-xl py-2 pl-10 pr-4"
 					placeholder="Engine, Brakes, Repair..."
+					value={searchService}
+					onChange={(e) => {
+						setSearchService(e.target.value);
+					}}
 				/>
 				<Wrench className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
 			</div>

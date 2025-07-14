@@ -12,15 +12,27 @@ export default function Home() {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [selectedShop, setSelectedShop] = useState(null);
 	const [showShopDetails, setShowShopDetails] = useState(false);
+	const [searchCity, setSearchCity] = useState('');
+	const [searchService, setSearchService] = useState('');
 
 	useEffect(() => {
+		console.log(searchService);
 		let filtered = shops.filter((shop) =>
-			shop.services.some((service) =>
-				service.toLowerCase().includes(filterTag.toLowerCase())
+			shop.services.some(
+				(service) =>
+					service.toLowerCase().includes(filterTag.toLowerCase()) &&
+					service.toLowerCase().includes(searchService.toLowerCase())
 			)
 		);
 		setFilteredShops(filtered);
-	}, [shops, filterTag]);
+	}, [shops, filterTag, searchService]);
+
+	useEffect(() => {
+		let filtered = shops.filter((shop) =>
+			shop.vicinity.toLowerCase().includes(searchCity.toLowerCase())
+		);
+		setFilteredShops(filtered);
+	}, [shops, searchCity]);
 
 	const closeModal = () => {
 		setIsModalOpen(false);
@@ -65,7 +77,13 @@ export default function Home() {
 
 	return (
 		<>
-			<RepairSearchForm handleFilterTagClick={handleFilterTagClick} />
+			<RepairSearchForm
+				handleFilterTagClick={handleFilterTagClick}
+				searchCity={searchCity}
+				setSearchCity={setSearchCity}
+				searchService={searchService}
+				setSearchService={setSearchService}
+			/>
 			<MapWidget />
 
 			{/* Bottom Sheet Modal */}
