@@ -7,18 +7,25 @@ import useShops from '../features/shops/useShops';
 
 export default function Home() {
 	const shops = useShops();
-	const [filterTag, setFilterTag] = useState('Brakes');
+	const [filterTag, setFilterTag] = useState('');
 	const [filteredShops, setFilteredShops] = useState([]);
 
 	useEffect(() => {
-		let filtered = shops.filter((shop) => shop.services.includes(filterTag));
-		console.log(shops);
+		let filtered = shops.filter((shop) =>
+			shop.services.some((service) =>
+				service.toLowerCase().includes(filterTag.toLowerCase())
+			)
+		);
 		setFilteredShops(filtered);
 	}, [shops, filterTag]);
 
+	function handleFilterTagClick(tag) {
+		setFilterTag(tag);
+	}
+
 	return (
 		<>
-			<RepairSearchForm />
+			<RepairSearchForm handleFilterTagClick={handleFilterTagClick} />
 			<MapWidget />
 			<ShopList shops={filteredShops} />
 		</>

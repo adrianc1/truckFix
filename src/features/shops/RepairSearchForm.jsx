@@ -2,10 +2,8 @@ import { useState } from 'react';
 import { Wrench, Navigation, MapPin } from 'lucide-react';
 import useShops from '../shops/useShops';
 
-export default function RepairSearchForm() {
-	const [results, setResults] = useState([]);
+export default function RepairSearchForm({ handleFilterTagClick }) {
 	const [serviceTag, setServiceTag] = useState('');
-	const shops = useShops();
 
 	const shopCategories = [
 		'All Services',
@@ -15,9 +13,6 @@ export default function RepairSearchForm() {
 		'Electrical',
 	];
 
-	function handleSetFilter(tag) {
-		setServiceTag(tag);
-	}
 	return (
 		<form className="w-full flex flex-col justify-center px-2 gap-4">
 			<div className="flex flex-col">
@@ -55,8 +50,7 @@ export default function RepairSearchForm() {
 						className="border border-gray-300 rounded-4xl px-4 py-2 min-w-max"
 						onClick={(e) => {
 							e.preventDefault();
-							handleSetFilter(cat);
-							console.log(serviceTag);
+							handleFilterTagClick(cat);
 						}}
 					>
 						{cat}
