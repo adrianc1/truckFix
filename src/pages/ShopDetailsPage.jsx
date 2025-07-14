@@ -2,14 +2,12 @@ import { useEffect } from 'react';
 import { Clock, MapPin, Phone, Wrench } from 'lucide-react';
 import star from '../assets/images/star.svg';
 
-export default function ShopDetailsPage({
-	selectedShop,
-	closeModal,
-	setIsModalOpen,
-}) {
+const ShopDetailsPage = ({ selectedShop, closeModal, setIsModalOpen }) => {
+	// Show modal after component mounts
 	useEffect(() => {
-		setIsModalOpen(true); // Animate in AFTER the component mounts
+		setIsModalOpen(true);
 	}, []);
+
 	return (
 		<div className="h-full">
 			{/* Shop Title and close Modal */}
@@ -99,4 +97,6 @@ export default function ShopDetailsPage({
 			</div>
 		</div>
 	);
-}
+};
+
+export default ShopDetailsPage;
