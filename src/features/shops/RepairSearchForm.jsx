@@ -1,17 +1,14 @@
 import { useState } from 'react';
 import { Wrench, Navigation, MapPin } from 'lucide-react';
-import useShops from '../shops/useShops';
 
 export default function RepairSearchForm({ handleFilterTagClick }) {
-	const [serviceTag, setServiceTag] = useState('');
-
-	const shopCategories = [
-		'All Services',
-		'Engine',
-		'Brakes',
-		'Tires',
-		'Electrical',
-	];
+	const [shopCategories, setShopCategories] = useState([
+		{ category: 'All Services', value: '', isActive: false },
+		{ category: 'Diesel', value: 'Diesel', isActive: false },
+		{ category: 'Engine', value: 'Engine', isActive: false },
+		{ category: 'Tires', value: 'Tires', isActive: false },
+		{ category: 'Electrical', value: 'Electrical', isActive: false },
+	]);
 
 	return (
 		<form className="w-full flex flex-col justify-center px-2 gap-4">
@@ -47,13 +44,22 @@ export default function RepairSearchForm({ handleFilterTagClick }) {
 				{shopCategories.map((cat, index) => (
 					<button
 						key={index}
-						className="border border-gray-300 rounded-4xl px-4 py-2 min-w-max"
+						className={`border border-gray-300 rounded-4xl px-4 py-2 min-w-max ${
+							cat.isActive ? 'bg-amber-400' : ''
+						}`}
 						onClick={(e) => {
 							e.preventDefault();
-							handleFilterTagClick(cat);
+							handleFilterTagClick(cat.value);
+							setShopCategories((prev) =>
+								prev.map((c) =>
+									c.value == cat.value
+										? { ...c, isActive: true }
+										: { ...c, isActive: false }
+								)
+							);
 						}}
 					>
-						{cat}
+						{cat.category}
 					</button>
 				))}
 			</div>
