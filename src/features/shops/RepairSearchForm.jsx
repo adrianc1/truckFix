@@ -40,7 +40,7 @@ export default function RepairSearchForm({
 			</div>
 
 			{/* Type of repair shop search bar */}
-			<div className="relative">
+			{/* <div className="relative">
 				<input
 					type="text"
 					className="border w-full rounded-xl py-2 pl-10 pr-4"
@@ -51,7 +51,7 @@ export default function RepairSearchForm({
 					}}
 				/>
 				<Wrench className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
-			</div>
+			</div> */}
 
 			{/* Repair shop categories  */}
 			<div className="flex overflow-x-scroll w-full gap-2 px-2 pb-4">
