@@ -11,14 +11,8 @@ export default function Home() {
 	const [filteredShops, setFilteredShops] = useState([]);
 
 	useEffect(() => {
-		let filtered = [];
-		shops.map((shop) => {
-			const filteredShop = shop.services.includes(filterTag) ? shop : null;
-			if (!filteredShop) return;
-			filtered.push(filteredShop);
-		});
-		console.log(filtered);
-
+		let filtered = shops.filter((shop) => shop.services.includes(filterTag));
+		console.log(shops);
 		setFilteredShops(filtered);
 	}, [shops, filterTag]);
 

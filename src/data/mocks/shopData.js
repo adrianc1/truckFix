@@ -126,7 +126,12 @@ const dummyShops = [
 				relative_time_description: '5 days ago',
 			},
 		],
-		services: ['Diesel Diagnostics', 'Transmission', 'After-hours support'],
+		services: [
+			'Diesel Diagnostics',
+			'Transmission',
+			'After-hours support',
+			'Brakes',
+		],
 		distance: '2.0 miles',
 		specializes_in_trucks: true,
 		accepts_large_vehicles: true,
