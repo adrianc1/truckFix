@@ -35,9 +35,13 @@ const LandingPage = () => {
 			</section>
 
 			{/* Map on landing page */}
-			<section className="w-[95%]  border-gray-300  mx-auto mt-8">
-				<div className="size-full rounded-2xl bg-gray-200">
-					<img src={MapImg} alt="" className="w-fit h-fit rounded-2xl" />
+			<section className="w-[95%] mx-auto mt-8">
+				<div className="h-96 rounded-2xl bg-gray-200 overflow-hidden">
+					<img
+						src={MapImg}
+						alt=""
+						className="w-full h-full object-cover rounded-2xl"
+					/>
 				</div>
 			</section>
 
