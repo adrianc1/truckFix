@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
 	Navigation,
 	Wrench,
@@ -6,7 +7,31 @@ import {
 	Phone,
 	ShieldCheck,
 } from 'lucide-react';
+
 const Features = () => {
+	useEffect(() => {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('fade-in-element');
+					} else {
+						entry.target.classList.remove('fade-in-element');
+					}
+				});
+			},
+			{ threshold: 0.1 }
+		);
+
+		const featureElements = document.querySelectorAll('.feature-card');
+		featureElements.forEach((el) => observer.observe(el));
+
+		// Optional cleanup on unmount
+		return () => {
+			featureElements.forEach((el) => observer.unobserve(el));
+		};
+	}, []);
+
 	const featuresList = [
 		{
 			title: 'Nearby Shops',
@@ -55,12 +80,12 @@ const Features = () => {
 					return (
 						<li
 							key={index}
-							className="border text-gray-500 border-gray-200 rounded-xl py-8 px-2"
+							className="feature-card border text-gray-500 border-gray-200 rounded-xl py-6 px-2"
 						>
 							<div className="bg-orange-100 text-orange-500 flex w-fit p-3 rounded-xl mb-4">
-								<IconComponent size={24} />
+								<IconComponent size={36} />
 							</div>
-							<h6 className="font-bold text-2xl text-black">{f.title}</h6>
+							<h6 className="font-semibold text-2xl text-black">{f.title}</h6>
 							<p>{f.des}</p>
 						</li>
 					);
