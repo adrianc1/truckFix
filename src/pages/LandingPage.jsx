@@ -1,8 +1,10 @@
 import { MapPin, Search } from 'lucide-react';
+import SectionTag from '../components/SectionTag';
+import Features from '../features/shops/Features';
 const LandingPage = () => {
 	return (
 		<div className="">
-			<section className="w-[95%] mx-auto">
+			<section className="w-[95%] mx-auto mt-8">
 				<div className="hero-text-container">
 					<h2 className="text-black font-bold text-3xl">Find Truck Repairs</h2>
 					<h2 className="text-orange-400 font-bold text-3xl">
@@ -30,8 +32,15 @@ const LandingPage = () => {
 				</form>
 			</section>
 
+			{/* Map on landing page */}
 			<section className="w-[95%] h-96 border-gray-300  mx-auto mt-8">
 				<div className="size-full rounded-2xl bg-gray-200"></div>
+			</section>
+
+			{/* Features section */}
+			<section className="w-[95%] mx-auto mt-8 flex flex-col justify-center items-center">
+				<SectionTag tagName="Features" />
+				<Features />
 			</section>
 		</div>
 	);
