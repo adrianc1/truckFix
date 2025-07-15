@@ -5,8 +5,6 @@ export default function RepairSearchForm({
 	handleFilterTagClick,
 	searchCity,
 	setSearchCity,
-	searchService,
-	setSearchService,
 }) {
 	const [shopCategories, setShopCategories] = useState([
 		{ category: 'All Services', value: '', isActive: false },
@@ -17,7 +15,7 @@ export default function RepairSearchForm({
 	]);
 
 	return (
-		<form className="w-full flex flex-col justify-center px-2 gap-4">
+		<form className=" w-full flex flex-col justify-center px-2 gap-4">
 			<div className="flex flex-col">
 				{/* Location Search Bar */}
 				<div className="relative mt-4">

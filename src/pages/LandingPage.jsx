@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router';
-import { MapPin, Search } from 'lucide-react';
+import { MapPin, Search, Navigation } from 'lucide-react';
+import Footer from '../components/layout/Footer';
 import MapImg from '../assets/images/map.png';
 import SectionTag from '../components/SectionTag';
 import Features from '../features/shops/Features';
@@ -31,9 +32,14 @@ const LandingPage = () => {
 							type="text"
 							className="border w-full rounded-3xl py-2 pl-10 pr-4"
 							placeholder="Enter City / Town"
+							value="Dallas, TX"
 						/>
 						<MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
 					</div>
+					<span className="self-end gap-1 flex justify-center items-center">
+						<Navigation className="w-4" />
+						<a href="">Use Current Location</a>
+					</span>
 					<button className="bg-orange-500 flex items-center justify-center gap-4 py-3 w-full text-white rounded-3xl">
 						<Search size={18} />
 						Find Repairs
@@ -63,6 +69,7 @@ const LandingPage = () => {
 				<SectionTag tagName="How It Works" />
 				<HowToFindShops />
 			</section>
+			<Footer />
 		</div>
 	);
 };

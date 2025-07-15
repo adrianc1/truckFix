@@ -1,5 +1,5 @@
 import mockMap from '../../assets/images/mockmap.png';
-export default function MapWidget({ mapHeight = 96 }) {
+export default function MapWidget({ mapHeight = 128 }) {
 	return (
 		<div className="flex flex-col mx-auto items-center mt-4 w-full px-2">
 			<div
@@ -11,7 +11,7 @@ export default function MapWidget({ mapHeight = 96 }) {
 					className="w-full h-full object-cover"
 				/>
 			</div>
-			{/* <div className="location-container border border-gray-400 rounded-b-xl w-full h-24 flex justify-around items-center ">
+			{/* <div className="location-container border border-gray-400 rounded-xl w-full h-24 flex justify-around items-center ">
 				<div className="location-details">
 					<h5 className="font-bold">Location</h5>
 					<span className="text-gray-500">Dallas, TX (25 mile radius)</span>
