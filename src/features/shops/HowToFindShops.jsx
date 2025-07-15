@@ -18,7 +18,7 @@ const HowToFindShops = () => {
 	];
 	return (
 		<div className="">
-			<h4 className="text-3xl font-bold text-center">
+			<h4 className="text-3xl font-bold text-center my-4">
 				Back On The Road In Three Simple Steps
 			</h4>
 			<p className="text-center text-gray-500">

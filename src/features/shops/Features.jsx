@@ -42,7 +42,7 @@ const Features = () => {
 
 	return (
 		<div className="">
-			<h4 className="text-3xl font-bold text-center">
+			<h4 className="text-3xl font-bold text-center my-4">
 				Everything You Need On The Road
 			</h4>
 			<p className="text-center text-gray-500">
