@@ -8,7 +8,7 @@ const LandingPage = () => {
 			<section className="w-[95%] mx-auto mt-8">
 				<div className="hero-text-container">
 					<h2 className="text-black font-bold text-3xl">Find Truck Repairs</h2>
-					<h2 className="text-orange-400 font-bold text-3xl">
+					<h2 className="text-orange-500 font-bold text-3xl">
 						Anytime, Anywhere
 					</h2>
 					<p>
@@ -26,7 +26,7 @@ const LandingPage = () => {
 						/>
 						<MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
 					</div>
-					<button className="bg-orange-400 flex items-center justify-center gap-4 py-3 w-full text-white rounded-3xl">
+					<button className="bg-orange-500 flex items-center justify-center gap-4 py-3 w-full text-white rounded-3xl">
 						<Search size={18} />
 						Find Repairs
 					</button>
