@@ -76,7 +76,7 @@ export default function Home() {
 	}
 
 	return (
-		<>
+		<div className="mt-24">
 			<RepairSearchForm
 				handleFilterTagClick={handleFilterTagClick}
 				searchCity={searchCity}
@@ -151,6 +151,6 @@ export default function Home() {
 					)}
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }

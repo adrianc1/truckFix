@@ -1,9 +1,11 @@
+import { useNavigate } from 'react-router';
 import { MapPin, Search } from 'lucide-react';
 import MapImg from '../assets/images/map.png';
 import SectionTag from '../components/SectionTag';
 import Features from '../features/shops/Features';
 import HowToFindShops from '../features/shops/HowToFindShops';
 const LandingPage = () => {
+	let navigate = useNavigate();
 	return (
 		<div className="mt-24">
 			<section className="w-[95%] mx-auto mt-8">
@@ -18,7 +20,12 @@ const LandingPage = () => {
 						mechanics.
 					</p>
 				</div>
-				<form className="flex w-full flex-col gap-4 mx-auto">
+				<form
+					className="flex w-full flex-col gap-4 mx-auto"
+					onSubmit={() => {
+						navigate('/results');
+					}}
+				>
 					<div className="relative mt-4 w-full ">
 						<input
 							type="text"
