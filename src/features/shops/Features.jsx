@@ -50,10 +50,13 @@ const Features = () => {
 				quickly and get back on schedule.
 			</p>
 			<ul className="mt-8 flex flex-col gap-4">
-				{featuresList.map((f) => {
+				{featuresList.map((f, index) => {
 					const IconComponent = f.icon;
 					return (
-						<li className="border text-gray-500 border-gray-200 rounded-xl py-8 px-2">
+						<li
+							key={index}
+							className="border text-gray-500 border-gray-200 rounded-xl py-8 px-2"
+						>
 							<div className="bg-orange-100 text-orange-500 flex w-fit p-3 rounded-xl mb-4">
 								<IconComponent size={24} />
 							</div>

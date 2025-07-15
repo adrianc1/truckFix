@@ -1,6 +1,7 @@
 import { MapPin, Search } from 'lucide-react';
 import SectionTag from '../components/SectionTag';
 import Features from '../features/shops/Features';
+import HowToFindShops from '../features/shops/HowToFindShops';
 const LandingPage = () => {
 	return (
 		<div className="mt-24">
@@ -41,6 +42,12 @@ const LandingPage = () => {
 			<section className="w-[95%] mx-auto mt-8 flex flex-col justify-center items-center">
 				<SectionTag tagName="Features" />
 				<Features />
+			</section>
+
+			{/* How It Works section */}
+			<section className="w-[95%] mx-auto mt-8 flex flex-col justify-center items-center">
+				<SectionTag tagName="How It Works" />
+				<HowToFindShops />
 			</section>
 		</div>
 	);
