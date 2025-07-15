@@ -3,7 +3,7 @@ import SectionTag from '../components/SectionTag';
 import Features from '../features/shops/Features';
 const LandingPage = () => {
 	return (
-		<div className="">
+		<div className="mt-24">
 			<section className="w-[95%] mx-auto mt-8">
 				<div className="hero-text-container">
 					<h2 className="text-black font-bold text-3xl">Find Truck Repairs</h2>
