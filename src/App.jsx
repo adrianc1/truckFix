@@ -4,6 +4,7 @@ import RepairSearchForm from './features/shops/RepairSearchForm';
 import MapWidget from './features/shops/MapWidget';
 import ShopList from './features/shops/ShopList';
 import Home from './pages/Home';
+import Footer from './components/layout/Footer';
 import LandingPage from './pages/LandingPage';
 const App = () => {
 	return (
@@ -11,6 +12,7 @@ const App = () => {
 			<Header />
 			<LandingPage />
 			{/* <Home /> */}
+			<Footer />
 		</div>
 	);
 };

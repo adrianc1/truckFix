@@ -1,4 +1,5 @@
 import { MapPin, Search } from 'lucide-react';
+import MapImg from '../assets/images/map.png';
 import SectionTag from '../components/SectionTag';
 import Features from '../features/shops/Features';
 import HowToFindShops from '../features/shops/HowToFindShops';
@@ -11,7 +12,7 @@ const LandingPage = () => {
 					<h2 className="text-orange-500 font-bold text-3xl">
 						Anytime, Anywhere
 					</h2>
-					<p>
+					<p className="my-4 text-gray-500">
 						F.A.S.T. connects truckers with nearby repair shops in seconds. Get
 						back on the road faster with our nationwide network of trusted
 						mechanics.
@@ -34,8 +35,10 @@ const LandingPage = () => {
 			</section>
 
 			{/* Map on landing page */}
-			<section className="w-[95%] h-96 border-gray-300  mx-auto mt-8">
-				<div className="size-full rounded-2xl bg-gray-200"></div>
+			<section className="w-[95%]  border-gray-300  mx-auto mt-8">
+				<div className="size-full rounded-2xl bg-gray-200">
+					<img src={MapImg} alt="" className="w-fit h-fit rounded-2xl" />
+				</div>
 			</section>
 
 			{/* Features section */}
