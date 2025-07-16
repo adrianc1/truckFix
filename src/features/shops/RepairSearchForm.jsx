@@ -8,9 +8,10 @@ export default function RepairSearchForm({
 }) {
 	const [shopCategories, setShopCategories] = useState([
 		{ category: 'All Services', value: '', isActive: false },
-		{ category: 'Diesel', value: 'Diesel', isActive: false },
+		{ category: 'DEF System', value: 'DEF', isActive: false },
 		{ category: 'Engine', value: 'Engine', isActive: false },
 		{ category: 'Tires', value: 'Tires', isActive: false },
+		{ category: 'Diesel', value: 'Electrical', isActive: false },
 		{ category: 'Electrical', value: 'Electrical', isActive: false },
 	]);
 
@@ -57,7 +58,7 @@ export default function RepairSearchForm({
 					<button
 						key={index}
 						className={`border border-gray-300 rounded-4xl px-4 py-2 min-w-max ${
-							cat.isActive ? 'bg-amber-400' : ''
+							cat.isActive ? 'bg-orange-100' : ''
 						}`}
 						onClick={(e) => {
 							e.preventDefault();
