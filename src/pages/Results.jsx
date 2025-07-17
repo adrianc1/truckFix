@@ -16,7 +16,6 @@ export default function Home() {
 	const [searchService, setSearchService] = useState('');
 
 	useEffect(() => {
-		console.log(searchService);
 		let filtered = shops.filter((shop) =>
 			shop.services.some(
 				(service) =>
@@ -72,7 +71,7 @@ export default function Home() {
 	// };
 
 	return (
-		<div className="mt-18">
+		<div className="mt-18 overflow-y-hidden">
 			<RepairSearchForm
 				setFilterTag={setFilterTag}
 				searchCity={searchCity}
@@ -85,11 +84,11 @@ export default function Home() {
 			{/* Bottom Sheet Modal */}
 			<div
 				className={`
-					fixed bottom-0 left-0 right-0 bg-white shadow-xl rounded-t-2xl border border-gray-300 
+					fixed max-h-[70vh] h-[50vh] bottom-0 left-0 right-0 bg-white shadow-xl rounded-t-2xl border border-gray-300 
 					transition-transform duration-300 z-50
 					${isModalOpen ? 'translate-y-0' : 'translate-y-[calc(100%-80px)]'}
 				`}
-				style={{ maxHeight: '90vh' }}
+				style={{ height: clamp('20vh', '50vh', '70vh') }}
 			>
 				{/* Handle/Tab Area - Always visible */}
 				<div
