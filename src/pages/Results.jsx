@@ -71,14 +71,10 @@ export default function Home() {
 	// 	}
 	// };
 
-	function handleFilterTagClick(tag) {
-		setFilterTag(tag);
-	}
-
 	return (
-		<div className="mt-24">
+		<div className="mt-18">
 			<RepairSearchForm
-				handleFilterTagClick={handleFilterTagClick}
+				setFilterTag={setFilterTag}
 				searchCity={searchCity}
 				setSearchCity={setSearchCity}
 				searchService={searchService}

@@ -1,28 +1,19 @@
-import { useState } from 'react';
 import { Wrench, Navigation, MapPin } from 'lucide-react';
+import RepairFilters from './RepairFilters';
 
 export default function RepairSearchForm({
-	handleFilterTagClick,
 	searchCity,
 	setSearchCity,
+	setFilterTag,
 }) {
-	const [shopCategories, setShopCategories] = useState([
-		{ category: 'All Services', value: '', isActive: false },
-		{ category: 'DEF System', value: 'DEF', isActive: false },
-		{ category: 'Engine', value: 'Engine', isActive: false },
-		{ category: 'Tires', value: 'Tires', isActive: false },
-		{ category: 'Diesel', value: 'Electrical', isActive: false },
-		{ category: 'Electrical', value: 'Electrical', isActive: false },
-	]);
-
 	return (
-		<form className=" w-full flex flex-col justify-center px-2 gap-4">
+		<form className="absolute z-100 w-full flex flex-col justify-center px-2 gap-4">
 			<div className="flex flex-col">
 				{/* Location Search Bar */}
 				<div className="relative mt-4">
 					<input
 						type="text"
-						className="border w-full rounded-xl py-2 pl-10 pr-4"
+						className="border bg-white w-full rounded-xl py-2 pl-10 pr-4"
 						placeholder="Enter City / Town"
 						value={searchCity}
 						onChange={(e) => {
@@ -38,47 +29,7 @@ export default function RepairSearchForm({
 				</span>
 			</div>
 
-			{/* Type of repair shop search bar */}
-			{/* <div className="relative">
-				<input
-					type="text"
-					className="border w-full rounded-xl py-2 pl-10 pr-4"
-					placeholder="Engine, Brakes, Repair..."
-					value={searchService}
-					onChange={(e) => {
-						setSearchService(e.target.value);
-					}}
-				/>
-				<Wrench className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
-			</div> */}
-
-			{/* Repair shop categories  */}
-			<div className="flex overflow-x-scroll w-full gap-2 px-2 pb-4">
-				{shopCategories.map((cat, index) => (
-					<button
-						key={index}
-						className={`border border-gray-300 rounded-4xl px-4 py-2 min-w-max ${
-							cat.isActive ? 'bg-orange-100' : ''
-						}`}
-						onClick={(e) => {
-							e.preventDefault();
-							handleFilterTagClick(cat.value);
-							setShopCategories((prev) =>
-								prev.map((c) =>
-									c.value == cat.value
-										? { ...c, isActive: true }
-										: { ...c, isActive: false }
-								)
-							);
-						}}
-					>
-						{cat.category}
-					</button>
-				))}
-			</div>
-			<button className="border mb-4 bg-black text-white font-bold rounded-2xl py-2 w-1/2 mx-auto">
-				Search
-			</button>
+			<RepairFilters setFilterTag={setFilterTag} />
 		</form>
 	);
 }
