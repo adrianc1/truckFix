@@ -16,7 +16,7 @@ const LandingPage = () => {
 						Anytime, Anywhere
 					</h2>
 					<p className="my-4 text-gray-500">
-						F.A.S.T. connects truckers with nearby repair shops in seconds. Get
+						TruckFix connects truckers with nearby repair shops in seconds. Get
 						back on the road faster with our nationwide network of trusted
 						mechanics.
 					</p>

@@ -9,7 +9,7 @@ export default function MapWidget({ mapHeight = 128 }) {
 				<img
 					src={mockMap}
 					alt="Map showing nearby repair shops"
-					className="w-full h-full object-cover"
+					className="w-full h-full object-cover overflow-hidden"
 				/>
 			</div>
 		</div>

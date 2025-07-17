@@ -16,7 +16,7 @@ export default function RepairFilters({ setFilterTag }) {
 	return (
 		<>
 			{/* Repair shop categories  */}
-			<div className="flex overflow-x-scroll w-full gap-2 px-2 pb-4">
+			<div className="flex overflow-x-scroll w-full gap-2 px-2 pb-4 mb-8">
 				{shopCategories.map((cat, index) => (
 					<button
 						key={index}

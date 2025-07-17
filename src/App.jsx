@@ -4,7 +4,7 @@ import Home from './pages/Results';
 import LandingPage from './pages/LandingPage';
 const App = () => {
 	return (
-		<div className="w-full h-auto">
+		<div className="w-full h-full">
 			<Header />
 			<Routes>
 				<Route index element={<LandingPage />} />
