@@ -7,7 +7,7 @@ export default function RepairSearchForm({
 	setFilterTag,
 }) {
 	return (
-		<form className="absolute z-100 w-full flex flex-col justify-center px-2 gap-4">
+		<form className="absolute mt-8 z-100 w-full flex flex-col justify-center px-2 gap-4">
 			<div className="flex flex-col">
 				{/* Location Search Bar */}
 				<div className="relative mt-4">
@@ -24,7 +24,7 @@ export default function RepairSearchForm({
 				</div>
 				{/* Get current location  */}
 				<span className="self-end flex mr-2 h-8 w-8 items-center justify-center rounded-full bg-white text-orange-500 ">
-					<Navigation className="w-4" />
+					{/* <Navigation className="w-4" /> */}
 					{/* <a href="">Use Current Location</a> */}
 				</span>
 			</div>

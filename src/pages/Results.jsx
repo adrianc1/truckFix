@@ -5,14 +5,18 @@ import ShopList from '../features/shops/ShopList';
 import ShopDetailsPage from './ShopDetailsPage';
 import useShops from '../features/shops/useShops';
 import BottomSheetModal from '../features/shops/BottomSheetModal';
+import { APIProvider, Map, AdvancedMarker } from '@vis.gl/react-google-maps';
 
-export default function Home() {
+export default function Results({ currentLocation }) {
 	const shops = useShops();
 	const [filterTag, setFilterTag] = useState('');
 	const [filteredShops, setFilteredShops] = useState([]);
-
 	const [searchCity, setSearchCity] = useState('');
 	const [searchService, setSearchService] = useState('');
+
+	const { latitude, longitude } = currentLocation;
+
+	console.log(latitude, longitude);
 
 	useEffect(() => {
 		let filtered = shops.filter((shop) =>
@@ -36,7 +40,7 @@ export default function Home() {
 	// };
 
 	return (
-		<div className="mt-14">
+		<div className="mt-14 overflow-y-hidden">
 			<RepairSearchForm
 				setFilterTag={setFilterTag}
 				searchCity={searchCity}
@@ -44,7 +48,20 @@ export default function Home() {
 				searchService={searchService}
 				setSearchService={setSearchService}
 			/>
-			<MapWidget />
+			<APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
+				<Map
+					style={{ width: '100vw', height: '100vh' }}
+					mapId={import.meta.env.VITE_MAP_ID}
+					center={{ lat: 36.1718, lng: 115.1458 }}
+					zoom={5}
+					gestureHandling={'greedy'}
+					disableDefaultUI={true}
+				/>
+				<AdvancedMarker
+					position={{ lat: 36.1718, lng: 115.1458 }}
+				></AdvancedMarker>
+			</APIProvider>
+
 			<BottomSheetModal
 				shops={shops}
 				filteredShops={filteredShops}

@@ -1,3 +1,4 @@
+import { useState, useSyncExternalStore } from 'react';
 import { useNavigate } from 'react-router';
 import { MapPin, Search, Navigation } from 'lucide-react';
 import Footer from '../components/layout/Footer';
@@ -5,15 +6,24 @@ import MapImg from '../assets/images/map.png';
 import SectionTag from '../components/SectionTag';
 import Features from '../features/shops/Features';
 import HowToFindShops from '../features/shops/HowToFindShops';
-const LandingPage = () => {
+
+const LandingPage = ({ currentLocation, setCurrentLocation }) => {
 	let navigate = useNavigate();
-	if ('geolocation' in navigator) {
-		navigator.geolocation.getCurrentPosition((position) => {
-			console.log(position.coords.latitude, position.coords.longitude);
-		});
-	} else {
-		/* geolocation IS NOT available */
+
+	function getUserLocation() {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(
+				(position) => {
+					const { latitude, longitude } = position.coords;
+					setCurrentLocation({ latitude, longitude });
+				},
+				(error) => console.log(error)
+			);
+		} else {
+			alert('please enable location services');
+		}
 	}
+
 	return (
 		<div className="mt-24">
 			<section className="w-[95%] mx-auto mt-8">
@@ -39,13 +49,18 @@ const LandingPage = () => {
 							type="text"
 							className="border w-full rounded-3xl py-2 pl-10 pr-4"
 							placeholder="Enter City / Town"
-							value="Dallas, TX"
+							value="yooo"
+							onChange={(e) => {
+								e.target.value;
+							}}
 						/>
 						<MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
 					</div>
 					<span className="self-end gap-1 flex justify-center items-center">
 						<Navigation className="w-4" />
-						<a href="">Use Current Location</a>
+						<div onClick={getUserLocation} className="pointer">
+							Use Current Location
+						</div>
 					</span>
 					<button className="bg-orange-500 flex items-center justify-center gap-4 py-3 w-full text-white rounded-3xl">
 						<Search size={18} />
