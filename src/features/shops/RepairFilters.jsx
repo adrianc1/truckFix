@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 export default function RepairFilters({ setFilterTag }) {
 	const [shopCategories, setShopCategories] = useState([
-		{ category: 'All Services', value: '', isActive: false },
+		{ category: 'All Services', value: '', isActive: true },
 		{ category: 'DEF System', value: 'DEF', isActive: false },
 		{ category: 'Engine', value: 'Engine', isActive: false },
 		{ category: 'Tires', value: 'Tires', isActive: false },
