@@ -8,6 +8,7 @@ export default function RepairFilters({ setFilterTag }) {
 		{ category: 'Tires', value: 'Tires', isActive: false },
 		{ category: 'Diesel', value: 'Diesel', isActive: false },
 		{ category: 'Electrical', value: 'Electrical', isActive: false },
+		{ category: 'Truck Stop', value: 'Truck Stop', isActive: false },
 	]);
 	function handleFilterTagClick(tag) {
 		setFilterTag(tag);

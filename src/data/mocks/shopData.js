@@ -431,7 +431,7 @@ const dummyShops = [
 		accepts_large_vehicles: true,
 	},
 	{
-		place_id: 'dummy_shop_10',
+		place_id: 'dummy_shop_11',
 		name: 'Phoenix Fleet Care',
 		vicinity: '450 S 15th Ave, Phoenix, AZ',
 		rating: 4.4,
