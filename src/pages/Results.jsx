@@ -52,8 +52,8 @@ export default function Results({ currentLocation }) {
 				<Map
 					style={{ width: '100vw', height: '100vh' }}
 					mapId={import.meta.env.VITE_MAP_ID}
-					center={{ lat: 36.1718, lng: -115.1458 }}
-					zoom={9}
+					defaultCenter={{ lat: 36.1718, lng: -115.1458 }}
+					defaultZoom={9}
 					gestureHandling={'greedy'}
 					disableDefaultUI={true}
 				/>
