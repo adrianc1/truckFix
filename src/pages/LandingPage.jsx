@@ -49,7 +49,7 @@ const LandingPage = ({ currentLocation, setCurrentLocation }) => {
 							type="text"
 							className="border w-full rounded-3xl py-2 pl-10 pr-4"
 							placeholder="Enter City / Town"
-							value="yooo"
+							value="Las Vegas, NV"
 							onChange={(e) => {
 								e.target.value;
 							}}
