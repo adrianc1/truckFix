@@ -7,6 +7,13 @@ import Features from '../features/shops/Features';
 import HowToFindShops from '../features/shops/HowToFindShops';
 const LandingPage = () => {
 	let navigate = useNavigate();
+	if ('geolocation' in navigator) {
+		navigator.geolocation.getCurrentPosition((position) => {
+			console.log(position.coords.latitude, position.coords.longitude);
+		});
+	} else {
+		/* geolocation IS NOT available */
+	}
 	return (
 		<div className="mt-24">
 			<section className="w-[95%] mx-auto mt-8">

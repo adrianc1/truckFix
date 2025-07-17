@@ -50,7 +50,7 @@ export default function BottomSheetModal({
 			{/* Bottom Sheet Modal */}
 			<div
 				className={`
-					fixed  max-h-[70vh]  bottom-0 left-0 right-0 bg-white shadow-xl rounded-t-2xl border border-gray-300 
+					fixed  max-h-[50vh]  bottom-0 left-0 right-0 bg-white shadow-xl rounded-t-2xl border border-gray-300 
 					transition-transform duration-300 z-50
 					${isModalOpen ? 'translate-y-0' : 'translate-y-[calc(100%-80px)]'}
 				`}
