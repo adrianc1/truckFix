@@ -1,4 +1,4 @@
-import { useState, useSyncExternalStore } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { MapPin, Search, Navigation } from 'lucide-react';
 import Footer from '../components/layout/Footer';
@@ -6,9 +6,22 @@ import MapImg from '../assets/images/map.png';
 import SectionTag from '../components/SectionTag';
 import Features from '../features/shops/Features';
 import HowToFindShops from '../features/shops/HowToFindShops';
+import { setItem } from '../utils/localStorage';
 
 const LandingPage = ({ currentLocation, setCurrentLocation }) => {
 	let navigate = useNavigate();
+
+	useEffect(() => {
+		if (currentLocation.latitude && currentLocation.longitude) {
+			navigate('/results', {
+				state: { location: currentLocation },
+			});
+		}
+	}, [currentLocation, navigate]);
+
+	useEffect(() => {
+		setItem('currentLocation', currentLocation);
+	}, [currentLocation]);
 
 	function getUserLocation() {
 		if (navigator.geolocation) {
