@@ -74,13 +74,14 @@ const Features = () => {
 				TruckFix provides all the tools truckers need to find reliable repairs
 				quickly and get back on schedule.
 			</p>
-			<ul className="mt-8 flex flex-col gap-4">
+			<ul className="mt-8 w-full flex flex-col gap-4 md:flex-row md:flex-wrap md:justify-center md:gap-12">
 				{featuresList.map((f, index) => {
 					const IconComponent = f.icon;
 					return (
 						<li
 							key={index}
-							className="feature-card border text-gray-500 border-gray-200 rounded-xl py-6 px-2"
+							className="feature-card border text-gray-500 border-gray-200 rounded-xl py-6 px-2
+             w-full md:w-1/4 md:p-4 md:pt-6"
 						>
 							<div className="bg-orange-100 text-orange-500 flex w-fit p-3 rounded-xl mb-4">
 								<IconComponent size={36} />

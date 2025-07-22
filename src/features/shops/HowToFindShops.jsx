@@ -25,12 +25,12 @@ const HowToFindShops = () => {
 				TruckFix provides all the tools truckers need to find reliable repairs
 				quickly and get back on schedule.
 			</p>
-			<ul className="mt-8 flex flex-col gap-4">
+			<ul className="mt-8 flex flex-col gap-4 md:flex-row">
 				{steps.map((step) => {
 					return (
 						<li
 							key={step.id}
-							className="border flex flex-col justify-center items-center text-gray-500 border-gray-200 rounded-xl py-8 px-2"
+							className="border flex flex-col justify-center items-center text-gray-500 border-gray-200 rounded-xl py-8 px-2 w-full md:w-1/3 "
 						>
 							<div className="bg-orange-500 text-orange-100 flex h-12 w-12 p-4  rounded-full mb-4 justify-center items-center font-bold text-xl">
 								{step.id}

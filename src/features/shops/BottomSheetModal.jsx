@@ -50,14 +50,15 @@ export default function BottomSheetModal({
 			{/* Bottom Sheet Modal */}
 			<div
 				className={`
-					fixed  max-h-[50vh]  bottom-0 left-0 right-0 bg-white shadow-xl rounded-t-2xl border border-gray-300 
-					transition-transform duration-300 z-50
-					${isModalOpen ? 'translate-y-0' : 'translate-y-[calc(100%-80px)]'}
-				`}
+    fixed bottom-0 left-0 right-0 bg-white shadow-xl rounded-t-2xl border border-gray-300
+    transition-transform duration-300 z-50 flex flex-col
+    ${isModalOpen ? 'translate-y-0' : 'translate-y-[calc(100%-80px)]'}
+  `}
+				style={{ maxHeight: '60vh' }} // outer container half screen height
 			>
 				{/* Handle/Tab Area - Always visible */}
 				<div
-					className="p-4 cursor-pointer select-none"
+					className="p-4 cursor-pointer select-none flex-shrink-0"
 					onClick={isModalOpen ? closeModal : openModal}
 				>
 					{/* Handle bar */}
