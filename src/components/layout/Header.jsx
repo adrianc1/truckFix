@@ -10,7 +10,14 @@ const Header = () => {
 				<h1 className="text-2xl text-center font-bold">TruckFix</h1>
 			</Link>
 
-			<div className="settings-icon flex justify-center">
+			<div
+				className="settings-icon flex justify-center"
+				onClick={() => {
+					alert(
+						'Hey there! This page is still under construction. Please feel free to take a look around.'
+					);
+				}}
+			>
 				<img src={settingsIcon} className="w-6 h-6" alt="" />
 			</div>
 		</header>

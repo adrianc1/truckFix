@@ -13,20 +13,16 @@ export default function RepairSearchForm({
 				<div className="relative mt-4">
 					<input
 						type="text"
-						className="border bg-white w-full rounded-xl py-2 pl-10 pr-4"
+						className="border bg-white w-full rounded-xl py-2 pl-10 pr-4 text-gray-500 md:w-full"
 						placeholder="Enter City / Town"
-						value={searchCity}
+						value="Demo Only. Using mock data to showcase shop filtering and details. Making one API call to display map."
+						readOnly
 						onChange={(e) => {
 							setSearchCity(e.target.value);
 						}}
 					/>
 					<MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
 				</div>
-				{/* Get current location  */}
-				<span className="self-end flex mr-2 h-8 w-8 items-center justify-center rounded-full bg-white text-orange-500 ">
-					{/* <Navigation className="w-4" /> */}
-					{/* <a href="">Use Current Location</a> */}
-				</span>
 			</div>
 
 			<RepairFilters setFilterTag={setFilterTag} />
