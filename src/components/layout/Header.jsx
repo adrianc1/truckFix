@@ -1,5 +1,5 @@
 import settingsIcon from '../../assets/images/settings.svg';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Truck } from 'lucide-react';
 
 const Header = () => {

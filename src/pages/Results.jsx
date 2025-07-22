@@ -1,19 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useTransition } from 'react';
+import { useLocation } from 'react-router-dom';
 import MapWidget from '../features/shops/MapWidget';
 import RepairSearchForm from '../features/shops/RepairSearchForm';
 import useShops from '../features/shops/useShops';
 import BottomSheetModal from '../features/shops/BottomSheetModal';
 import { APIProvider, Map, AdvancedMarker } from '@vis.gl/react-google-maps';
 
-export default function Results({ currentLocation, setCurrentLocation }) {
+export default function Results() {
 	const shops = useShops();
 	const [filterTag, setFilterTag] = useState('');
 	const [filteredShops, setFilteredShops] = useState([]);
 	const [searchCity, setSearchCity] = useState('');
 	const [searchService, setSearchService] = useState('');
-	const { latitude, longitude } = currentLocation;
+	const location = useLocation();
+	const params = new URLSearchParams(location.search);
+	const lat = parseFloat(params.get('lat'));
+	const lng = parseFloat(params.get('lng'));
+	const [center, setCenter] = useState({ lat: 0, lng: 0 });
 
-	console.log(latitude, longitude);
+	useEffect(() => {
+		if (!isNaN(lat) && !isNaN(lng)) {
+			setCenter({ lat, lng });
+		}
+	}, [lng, lat]);
 
 	useEffect(() => {
 		let filtered = shops.filter((shop) =>
@@ -25,8 +34,6 @@ export default function Results({ currentLocation, setCurrentLocation }) {
 		);
 		setFilteredShops(filtered);
 	}, [shops, filterTag, searchService]);
-
-	console.log(currentLocation.longitude, currentLocation.latitude);
 
 	// const handleModalContentClick = (e) => {
 	// 	e.stopPropagation();
@@ -47,19 +54,24 @@ export default function Results({ currentLocation, setCurrentLocation }) {
 				searchService={searchService}
 				setSearchService={setSearchService}
 			/>
-			{/* <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
+			<div className="mt-64 bg-gray-100 rounded-lg my-4">
+				<h3 className="font-bold text-lg">Current Location</h3>
+				<p>Latitude: {center.lat}</p>
+				<p>Longitude: {center.lng}</p>
+			</div>
+			<APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
 				<Map
 					style={{ width: '100vw', height: '100vh' }}
 					mapId={import.meta.env.VITE_MAP_ID}
-					defaultCenter={{ lat: 36.1718, lng: -115.1458 }}
+					defaultCenter={{ lat: center.lat, lng: center.lng }}
 					defaultZoom={9}
 					gestureHandling={'greedy'}
 					disableDefaultUI={true}
 				/>
 				<AdvancedMarker
-					position={{ lat: 36.1718, lng: -115.1458 }}
+					position={{ lat: center.lat, lng: center.lng }}
 				></AdvancedMarker>
-			</APIProvider> */}
+			</APIProvider>
 
 			<BottomSheetModal
 				shops={shops}

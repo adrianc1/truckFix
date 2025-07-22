@@ -1,34 +1,24 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MapPin, Search, Navigation } from 'lucide-react';
 import Footer from '../components/layout/Footer';
 import MapImg from '../assets/images/map.png';
 import SectionTag from '../components/SectionTag';
 import Features from '../features/shops/Features';
 import HowToFindShops from '../features/shops/HowToFindShops';
-import { setItem } from '../utils/localStorage';
 
-const LandingPage = ({ currentLocation, setCurrentLocation }) => {
+const LandingPage = () => {
+	const [coords, setCoords] = useState({ lat: '', lng: '' });
+	const [manualLocation, setManualLocation] = useState('');
+
 	let navigate = useNavigate();
-
-	useEffect(() => {
-		if (currentLocation.latitude && currentLocation.longitude) {
-			navigate('/results', {
-				state: { location: currentLocation },
-			});
-		}
-	}, [currentLocation, navigate]);
-
-	useEffect(() => {
-		setItem('currentLocation', currentLocation);
-	}, [currentLocation]);
 
 	function getUserLocation() {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(
 				(position) => {
 					const { latitude, longitude } = position.coords;
-					setCurrentLocation({ latitude, longitude });
+					setCoords({ lat: latitude, lng: longitude });
 				},
 				(error) => console.log(error)
 			);
@@ -53,8 +43,9 @@ const LandingPage = ({ currentLocation, setCurrentLocation }) => {
 				</div>
 				<form
 					className="flex w-full flex-col gap-4 mx-auto"
-					onSubmit={() => {
-						navigate('/results');
+					onSubmit={(e) => {
+						e.preventDefault();
+						navigate(`/results?lat=${coords.lat}&lng=${coords.lng}`);
 					}}
 				>
 					<div className="relative mt-4 w-full ">
@@ -62,9 +53,9 @@ const LandingPage = ({ currentLocation, setCurrentLocation }) => {
 							type="text"
 							className="border w-full rounded-3xl py-2 pl-10 pr-4"
 							placeholder="Enter City / Town"
-							value="Las Vegas, NV"
+							value={manualLocation || (coords.lat, coords.lng)}
 							onChange={(e) => {
-								e.target.value;
+								setManualLocation(e.target.value);
 							}}
 						/>
 						<MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
