@@ -30,19 +30,23 @@ const LandingPage = () => {
 	return (
 		<div className="mt-24">
 			<section className="w-[95%] mx-auto mt-8">
-				<div className="hero-text-container">
-					<h2 className="text-black font-bold text-3xl">Find Truck Repairs</h2>
-					<h2 className="text-orange-500 font-bold text-3xl">
-						Anytime, Anywhere
-					</h2>
-					<p className="my-4 text-gray-500 md:w-1/2">
+				<div className="hero-text-container md:text-center">
+					<div className="md:flex md:flex-col md:items-center">
+						<h2 className="text-black font-bold text-3xl md:text-5xl md:inline">
+							Find Truck Repairs
+						</h2>
+						<h2 className="text-orange-500 font-bold text-3xl md:text-5xl md:inline md:ml-2 md:mt-4">
+							Anytime, Anywhere
+						</h2>
+					</div>
+					<p className="my-4 text-gray-500 md:w-1/2 md:mx-auto">
 						TruckFix connects truckers with nearby repair shops in seconds. Get
 						back on the road faster with our nationwide network of trusted
 						mechanics.
 					</p>
 				</div>
 				<form
-					className="flex w-full flex-col gap-4 mx-auto"
+					className="flex w-full flex-col gap-4 mx-auto lg:w-4/5"
 					onSubmit={(e) => {
 						e.preventDefault();
 						navigate(`/results?lat=${coords.lat}&lng=${coords.lng}`);
@@ -75,7 +79,7 @@ const LandingPage = () => {
 			</section>
 
 			{/* Map on landing page */}
-			<section className="w-[95%] mx-auto mt-8">
+			<section className="w-[95%] mx-auto mt-8 lg:w-4/5">
 				<div className="h-96 rounded-2xl bg-gray-200 overflow-hidden">
 					<img
 						src={MapImg}
