@@ -2,7 +2,7 @@ const dummyShops = [
 	{
 		place_id: 'dummy_shop_1',
 		name: 'Padda Bros Express Repair',
-		vicinity: '1234 Truck Hwy, Dallas, TX',
+		vicinity: '10801 N Wolfe Rd, Cupertino, CA 95014',
 		rating: 4.5,
 		user_ratings_total: 127,
 		price_level: 2,

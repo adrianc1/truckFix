@@ -16,7 +16,10 @@ export default function Results() {
 	const params = new URLSearchParams(location.search);
 	const lat = parseFloat(params.get('lat'));
 	const lng = parseFloat(params.get('lng'));
-	const [center, setCenter] = useState({ lat: 0, lng: 0 });
+	const [center, setCenter] = useState({
+		lat: 37.3346,
+		lng: -122.009,
+	});
 
 	useEffect(() => {
 		if (!isNaN(lat) && !isNaN(lng)) {
@@ -54,11 +57,7 @@ export default function Results() {
 				searchService={searchService}
 				setSearchService={setSearchService}
 			/>
-			<div className="mt-64 bg-gray-100 rounded-lg my-4">
-				<h3 className="font-bold text-lg">Current Location</h3>
-				<p>Latitude: {center.lat}</p>
-				<p>Longitude: {center.lng}</p>
-			</div>
+
 			<APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
 				<Map
 					style={{ width: '100vw', height: '100vh' }}

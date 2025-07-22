@@ -51,9 +51,10 @@ const LandingPage = () => {
 					<div className="relative mt-4 w-full ">
 						<input
 							type="text"
-							className="border w-full rounded-3xl py-2 pl-10 pr-4"
+							className="border w-full rounded-3xl py-2 pl-10 pr-4 text-gray-500"
 							placeholder="Enter City / Town"
-							value={manualLocation || (coords.lat, coords.lng)}
+							value="Demo Only. Please click 'Find Repairs' below to continue demo."
+							readOnly
 							onChange={(e) => {
 								setManualLocation(e.target.value);
 							}}
