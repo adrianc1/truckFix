@@ -1,7 +1,7 @@
 import { useEffect, useState, useTransition } from 'react';
 import { useLocation } from 'react-router-dom';
 import MapWidget from '../features/shops/MapWidget';
-import demoMap from '../assets/images/demomap.png';
+import demoMap from '../assets/images/demomap2.png';
 import RepairSearchForm from '../features/shops/RepairSearchForm';
 import useShops from '../features/shops/useShops';
 import BottomSheetModal from '../features/shops/BottomSheetModal';
@@ -67,7 +67,6 @@ export default function Results() {
 						width: '100%',
 						height: '100%',
 						objectFit: 'cover',
-						objectPosition: 'left',
 					}}
 				/>
 			</div>
