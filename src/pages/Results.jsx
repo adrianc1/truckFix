@@ -59,23 +59,18 @@ export default function Results() {
 				setSearchService={setSearchService}
 			/>
 
-			<div className="demo-map">
-				<img src={demoMap} alt="" />
+			<div className="demo-map" style={{ width: '100vw', height: '100vh' }}>
+				<img
+					src={demoMap}
+					alt=""
+					style={{
+						width: '100%',
+						height: '100%',
+						objectFit: 'cover',
+						objectPosition: 'left',
+					}}
+				/>
 			</div>
-
-			<APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
-				<Map
-					style={{ width: '100vw', height: '100vh' }}
-					mapId={import.meta.env.VITE_MAP_ID}
-					defaultCenter={center}
-					defaultZoom={9}
-					gestureHandling={'greedy'}
-					disableDefaultUI={true}
-				>
-					{/* Marker must be inside Map */}
-					<AdvancedMarker position={center} />
-				</Map>
-			</APIProvider>
 
 			<BottomSheetModal
 				shops={shops}

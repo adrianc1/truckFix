@@ -2,7 +2,7 @@ const dummyShops = [
 	{
 		place_id: 'dummy_shop_1',
 		name: 'Padda Bros Express Repair',
-		vicinity: '951 S Anaheim Blvd, Anaheim, CA 92805',
+		vicinity: '951 S Soto St, Boyle Heights, CA 90033',
 		rating: 4.5,
 		user_ratings_total: 127,
 		price_level: 2,
