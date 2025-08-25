@@ -62,14 +62,14 @@ export default function Results() {
 				<Map
 					style={{ width: '100vw', height: '100vh' }}
 					mapId={import.meta.env.VITE_MAP_ID}
-					defaultCenter={{ lat: center.lat, lng: center.lng }}
+					defaultCenter={center}
 					defaultZoom={9}
 					gestureHandling={'greedy'}
 					disableDefaultUI={true}
-				/>
-				<AdvancedMarker
-					position={{ lat: center.lat, lng: center.lng }}
-				></AdvancedMarker>
+				>
+					{/* Marker must be inside Map */}
+					<AdvancedMarker position={center} />
+				</Map>
 			</APIProvider>
 
 			<BottomSheetModal

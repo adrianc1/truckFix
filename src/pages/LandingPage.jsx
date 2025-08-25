@@ -40,8 +40,8 @@ const LandingPage = () => {
 						</h2>
 					</div>
 					<p className="my-4 text-gray-500 md:w-1/2 md:mx-auto">
-						TruckFix connects truckers with nearby repair shops in seconds. Get
-						back on the road faster with our nationwide network of trusted
+						RepairFind connects truckers with nearby repair shops in seconds.
+						Get back on the road faster with our nationwide network of trusted
 						mechanics.
 					</p>
 				</div>
@@ -71,7 +71,7 @@ const LandingPage = () => {
 							Use Current Location
 						</div>
 					</span>
-					<button className="bg-orange-500 flex items-center justify-center gap-4 py-3 w-full text-white rounded-3xl">
+					<button className="bg-orange-500 flex items-center justify-center gap-4 py-3 w-full text-white rounded-3xl cursor-pointer">
 						<Search size={18} />
 						Find Repairs
 					</button>
