@@ -1,6 +1,7 @@
 import { useEffect, useState, useTransition } from 'react';
 import { useLocation } from 'react-router-dom';
 import MapWidget from '../features/shops/MapWidget';
+import demoMap from '../assets/images/demomap.png';
 import RepairSearchForm from '../features/shops/RepairSearchForm';
 import useShops from '../features/shops/useShops';
 import BottomSheetModal from '../features/shops/BottomSheetModal';
@@ -57,6 +58,10 @@ export default function Results() {
 				searchService={searchService}
 				setSearchService={setSearchService}
 			/>
+
+			<div className="demo-map">
+				<img src={demoMap} alt="" />
+			</div>
 
 			<APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
 				<Map
