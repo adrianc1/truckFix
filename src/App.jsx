@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { setItem, getItem } from './utils/localStorage';
 import Header from './components/layout/Header';
 import Results from './pages/Results';
 import LandingPage from './pages/LandingPage';

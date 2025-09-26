@@ -1,11 +1,11 @@
 import { useEffect, useState, useTransition } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import MapWidget from '../features/shops/MapWidget';
 import demoMap from '../assets/images/demomap2.png';
 import RepairSearchForm from '../features/shops/RepairSearchForm';
 import useShops from '../features/shops/useShops';
 import BottomSheetModal from '../features/shops/BottomSheetModal';
-import { APIProvider, Map, AdvancedMarker } from '@vis.gl/react-google-maps';
+import { APIProvider, Map } from '@vis.gl/react-google-maps';
 
 export default function Results() {
 	const shops = useShops();
@@ -13,14 +13,19 @@ export default function Results() {
 	const [filteredShops, setFilteredShops] = useState([]);
 	const [searchCity, setSearchCity] = useState('');
 	const [searchService, setSearchService] = useState('');
-	const location = useLocation();
-	const params = new URLSearchParams(location.search);
-	const lat = parseFloat(params.get('lat'));
-	const lng = parseFloat(params.get('lng'));
+	const [searchParams, setSearchParams] = useSearchParams();
+	const lat = parseFloat(searchParams.get('lat'));
+	const lng = parseFloat(searchParams.get('lng'));
+	const city = searchParams.get('city');
 	const [center, setCenter] = useState({
 		lat: 37.3346,
 		lng: -122.009,
 	});
+	const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
+	useEffect(() => {
+		console.log(lat, lng, city);
+	}, [lat, lng, city]);
 
 	useEffect(() => {
 		if (!isNaN(lat) && !isNaN(lng)) {
@@ -59,7 +64,27 @@ export default function Results() {
 				setSearchService={setSearchService}
 			/>
 
-			<div className="demo-map" style={{ width: '100vw', height: '100vh' }}>
+			<APIProvider
+				apiKey={apiKey}
+				onLoad={() => console.log('Maps API has loaded.')}
+			>
+				<div style={{ width: '100vw', height: '100vh' }}>
+					<Map
+						defaultZoom={13}
+						defaultCenter={{ lat, lng }}
+						onCameraChanged={(ev) =>
+							console.log(
+								'camera changed:',
+								ev.detail.center,
+								'zoom:',
+								ev.detail.zoom
+							)
+						}
+					></Map>
+				</div>
+			</APIProvider>
+
+			{/* <div className="demo-map" style={{ width: '100vw', height: '100vh' }}>
 				<img
 					src={demoMap}
 					alt=""
@@ -69,7 +94,7 @@ export default function Results() {
 						objectFit: 'cover',
 					}}
 				/>
-			</div>
+			</div> */}
 
 			<BottomSheetModal
 				shops={shops}

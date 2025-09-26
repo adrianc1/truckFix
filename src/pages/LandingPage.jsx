@@ -49,7 +49,9 @@ const LandingPage = () => {
 					className="flex w-full flex-col gap-4 mx-auto lg:w-4/5"
 					onSubmit={(e) => {
 						e.preventDefault();
-						navigate(`/results?lat=${coords.lat}&lng=${coords.lng}`);
+						navigate(
+							`/results?lat=${coords.lat}&lng=${coords.lng}&city=${manualLocation}`
+						);
 					}}
 				>
 					<div className="relative mt-4 w-full ">
@@ -57,8 +59,7 @@ const LandingPage = () => {
 							type="text"
 							className="border w-full rounded-3xl py-2 pl-10 pr-4 text-gray-500"
 							placeholder="Enter City / Town"
-							value="Demo Only. Please click 'Find Repairs' below to continue demo."
-							readOnly
+							value={manualLocation}
 							onChange={(e) => {
 								setManualLocation(e.target.value);
 							}}
@@ -67,6 +68,7 @@ const LandingPage = () => {
 					</div>
 					<span className="self-end gap-1 flex justify-center items-center">
 						<Navigation className="w-4" />
+
 						<div onClick={getUserLocation} className="pointer">
 							Use Current Location
 						</div>
