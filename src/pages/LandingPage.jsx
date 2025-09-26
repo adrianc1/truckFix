@@ -6,6 +6,7 @@ import MapImg from '../assets/images/map.png';
 import SectionTag from '../components/SectionTag';
 import Features from '../features/shops/Features';
 import HowToFindShops from '../features/shops/HowToFindShops';
+import HeroSection from '../components/HeroSection';
 
 const LandingPage = () => {
 	// States
@@ -38,7 +39,7 @@ const LandingPage = () => {
 				};
 
 				setCoords(coordinates);
-				return coordinates; // Return the coordinates
+				return coordinates;
 			} else {
 				console.error('No results found for address:', address);
 				return null;
@@ -49,19 +50,76 @@ const LandingPage = () => {
 		}
 	}
 
-	function getUserLocation() {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(
-				(position) => {
-					const { latitude, longitude } = position.coords;
-					setCoords({ lat: latitude, lng: longitude });
-				},
-				(error) => console.log(error)
+	async function reverseGeocode(lat, lng) {
+		try {
+			const res = await fetch(
+				`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`
 			);
-		} else {
-			alert('please enable location services');
+
+			if (!res.ok) {
+				throw new Error(`HTTP error! status: ${res.status}`);
+			}
+
+			const data = await res.json();
+
+			if (data.status === 'OK' && data.results.length > 0) {
+				const addressComponents = data.results[0].address_components;
+				const city =
+					addressComponents.find(
+						(component) =>
+							component.types.includes('locality') ||
+							component.types.includes('administrative_area_level_3')
+					)?.long_name || '';
+
+				const state =
+					addressComponents.find((component) =>
+						component.types.includes('administrative_area_level_1')
+					)?.short_name || '';
+
+				return {
+					cityState:
+						city && state
+							? `${city}, ${state}`
+							: data.results[0].formatted_address,
+				};
+			}
+			return null;
+		} catch (error) {
+			console.error('Reverse geocoding failed:', error);
+			return null;
 		}
 	}
+
+	const getUserLocation = async () => {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(
+				async (position) => {
+					const { latitude, longitude } = position.coords;
+					const coordinates = { lat: latitude, lng: longitude };
+					setCoords(coordinates);
+
+					// Get the address name and put it in the input field
+					try {
+						const addressInfo = await reverseGeocode(latitude, longitude);
+						const cityName = addressInfo?.cityState || 'Current Location';
+
+						// Put the city name in the input field
+						setTypedLocation(cityName);
+					} catch (error) {
+						console.error('Reverse geocoding failed:', error);
+						// Put generic text in input field
+						setTypedLocation('Current Location');
+					}
+				},
+				(error) => {
+					console.log('Geolocation error:', error);
+					alert('Unable to get your location. Please enter it manually.');
+				}
+			);
+		} else {
+			alert('Please enable location services');
+		}
+	};
 
 	const handleFormSubmit = async (e) => {
 		e.preventDefault();
@@ -86,21 +144,7 @@ const LandingPage = () => {
 	return (
 		<div className="mt-24">
 			<section className="w-[95%] mx-auto mt-8">
-				<div className="hero-text-container md:text-center">
-					<div className="md:flex md:flex-col md:items-center">
-						<h2 className="text-black font-bold text-3xl md:text-5xl md:inline">
-							Find Truck Repairs
-						</h2>
-						<h2 className="text-orange-500 font-bold text-3xl md:text-5xl md:inline md:ml-2 md:mt-4">
-							Anytime, Anywhere
-						</h2>
-					</div>
-					<p className="my-4 text-gray-500 md:w-1/2 md:mx-auto">
-						RepairFind connects truckers with nearby repair shops in seconds.
-						Get back on the road faster with our nationwide network of trusted
-						mechanics.
-					</p>
-				</div>
+				<HeroSection />
 				<form
 					className="flex w-full flex-col gap-4 mx-auto lg:w-4/5"
 					onSubmit={handleFormSubmit}
