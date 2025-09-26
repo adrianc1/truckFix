@@ -5,7 +5,12 @@ import demoMap from '../assets/images/demomap2.png';
 import RepairSearchForm from '../features/shops/RepairSearchForm';
 import useShops from '../features/shops/useShops';
 import BottomSheetModal from '../features/shops/BottomSheetModal';
-import { APIProvider, Map } from '@vis.gl/react-google-maps';
+import {
+	APIProvider,
+	Map,
+	AdvancedMarker,
+	Pin,
+} from '@vis.gl/react-google-maps';
 
 export default function Results() {
 	const [filterTag, setFilterTag] = useState('');
@@ -140,21 +145,29 @@ export default function Results() {
 								ev.detail.zoom
 							)
 						}
-					></Map>
+					>
+						{/* Current location marker (optional) */}
+						<AdvancedMarker position={{ lat, lng }}>
+							<Pin
+								background={'#FF0000'}
+								glyphColor={'#FFF'}
+								borderColor={'#FFF'}
+							/>
+						</AdvancedMarker>
+
+						{/* Shop markers */}
+						{shops.map((shop) => (
+							<AdvancedMarker key={shop.id} position={shop.coordinates}>
+								<Pin
+									background={'#FBBC04'}
+									glyphColor={'#000'}
+									borderColor={'#000'}
+								/>
+							</AdvancedMarker>
+						))}
+					</Map>
 				</div>
 			</APIProvider>
-
-			{/* <div className="demo-map" style={{ width: '100vw', height: '100vh' }}>
-				<img
-					src={demoMap}
-					alt=""
-					style={{
-						width: '100%',
-						height: '100%',
-						objectFit: 'cover',
-					}}
-				/>
-			</div> */}
 
 			<BottomSheetModal
 				shops={shops}
