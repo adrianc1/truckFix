@@ -8,10 +8,11 @@ import Features from '../features/shops/Features';
 import HowToFindShops from '../features/shops/HowToFindShops';
 
 const LandingPage = () => {
+	// States
 	const [coords, setCoords] = useState({ lat: '', lng: '' });
-	const [manualLocation, setManualLocation] = useState('');
-	const [address, setAddress] = useState('');
+	const [typedLocation, setTypedLocation] = useState('');
 
+	// API Key Import
 	const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 	let navigate = useNavigate();
@@ -65,16 +66,16 @@ const LandingPage = () => {
 	const handleFormSubmit = async (e) => {
 		e.preventDefault();
 
-		if (!manualLocation.trim()) return;
+		if (!typedLocation.trim()) return;
 
 		try {
 			// Get coordinates and wait for them
-			const coordinates = await geocodedLocation(manualLocation);
+			const coordinates = await geocodedLocation(typedLocation);
 
 			if (coordinates) {
 				// Navigate with the fresh coordinates
 				navigate(
-					`/results?lat=${coordinates.lat}&lng=${coordinates.lng}&city=${manualLocation}`
+					`/results?lat=${coordinates.lat}&lng=${coordinates.lng}&city=${typedLocation}`
 				);
 			}
 		} catch (error) {
@@ -109,9 +110,9 @@ const LandingPage = () => {
 							type="text"
 							className="border w-full rounded-3xl py-2 pl-10 pr-4 text-gray-500"
 							placeholder="Enter City / Town"
-							value={manualLocation}
+							value={typedLocation}
 							onChange={(e) => {
-								setManualLocation(e.target.value);
+								setTypedLocation(e.target.value);
 							}}
 						/>
 						<MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
