@@ -13,7 +13,7 @@ export default function Results() {
 	const [filteredShops, setFilteredShops] = useState([]);
 	const [searchCity, setSearchCity] = useState('');
 	const [searchService, setSearchService] = useState('');
-	const [searchParams, setSearchParams] = useSearchParams();
+	const [searchParams] = useSearchParams();
 	const lat = parseFloat(searchParams.get('lat'));
 	const lng = parseFloat(searchParams.get('lng'));
 	const city = searchParams.get('city');
@@ -22,10 +22,6 @@ export default function Results() {
 		lng: -122.009,
 	});
 	const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-
-	useEffect(() => {
-		console.log(lat, lng, city);
-	}, [lat, lng, city]);
 
 	useEffect(() => {
 		if (!isNaN(lat) && !isNaN(lng)) {

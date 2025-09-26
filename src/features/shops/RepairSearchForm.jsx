@@ -15,8 +15,7 @@ export default function RepairSearchForm({
 						type="text"
 						className="border bg-white w-full rounded-xl py-2 pl-10 pr-4 text-gray-500 md:w-full"
 						placeholder="Enter City / Town"
-						value="Demo Only. Using mock data to showcase shop filtering and details. Making one API call to display map."
-						readOnly
+						value={searchCity}
 						onChange={(e) => {
 							setSearchCity(e.target.value);
 						}}

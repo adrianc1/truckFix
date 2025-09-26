@@ -10,8 +10,43 @@ import HowToFindShops from '../features/shops/HowToFindShops';
 const LandingPage = () => {
 	const [coords, setCoords] = useState({ lat: '', lng: '' });
 	const [manualLocation, setManualLocation] = useState('');
+	const [address, setAddress] = useState('');
+
+	const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 	let navigate = useNavigate();
+
+	async function geocodedLocation(address) {
+		try {
+			const encodedAddress = encodeURIComponent(address);
+
+			let res = await fetch(
+				`https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${apiKey}`
+			);
+
+			if (!res.ok) {
+				throw new Error(`HTTP error! status: ${res.status}`);
+			}
+
+			let data = await res.json();
+
+			if (data.status === 'OK' && data.results.length > 0) {
+				const coordinates = {
+					lat: data.results[0].geometry.location.lat,
+					lng: data.results[0].geometry.location.lng,
+				};
+
+				setCoords(coordinates);
+				return coordinates; // Return the coordinates
+			} else {
+				console.error('No results found for address:', address);
+				return null;
+			}
+		} catch (error) {
+			console.error('Geocoding failed:', error);
+			return null;
+		}
+	}
 
 	function getUserLocation() {
 		if (navigator.geolocation) {
@@ -26,6 +61,26 @@ const LandingPage = () => {
 			alert('please enable location services');
 		}
 	}
+
+	const handleFormSubmit = async (e) => {
+		e.preventDefault();
+
+		if (!manualLocation.trim()) return;
+
+		try {
+			// Get coordinates and wait for them
+			const coordinates = await geocodedLocation(manualLocation);
+
+			if (coordinates) {
+				// Navigate with the fresh coordinates
+				navigate(
+					`/results?lat=${coordinates.lat}&lng=${coordinates.lng}&city=${manualLocation}`
+				);
+			}
+		} catch (error) {
+			console.error('Failed to get location:', error);
+		}
+	};
 
 	return (
 		<div className="mt-24">
@@ -47,12 +102,7 @@ const LandingPage = () => {
 				</div>
 				<form
 					className="flex w-full flex-col gap-4 mx-auto lg:w-4/5"
-					onSubmit={(e) => {
-						e.preventDefault();
-						navigate(
-							`/results?lat=${coords.lat}&lng=${coords.lng}&city=${manualLocation}`
-						);
-					}}
+					onSubmit={handleFormSubmit}
 				>
 					<div className="relative mt-4 w-full ">
 						<input
