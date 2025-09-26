@@ -12,6 +12,7 @@ const LandingPage = () => {
 	// States
 	const [coords, setCoords] = useState({ lat: '', lng: '' });
 	const [typedLocation, setTypedLocation] = useState('');
+	const [isUsingCurrentLocation, setIsUsingCurrentLocation] = useState(false);
 
 	// API Key Import
 	const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -97,6 +98,7 @@ const LandingPage = () => {
 					const { latitude, longitude } = position.coords;
 					const coordinates = { lat: latitude, lng: longitude };
 					setCoords(coordinates);
+					setIsUsingCurrentLocation(true); // Mark that we're using current location
 
 					// Get the address name and put it in the input field
 					try {
@@ -127,17 +129,30 @@ const LandingPage = () => {
 		if (!typedLocation.trim()) return;
 
 		try {
-			// Get coordinates and wait for them
-			const coordinates = await geocodedLocation(typedLocation);
-
-			if (coordinates) {
-				// Navigate with the fresh coordinates
+			// If using current location, use existing coordinates (no API call needed!)
+			if (isUsingCurrentLocation && coords.lat && coords.lng) {
 				navigate(
-					`/results?lat=${coordinates.lat}&lng=${coordinates.lng}&city=${typedLocation}`
+					`/results?lat=${coords.lat}&lng=${coords.lng}&city=${typedLocation}`
 				);
+			} else {
+				// Only geocode if it's a manually typed address
+				const coordinates = await geocodedLocation(typedLocation);
+				if (coordinates) {
+					navigate(
+						`/results?lat=${coordinates.lat}&lng=${coordinates.lng}&city=${typedLocation}`
+					);
+				}
 			}
 		} catch (error) {
 			console.error('Failed to get location:', error);
+		}
+	};
+
+	// Reset the flag when user starts typing manually
+	const handleInputChange = (e) => {
+		setTypedLocation(e.target.value);
+		if (isUsingCurrentLocation) {
+			setIsUsingCurrentLocation(false); // User is now typing manually
 		}
 	};
 
@@ -155,16 +170,14 @@ const LandingPage = () => {
 							className="border w-full rounded-3xl py-2 pl-10 pr-4 text-gray-500"
 							placeholder="Enter City / Town"
 							value={typedLocation}
-							onChange={(e) => {
-								setTypedLocation(e.target.value);
-							}}
+							onChange={handleInputChange}
 						/>
 						<MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
 					</div>
 					<span className="self-end gap-1 flex justify-center items-center">
 						<Navigation className="w-4" />
 
-						<div onClick={getUserLocation} className="pointer">
+						<div onClick={getUserLocation} className="pointer cursor-pointer">
 							Use Current Location
 						</div>
 					</span>

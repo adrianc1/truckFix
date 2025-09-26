@@ -54,7 +54,7 @@ export default function BottomSheetModal({
     transition-transform duration-300 z-50 flex flex-col
     ${isModalOpen ? 'translate-y-0' : 'translate-y-[calc(100%-80px)]'}
   `}
-				style={{ maxHeight: '60vh' }} // outer container half screen height
+				style={{ maxHeight: '60vh' }}
 			>
 				{/* Handle/Tab Area - Always visible */}
 				<div
