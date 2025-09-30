@@ -5,7 +5,12 @@ import demoMap from '../assets/images/demomap2.png';
 import RepairSearchForm from '../features/shops/RepairSearchForm';
 import useShops from '../features/shops/useShops';
 import BottomSheetModal from '../features/shops/BottomSheetModal';
-import { APIProvider, Map } from '@vis.gl/react-google-maps';
+import {
+	APIProvider,
+	Map,
+	AdvancedMarker,
+	Pin,
+} from '@vis.gl/react-google-maps';
 
 export default function Results() {
 	const [filterTag, setFilterTag] = useState('');
@@ -95,14 +100,12 @@ export default function Results() {
 
 	useEffect(() => {
 		let filtered = shops.filter((shop) =>
-			shop.services.some(
-				(service) =>
-					service.toLowerCase().includes(filterTag.toLowerCase()) &&
-					service.toLowerCase().includes(searchService.toLowerCase())
+			shop.services.some((service) =>
+				service.toLowerCase().includes(filterTag.toLowerCase())
 			)
 		);
 		setFilteredShops(filtered);
-	}, [shops, filterTag, searchService]);
+	}, [shops, filterTag]);
 
 	// const handleModalContentClick = (e) => {
 	// 	e.stopPropagation();
@@ -120,7 +123,6 @@ export default function Results() {
 				setFilterTag={setFilterTag}
 				searchCity={searchCity}
 				setSearchCity={setSearchCity}
-				searchService={searchService}
 				setSearchService={setSearchService}
 			/>
 
@@ -132,6 +134,7 @@ export default function Results() {
 					<Map
 						defaultZoom={13}
 						defaultCenter={{ lat, lng }}
+						mapId="320c16fbbeb5efaf348d661f"
 						onCameraChanged={(ev) =>
 							console.log(
 								'camera changed:',
@@ -140,7 +143,9 @@ export default function Results() {
 								ev.detail.zoom
 							)
 						}
-					></Map>
+					>
+						<PoiMarkers pois={shops} />
+					</Map>
 				</div>
 			</APIProvider>
 
@@ -165,3 +170,19 @@ export default function Results() {
 		</div>
 	);
 }
+
+const PoiMarkers = ({ pois }) => {
+	return (
+		<>
+			{pois.map((poi) => (
+				<AdvancedMarker key={poi.place_id} position={poi.geometry.location}>
+					<Pin
+						background={'#FBBC04'}
+						glyphColor={'#000'}
+						borderColor={'#000'}
+					/>
+				</AdvancedMarker>
+			))}
+		</>
+	);
+};
