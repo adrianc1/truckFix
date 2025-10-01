@@ -74,7 +74,7 @@ export default function Results() {
 					<Map
 						defaultZoom={13}
 						defaultCenter={{ lat, lng }}
-						mapId="320c16fbbeb5efaf348d661f"
+						mapId={import.meta.env.VITE_MAP_ID}
 						onCameraChanged={(ev) =>
 							console.log(
 								'camera changed:',
