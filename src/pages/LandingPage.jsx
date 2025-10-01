@@ -152,7 +152,7 @@ const LandingPage = () => {
 	const handleInputChange = (e) => {
 		setTypedLocation(e.target.value);
 		if (isUsingCurrentLocation) {
-			setIsUsingCurrentLocation(false); // User is now typing manually
+			setIsUsingCurrentLocation(false);
 		}
 	};
 
