@@ -14,7 +14,7 @@ export default function BottomSheetModal({
 
 	useEffect(() => {
 		let filtered = shops.filter((shop) =>
-			shop.vicinity.toLowerCase().includes(searchCity.toLowerCase())
+			shop.formatted_address?.toLowerCase().includes(searchCity.toLowerCase())
 		);
 		setFilteredShops(filtered);
 	}, [shops, searchCity, setFilteredShops]);
