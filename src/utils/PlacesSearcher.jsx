@@ -5,7 +5,7 @@ import { useMap, useMapsLibrary } from '@vis.gl/react-google-maps';
 export function PlacesSearcher({
 	onPlacesFound,
 	center,
-	query = 'repair shops',
+	query = 'truck repair shops',
 }) {
 	const map = useMap();
 	const placesLib = useMapsLibrary('places');

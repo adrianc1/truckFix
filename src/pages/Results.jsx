@@ -87,7 +87,7 @@ export default function Results() {
 						<PlacesSearcher
 							onPlacesFound={handlePlacesFound}
 							center={searchLocation}
-							query={searchService || 'repair shops'}
+							query={searchService || 'truck repair shops'}
 							searchTrigger={searchTrigger}
 						/>
 						<PoiMarkers pois={shops} />
