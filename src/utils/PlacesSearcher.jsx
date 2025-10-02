@@ -2,11 +2,7 @@ import { useEffect } from 'react';
 import { useMap, useMapsLibrary } from '@vis.gl/react-google-maps';
 
 // Component that searches for places and passes results to parent
-export function PlacesSearcher({
-	onPlacesFound,
-	center,
-	query = 'truck repair shops',
-}) {
+export function PlacesSearcher({ onPlacesFound, center, query = 'truck' }) {
 	const map = useMap();
 	const placesLib = useMapsLibrary('places');
 	const coreLib = useMapsLibrary('core');

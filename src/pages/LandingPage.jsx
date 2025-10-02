@@ -42,7 +42,7 @@ const LandingPage = () => {
 				setCoords(coordinates);
 				return coordinates;
 			} else {
-				console.error('No results found for address:', address);
+				console.error('No results found for address:', address, data.status);
 				return null;
 			}
 		} catch (error) {
@@ -126,7 +126,10 @@ const LandingPage = () => {
 	const handleFormSubmit = async (e) => {
 		e.preventDefault();
 
-		if (!typedLocation.trim()) return;
+		if (!typedLocation.trim()) {
+			alert('Please enter a location');
+			return;
+		}
 
 		try {
 			// If using current location, use existing coordinates (no API call needed!)

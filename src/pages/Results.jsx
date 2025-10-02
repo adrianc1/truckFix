@@ -14,7 +14,7 @@ export default function Results() {
 	const [filterTag, setFilterTag] = useState('');
 	const [filteredShops, setFilteredShops] = useState([]);
 	const [searchCity, setSearchCity] = useState('');
-	const [searchService, setSearchService] = useState('repair shop');
+	const [searchService, setSearchService] = useState('truck');
 	const [searchParams] = useSearchParams();
 	const lat = parseFloat(searchParams.get('lat'));
 	const lng = parseFloat(searchParams.get('lng'));
@@ -87,7 +87,7 @@ export default function Results() {
 						<PlacesSearcher
 							onPlacesFound={handlePlacesFound}
 							center={searchLocation}
-							query={searchService || 'truck repair shops'}
+							query={searchService || 'truck'}
 							searchTrigger={searchTrigger}
 						/>
 						<PoiMarkers pois={shops} />
