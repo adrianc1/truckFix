@@ -11,7 +11,7 @@ export default function HeroSection() {
 					</h2>
 				</div>
 				<p className="my-4 text-gray-500 md:w-1/2 md:mx-auto">
-					RepairFind connects truckers with nearby repair shops in seconds. Get
+					TruckFix connects truckers with nearby repair shops in seconds. Get
 					back on the road faster with our nationwide network of trusted
 					mechanics.
 				</p>
