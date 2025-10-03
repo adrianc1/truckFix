@@ -31,11 +31,12 @@ export function PlacesSearcher({ onPlacesFound, center, query = 'truck' }) {
 					'displayName',
 					'location',
 					'formattedAddress',
+					'internationalPhoneNumber',
 					'id',
 					'businessStatus',
 					'rating',
 					'types',
-					'regularOpeningHours', // Request opening hours
+					'regularOpeningHours',
 				],
 				locationBias: center,
 				language: 'en-US',
@@ -98,7 +99,7 @@ export function PlacesSearcher({ onPlacesFound, center, query = 'truck' }) {
 							services: (place.types || ['repair']).filter(Boolean),
 							source: 'google_places',
 							opening_hours: {
-								open_now: place.businessStatus === 'OPERATIONAL', // Simple: just use business status
+								open_now: place.businessStatus === 'OPERATIONAL',
 							},
 						};
 					});
@@ -121,5 +122,5 @@ export function PlacesSearcher({ onPlacesFound, center, query = 'truck' }) {
 		searchPlaces();
 	}, [placesLib, coreLib, map, center, query]);
 
-	return null; // This component doesn't render anything
+	return null;
 }

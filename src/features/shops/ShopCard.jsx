@@ -13,7 +13,7 @@ export default function ShopCard({ shop, onShopSelect }) {
 						{shop.name}
 					</h5>
 
-					<span className="text-gray-700">{shop.vicinity}</span>
+					<span className="text-gray-700">{shop.formatted_address}</span>
 					{/* <span>{shop.shopDistance}</span> */}
 
 					{/* SHOP SERVICES - Hybrid approach */}
