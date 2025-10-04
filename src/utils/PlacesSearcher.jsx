@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useMap, useMapsLibrary } from '@vis.gl/react-google-maps';
+import { calculateDistance } from './distanceCalculator';
 
 // Component that searches for places and passes results to parent
 export function PlacesSearcher({
@@ -62,7 +63,16 @@ export function PlacesSearcher({
 
 					// Transform to match your data structure
 					const transformedPlaces = results.map((place) => {
-						// Try to get opening hours
+						const distance = calculateDistance(
+							center.lat,
+							center.lng,
+							typeof place.location.lat === 'function'
+								? place.location.lat()
+								: place.location.lat,
+							typeof place.location.lng === 'function'
+								? place.location.lng()
+								: place.location.lng
+						);
 						const hours = place.regularOpeningHours;
 						let isOpenNow = false;
 
@@ -110,6 +120,7 @@ export function PlacesSearcher({
 								  }
 								: null,
 							source: 'google_places',
+							distance: distance,
 						};
 					});
 

@@ -8,9 +8,7 @@ import {
 	Map,
 	AdvancedMarker,
 	Pin,
-	InfoWindow,
 } from '@vis.gl/react-google-maps';
-import ShopDetailsPage from './ShopDetailsPage';
 
 export default function Results() {
 	const [filterTag, setFilterTag] = useState('');
@@ -27,8 +25,11 @@ export default function Results() {
 	const [selectedShop, setSelectedShop] = useState(null);
 	const [showShopDetails, setShowShopDetails] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [maxDistance, setMaxDistance] = useState(50); // Add this state
 
 	const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
+	const shopsWithinRange = shops.filter((shop) => shop.distance <= maxDistance);
 
 	const handlePlacesFound = useCallback((places) => {
 		console.log('Results - received places:', places);
@@ -92,7 +93,7 @@ export default function Results() {
 						<PlacesSearcher
 							onPlacesFound={handlePlacesFound}
 							center={searchLocation}
-							query={searchService || 'truck'}
+							query={searchService || 'truck repair shop'}
 							searchTrigger={searchTrigger}
 						/>
 						<PoiMarkers

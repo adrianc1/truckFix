@@ -14,7 +14,6 @@ export default function ShopCard({ shop, onShopSelect }) {
 					</h5>
 
 					<span className="text-gray-700">{shop.formatted_address}</span>
-					{/* <span>{shop.shopDistance}</span> */}
 
 					{/* SHOP SERVICES - Hybrid approach */}
 					<div className="flex flex-wrap gap-1 mt-2">
@@ -33,7 +32,10 @@ export default function ShopCard({ shop, onShopSelect }) {
 				</div>
 
 				{/* Rating and is open - Fixed positioning */}
-				<div className="rating-status-container flex-shrink-0 w-24 flex flex-col justify-center items-center ml-4">
+				<div className="rating-status-container flex-shrink-0 w-24 flex flex-col gap-4 justify-center items-center ml-4">
+					<span className="bg-orange-500 text-white px-2 py-1 rounded-full text-sm font-medium">
+						{shop.distance.toFixed(1)} mi
+					</span>
 					<span className="rating flex justify-center items-center gap-1">
 						<div className="star w-4 h-4">
 							<img src={star} alt="" className="w-full h-full" />

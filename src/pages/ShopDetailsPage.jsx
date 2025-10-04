@@ -31,7 +31,7 @@ const ShopDetailsPage = ({ selectedShop }) => {
 				<MapPin className="mb-2" />
 				<h6 className="font-bold">Address</h6>
 				<span>{selectedShop.formatted_address}</span>
-				<span>0.8 miles away</span>
+				<span className="">{selectedShop.distance.toFixed(1)} mi</span>
 			</div>
 
 			{/* phone block  */}
