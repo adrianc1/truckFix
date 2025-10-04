@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import ShopDetailsPage from '../../pages/ShopDetailsPage';
 import ShopList from './ShopList';
 

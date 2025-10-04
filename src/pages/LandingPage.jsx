@@ -92,18 +92,22 @@ const LandingPage = () => {
 	}
 
 	const getUserLocation = async () => {
+		console.log(typedLocation);
 		if (navigator.geolocation) {
+			console.log('hyyyyyy');
 			navigator.geolocation.getCurrentPosition(
 				async (position) => {
 					const { latitude, longitude } = position.coords;
 					const coordinates = { lat: latitude, lng: longitude };
 					setCoords(coordinates);
-					setIsUsingCurrentLocation(true); // Mark that we're using current location
+					setIsUsingCurrentLocation(true);
 
 					// Get the address name and put it in the input field
 					try {
 						const addressInfo = await reverseGeocode(latitude, longitude);
 						const cityName = addressInfo?.cityState || 'Current Location';
+						setCoords(coordinates);
+						console.log(coordinates);
 
 						// Put the city name in the input field
 						setTypedLocation(cityName);
