@@ -31,7 +31,6 @@ export function PlacesSearcher({ onPlacesFound, center, query = 'truck' }) {
 					'displayName',
 					'location',
 					'formattedAddress',
-					'internationalPhoneNumber',
 					'id',
 					'businessStatus',
 					'rating',
@@ -40,7 +39,7 @@ export function PlacesSearcher({ onPlacesFound, center, query = 'truck' }) {
 				],
 				locationBias: center,
 				language: 'en-US',
-				maxResultCount: 20,
+				maxResultCount: 10,
 				region: 'us',
 			};
 
@@ -93,7 +92,6 @@ export function PlacesSearcher({ onPlacesFound, center, query = 'truck' }) {
 											: place.location.lng,
 								},
 							},
-							phone_number: place.internationalPhoneNumber || '',
 							formatted_address: place.formattedAddress || '',
 							rating: place.rating || 0,
 							business_status: place.businessStatus || 'OPERATIONAL',

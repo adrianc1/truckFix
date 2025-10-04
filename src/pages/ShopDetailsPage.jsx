@@ -40,8 +40,8 @@ const ShopDetailsPage = ({ selectedShop }) => {
 				<h6 className="font-bold">Phone</h6>
 				<div className="flex justify-between items-center pr-4">
 					<span>{selectedShop.phone_number || 'Not available'}</span>
-					<button className="border px-4 py-2 rounded-xl bg-black text-white">
-						Call
+					<button className="border px-4 py-2 rounded-xl bg-orange-500 text-white">
+						Call Shop Now
 					</button>
 				</div>
 			</div>
