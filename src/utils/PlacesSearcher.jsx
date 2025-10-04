@@ -39,11 +39,13 @@ export function PlacesSearcher({
 					'id',
 					'businessStatus',
 					'rating',
+					'userRatingCount',
 					'types',
 					'regularOpeningHours',
 				],
 				locationBias: center,
 				language: 'en-US',
+				maxResultCount: 10,
 				maxResultCount: 10,
 				region: 'us',
 			};
@@ -97,19 +99,11 @@ export function PlacesSearcher({
 											: place.location.lng,
 								},
 							},
-							formatted_address: place.formattedAddress || '',
-							rating: place.rating || 0,
-							business_status: place.businessStatus || 'OPERATIONAL',
-							services: (place.types || ['repair']).filter(Boolean),
-							source: 'google_places',
-							opening_hours: {
-								open_now: place.businessStatus === 'OPERATIONAL',
-							},
+							user_ratings_total: place.userRatingCount || 0,
 							current_opening_hours: place.regularOpeningHours
 								? {
 										weekday_text:
 											place.regularOpeningHours.weekdayDescriptions || [],
-										periods: place.regularOpeningHours.periods || [], // Add this if you need structured data
 								  }
 								: null,
 						};
