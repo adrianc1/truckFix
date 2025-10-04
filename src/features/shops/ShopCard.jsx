@@ -17,7 +17,7 @@ export default function ShopCard({ shop, onShopSelect }) {
 
 					{/* SHOP SERVICES - Hybrid approach */}
 					<div className="flex flex-wrap gap-1 mt-2">
-						{shop.services.map((service, index) => (
+						{/* {shop.services.map((service, index) => (
 							<span
 								key={index}
 								className="border border-gray-300 rounded-full px-2 py-1 text-xs bg-gray-50 hover:bg-gray-100 transition-colors text-center"
@@ -27,7 +27,13 @@ export default function ShopCard({ shop, onShopSelect }) {
 									? `${service.substring(0, 12)}...`
 									: service}
 							</span>
-						))}
+						))} */}
+						<span className="rating flex justify-center items-center gap-1">
+							<div className="star w-4 h-4">
+								<img src={star} alt="" className="w-full h-full" />
+							</div>
+							{shop.rating}
+						</span>
 					</div>
 				</div>
 
@@ -36,12 +42,7 @@ export default function ShopCard({ shop, onShopSelect }) {
 					<span className="bg-orange-500 text-white px-2 py-1 rounded-full text-sm font-medium">
 						{shop.distance.toFixed(1)} mi
 					</span>
-					<span className="rating flex justify-center items-center gap-1">
-						<div className="star w-4 h-4">
-							<img src={star} alt="" className="w-full h-full" />
-						</div>
-						{shop.rating}
-					</span>
+
 					<span
 						className={`is-open text-sm ${
 							shop.opening_hours.open_now ? 'text-green-600' : 'text-red-600'
