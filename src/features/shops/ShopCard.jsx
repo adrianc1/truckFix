@@ -1,5 +1,6 @@
 import star from '../../assets/images/star.svg';
 export default function ShopCard({ shop, onShopSelect }) {
+	window.scrollTo({ top: 0, behavior: 'smooth' });
 	return (
 		<>
 			<div

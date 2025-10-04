@@ -2,6 +2,8 @@ import { Clock, MapPin, Phone, Wrench } from 'lucide-react';
 import star from '../assets/images/star.svg';
 
 const ShopDetailsPage = ({ selectedShop }) => {
+	window.scrollTo({ top: 0, behavior: 'smooth' });
+
 	return (
 		<div className="px-4 pb-4">
 			{/* Shop Rating and Status */}
