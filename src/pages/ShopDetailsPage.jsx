@@ -35,10 +35,12 @@ const ShopDetailsPage = ({ selectedShop }) => {
 			</div>
 
 			{/* phone block  */}
-			<div className="phone-block flex flex-col w-full px-3 py-4 border-2 border-gray-200 rounded-xl h-auto mb-3">
-				<Phone className="mb-2" />
-				<h6 className="font-bold">Phone</h6>
-				<div className="flex justify-start items-start pr-4 pt-4">
+			<div className="phone-block flex items-center justify-between w-full px-3 py-4 border-2 border-gray-200 rounded-xl h-auto mb-3">
+				<div className="flex-col">
+					<Phone className="mb-2" />
+					<h6 className="font-bold">Phone</h6>
+				</div>
+				<div className="flex justify-start items-center pr-4 pt-4">
 					{/* <span>{selectedShop.internationalPhoneNumber}</span> */}
 					<button className="border px-4 py-2 rounded-xl bg-orange-500 text-white">
 						Call Shop Now
