@@ -31,10 +31,10 @@ export function PlacesSearcher({ onPlacesFound, center, query = 'truck' }) {
 					'displayName',
 					'location',
 					'formattedAddress',
-					'internationalPhoneNumber',
 					'id',
 					'businessStatus',
 					'rating',
+					'userRatingCount',
 					'types',
 					'regularOpeningHours',
 				],
@@ -94,14 +94,13 @@ export function PlacesSearcher({ onPlacesFound, center, query = 'truck' }) {
 								},
 							},
 							phone_number: place.internationalPhoneNumber || '',
-							formatted_address: place.formattedAddress || '',
-							rating: place.rating || 0,
-							business_status: place.businessStatus || 'OPERATIONAL',
-							services: (place.types || ['repair']).filter(Boolean),
-							source: 'google_places',
-							opening_hours: {
-								open_now: place.businessStatus === 'OPERATIONAL',
-							},
+							user_ratings_total: place.userRatingCount || 0,
+							current_opening_hours: place.regularOpeningHours
+								? {
+										weekday_text:
+											place.regularOpeningHours.weekdayDescriptions || [],
+								  }
+								: null,
 						};
 					});
 
