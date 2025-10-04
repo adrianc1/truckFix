@@ -46,7 +46,6 @@ export function PlacesSearcher({
 				locationBias: center,
 				language: 'en-US',
 				maxResultCount: 10,
-				maxResultCount: 10,
 				region: 'us',
 			};
 
@@ -59,7 +58,6 @@ export function PlacesSearcher({
 					const testPlace = results[0];
 					console.log('First place opening hours check:', {
 						regularOpeningHours: testPlace.regularOpeningHours,
-						openingHours: testPlace.openingHours,
 					});
 
 					// Transform to match your data structure
@@ -79,8 +77,6 @@ export function PlacesSearcher({
 								}
 							} else if (hours.openNow !== undefined) {
 								isOpenNow = hours.openNow;
-							} else if (hours.open_now !== undefined) {
-								isOpenNow = hours.open_now;
 							}
 						}
 
@@ -99,13 +95,21 @@ export function PlacesSearcher({
 											: place.location.lng,
 								},
 							},
+							formatted_address: place.formattedAddress || '',
+							rating: place.rating || 0,
 							user_ratings_total: place.userRatingCount || 0,
+							business_status: place.businessStatus || 'OPERATIONAL',
+							services: (place.types || []).filter(Boolean),
+							opening_hours: {
+								open_now: isOpenNow,
+							},
 							current_opening_hours: place.regularOpeningHours
 								? {
 										weekday_text:
 											place.regularOpeningHours.weekdayDescriptions || [],
 								  }
 								: null,
+							source: 'google_places',
 						};
 					});
 
