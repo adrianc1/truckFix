@@ -8,7 +8,9 @@ import {
 	Map,
 	AdvancedMarker,
 	Pin,
+	InfoWindow,
 } from '@vis.gl/react-google-maps';
+import ShopDetailsPage from './ShopDetailsPage';
 
 export default function Results() {
 	const [filterTag, setFilterTag] = useState('');
@@ -22,6 +24,9 @@ export default function Results() {
 	const [loading, setLoading] = useState(false);
 	const [searchLocation, setSearchLocation] = useState({ lat, lng });
 	const [searchTrigger, setSearchTrigger] = useState(0);
+	const [selectedShop, setSelectedShop] = useState(null);
+	const [showShopDetails, setShowShopDetails] = useState(false);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
@@ -90,7 +95,12 @@ export default function Results() {
 							query={searchService || 'truck'}
 							searchTrigger={searchTrigger}
 						/>
-						<PoiMarkers pois={shops} />
+						<PoiMarkers
+							pois={shops}
+							onMarkerClick={setSelectedShop}
+							setShowShopDetails={setShowShopDetails}
+							setIsModalOpen={setIsModalOpen}
+						/>
 					</Map>
 				</div>
 			</APIProvider>
@@ -100,16 +110,36 @@ export default function Results() {
 				filteredShops={filteredShops}
 				searchCity={searchCity}
 				setFilteredShops={setFilteredShops}
+				selectedShop={selectedShop}
+				setSelectedShop={setSelectedShop}
+				showShopDetails={showShopDetails}
+				setShowShopDetails={setShowShopDetails}
+				isModalOpen={isModalOpen}
+				setIsModalOpen={setIsModalOpen}
 			/>
 		</div>
 	);
 }
 
-const PoiMarkers = ({ pois }) => {
+const PoiMarkers = ({
+	pois,
+	onMarkerClick,
+	setShowShopDetails,
+	setIsModalOpen,
+}) => {
 	return (
 		<>
 			{pois.map((poi) => (
-				<AdvancedMarker key={poi.place_id} position={poi.geometry.location}>
+				<AdvancedMarker
+					key={poi.place_id}
+					position={poi.geometry.location}
+					onClick={() => {
+						onMarkerClick(poi);
+						setShowShopDetails(true);
+						setIsModalOpen(true);
+						console.log(poi);
+					}}
+				>
 					<Pin
 						background={'#ff6900'}
 						glyphColor={'#000'}

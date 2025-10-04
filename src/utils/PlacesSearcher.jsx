@@ -45,7 +45,7 @@ export function PlacesSearcher({
 				],
 				locationBias: center,
 				language: 'en-US',
-				maxResultCount: 10,
+				maxResultCount: 5,
 				region: 'us',
 			};
 

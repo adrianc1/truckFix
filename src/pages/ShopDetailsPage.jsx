@@ -40,8 +40,7 @@ const ShopDetailsPage = ({ selectedShop }) => {
 					<Phone className="mb-2" />
 					<h6 className="font-bold">Phone</h6>
 				</div>
-				<div className="flex justify-start items-center pr-4 pt-4">
-					{/* <span>{selectedShop.internationalPhoneNumber}</span> */}
+				<div className="flex justify-end items-center pr-4">
 					<button className="border px-4 py-2 rounded-xl bg-orange-500 text-white">
 						Call Shop Now
 					</button>

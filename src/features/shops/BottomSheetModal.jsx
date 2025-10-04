@@ -7,11 +7,13 @@ export default function BottomSheetModal({
 	filteredShops,
 	searchCity,
 	setFilteredShops,
+	setSelectedShop,
+	selectedShop,
+	showShopDetails,
+	setShowShopDetails,
+	isModalOpen,
+	setIsModalOpen,
 }) {
-	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [selectedShop, setSelectedShop] = useState(null);
-	const [showShopDetails, setShowShopDetails] = useState(false);
-
 	useEffect(() => {
 		let filtered = shops.filter((shop) =>
 			shop.formatted_address?.toLowerCase().includes(searchCity.toLowerCase())
@@ -34,7 +36,6 @@ export default function BottomSheetModal({
 
 	// Handle shop selection - transition from list to details
 	const handleShopSelect = (shop) => {
-		console.log(shop);
 		setSelectedShop(shop);
 		setShowShopDetails(true);
 	};
