@@ -41,7 +41,7 @@ const ShopDetailsPage = ({ selectedShop }) => {
 					<h6 className="font-bold">Phone</h6>
 				</div>
 				<div className="flex justify-end items-center pr-4">
-					<button className="border px-4 py-2 rounded-xl bg-orange-500 text-white">
+					<button className="border px-4 py-2 rounded-xl bg-orange-500 text-white cursor-pointer">
 						Call Shop Now
 					</button>
 				</div>

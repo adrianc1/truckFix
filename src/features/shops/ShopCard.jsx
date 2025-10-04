@@ -32,7 +32,7 @@ export default function ShopCard({ shop, onShopSelect }) {
 				</div>
 
 				{/* Rating and is open - Fixed positioning */}
-				<div className="rating-status-container flex-shrink-0 w-24 flex flex-col gap-4 justify-center items-center ml-4">
+				<div className="rating-status-container flex-shrink-0 w-24 flex flex-col gap-2 justify-center items-center ml-4">
 					<span className="bg-orange-500 text-white px-2 py-1 rounded-full text-sm font-medium">
 						{shop.distance.toFixed(1)} mi
 					</span>

@@ -12,7 +12,7 @@ export default function ShopList({ shops = [], handleShopSelect }) {
 					No shops found matching your criteria.
 				</div>
 			) : (
-				<div className="shop-list-container w-full space-y-3">
+				<div className="shop-list-container w-full space-y-3 cursor-pointer">
 					{shops.map((shop) => (
 						<ShopCard
 							key={shop.place_id}
