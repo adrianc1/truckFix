@@ -93,6 +93,7 @@ export function PlacesSearcher({ onPlacesFound, center, query = 'truck' }) {
 											: place.location.lng,
 								},
 							},
+							phone_number: place.internationalPhoneNumber || '',
 							formatted_address: place.formattedAddress || '',
 							rating: place.rating || 0,
 							business_status: place.businessStatus || 'OPERATIONAL',

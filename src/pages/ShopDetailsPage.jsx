@@ -30,7 +30,7 @@ const ShopDetailsPage = ({ selectedShop }) => {
 			<div className="address-block flex flex-col w-full px-3 py-4 border-2 border-gray-200 rounded-xl h-auto mb-3">
 				<MapPin className="mb-2" />
 				<h6 className="font-bold">Address</h6>
-				<span>{selectedShop.vicinity}</span>
+				<span>{selectedShop.formatted_address}</span>
 				<span>0.8 miles away</span>
 			</div>
 
@@ -39,7 +39,7 @@ const ShopDetailsPage = ({ selectedShop }) => {
 				<Phone className="mb-2" />
 				<h6 className="font-bold">Phone</h6>
 				<div className="flex justify-between items-center pr-4">
-					<span>{selectedShop.internationalPhoneNumber}</span>
+					<span>{selectedShop.phone_number || 'Not available'}</span>
 					<button className="border px-4 py-2 rounded-xl bg-black text-white">
 						Call
 					</button>
