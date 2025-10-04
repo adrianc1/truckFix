@@ -14,7 +14,7 @@ export default function Results() {
 	const [filterTag, setFilterTag] = useState('');
 	const [filteredShops, setFilteredShops] = useState([]);
 	const [searchCity, setSearchCity] = useState('');
-	const [searchService, setSearchService] = useState('truck');
+	const [searchService, setSearchService] = useState('semi truck repair');
 	const [searchParams] = useSearchParams();
 	const lat = parseFloat(searchParams.get('lat'));
 	const lng = parseFloat(searchParams.get('lng'));

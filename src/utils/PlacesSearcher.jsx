@@ -2,7 +2,12 @@ import { useEffect } from 'react';
 import { useMap, useMapsLibrary } from '@vis.gl/react-google-maps';
 
 // Component that searches for places and passes results to parent
-export function PlacesSearcher({ onPlacesFound, center, query = 'truck' }) {
+export function PlacesSearcher({
+	onPlacesFound,
+	center,
+	query = 'semi truck repair',
+	searchTrigger,
+}) {
 	const map = useMap();
 	const placesLib = useMapsLibrary('places');
 	const coreLib = useMapsLibrary('core');
@@ -31,7 +36,6 @@ export function PlacesSearcher({ onPlacesFound, center, query = 'truck' }) {
 					'displayName',
 					'location',
 					'formattedAddress',
-					'internationalPhoneNumber',
 					'id',
 					'businessStatus',
 					'rating',
@@ -40,7 +44,7 @@ export function PlacesSearcher({ onPlacesFound, center, query = 'truck' }) {
 				],
 				locationBias: center,
 				language: 'en-US',
-				maxResultCount: 20,
+				maxResultCount: 10,
 				region: 'us',
 			};
 
@@ -101,6 +105,13 @@ export function PlacesSearcher({ onPlacesFound, center, query = 'truck' }) {
 							opening_hours: {
 								open_now: place.businessStatus === 'OPERATIONAL',
 							},
+							current_opening_hours: place.regularOpeningHours
+								? {
+										weekday_text:
+											place.regularOpeningHours.weekdayDescriptions || [],
+										periods: place.regularOpeningHours.periods || [], // Add this if you need structured data
+								  }
+								: null,
 						};
 					});
 
@@ -120,7 +131,7 @@ export function PlacesSearcher({ onPlacesFound, center, query = 'truck' }) {
 		}
 
 		searchPlaces();
-	}, [placesLib, coreLib, map, center, query]);
+	}, [placesLib, coreLib, map, center, searchTrigger, query]);
 
 	return null;
 }
