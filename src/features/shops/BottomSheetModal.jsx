@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useSwipeable } from 'react-swipeable';
 import ShopDetailsPage from '../../pages/ShopDetailsPage';
 import ShopList from './ShopList';
 
@@ -21,6 +22,7 @@ export default function BottomSheetModal({
 		setFilteredShops(filtered);
 	}, [shops, searchCity, setFilteredShops]);
 
+	// Open and Close Modal behavior
 	const closeModal = () => {
 		setIsModalOpen(false);
 		setShowShopDetails(false);
@@ -46,6 +48,16 @@ export default function BottomSheetModal({
 		setSelectedShop(null);
 	};
 
+	// Make bottom sheet modal swipeable
+	const handlers = useSwipeable({
+		onSwipedUp: () => {
+			setIsModalOpen(true);
+		},
+		onSwipedDown: () => {
+			setIsModalOpen(false);
+		},
+	});
+
 	return (
 		<>
 			{/* Bottom Sheet Modal */}
@@ -59,6 +71,7 @@ export default function BottomSheetModal({
 			>
 				{/* Handle/Tab Area - Always visible */}
 				<div
+					{...handlers}
 					className="p-4 cursor-pointer select-none flex-shrink-0"
 					onClick={isModalOpen ? closeModal : openModal}
 				>

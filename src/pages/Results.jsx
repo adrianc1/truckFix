@@ -27,16 +27,13 @@ export default function Results() {
 	const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 	const handlePlacesFound = useCallback((places) => {
-		console.log('Results - received places:', places);
-
-		// Enhance each shop with extracted services
-		const filteredPlaces = places.map((shop) => ({
+		// Update each shop with extracted services
+		const extractServices = places.map((shop) => ({
 			...shop,
 			services: extractServicesFromShop(shop),
 		}));
 
-		console.log('Enhanced places with services:', filteredPlaces);
-		setShops(filteredPlaces);
+		setShops(extractServices);
 		setLoading(false);
 	}, []);
 
@@ -55,8 +52,6 @@ export default function Results() {
 	}, [searchLocation]);
 
 	useEffect(() => {
-		console.log('[Results] Filtering shops');
-
 		if (!filterTag) {
 			setFilteredShops(shops);
 			return;
@@ -71,17 +66,6 @@ export default function Results() {
 	}, [shops, filterTag]);
 
 	// swiping behavior
-
-	const handlers = useSwipeable({
-		onSwipedUp: () => {
-			setIsModalOpen(true);
-		},
-		onSwipedDown: () => {
-			setIsModalOpen(false);
-		},
-	});
-
-	console.log('hey i rendered');
 
 	// const handleModalContentClick = (e) => {
 	// 	e.stopPropagation();
@@ -138,20 +122,18 @@ export default function Results() {
 				</div>
 			</APIProvider>
 
-			<div {...handlers} className="">
-				<BottomSheetModal
-					shops={shops}
-					filteredShops={filteredShops}
-					searchCity={searchCity}
-					setFilteredShops={setFilteredShops}
-					selectedShop={selectedShop}
-					setSelectedShop={setSelectedShop}
-					showShopDetails={showShopDetails}
-					setShowShopDetails={setShowShopDetails}
-					isModalOpen={isModalOpen}
-					setIsModalOpen={setIsModalOpen}
-				/>
-			</div>
+			<BottomSheetModal
+				shops={shops}
+				filteredShops={filteredShops}
+				searchCity={searchCity}
+				setFilteredShops={setFilteredShops}
+				selectedShop={selectedShop}
+				setSelectedShop={setSelectedShop}
+				showShopDetails={showShopDetails}
+				setShowShopDetails={setShowShopDetails}
+				isModalOpen={isModalOpen}
+				setIsModalOpen={setIsModalOpen}
+			/>
 		</div>
 	);
 }
