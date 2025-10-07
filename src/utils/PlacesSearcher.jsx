@@ -55,10 +55,6 @@ export function PlacesSearcher({
 					'reviews',
 					'editorialSummary',
 				],
-				locationRestriction: {
-					center,
-					radius,
-				},
 				locationBias: center,
 				language: 'en-US',
 				maxResultCount: 5,

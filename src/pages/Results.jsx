@@ -1,6 +1,5 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useSwipeable } from 'react-swipeable';
 import RepairSearchForm from '../features/shops/RepairSearchForm';
 import BottomSheetModal from '../features/shops/BottomSheetModal';
 import { PlacesSearcher } from '../utils/PlacesSearcher';
