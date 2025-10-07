@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useSwipeable } from 'react-swipeable';
 import RepairSearchForm from '../features/shops/RepairSearchForm';
 import BottomSheetModal from '../features/shops/BottomSheetModal';
 import { PlacesSearcher } from '../utils/PlacesSearcher';
@@ -69,6 +70,17 @@ export default function Results() {
 		setFilteredShops(filtered);
 	}, [shops, filterTag]);
 
+	// swiping behavior
+
+	const handlers = useSwipeable({
+		onSwipedUp: () => {
+			setIsModalOpen(true);
+		},
+		onSwipedDown: () => {
+			setIsModalOpen(false);
+		},
+	});
+
 	console.log('hey i rendered');
 
 	// const handleModalContentClick = (e) => {
@@ -126,18 +138,20 @@ export default function Results() {
 				</div>
 			</APIProvider>
 
-			<BottomSheetModal
-				shops={shops}
-				filteredShops={filteredShops}
-				searchCity={searchCity}
-				setFilteredShops={setFilteredShops}
-				selectedShop={selectedShop}
-				setSelectedShop={setSelectedShop}
-				showShopDetails={showShopDetails}
-				setShowShopDetails={setShowShopDetails}
-				isModalOpen={isModalOpen}
-				setIsModalOpen={setIsModalOpen}
-			/>
+			<div {...handlers} className="">
+				<BottomSheetModal
+					shops={shops}
+					filteredShops={filteredShops}
+					searchCity={searchCity}
+					setFilteredShops={setFilteredShops}
+					selectedShop={selectedShop}
+					setSelectedShop={setSelectedShop}
+					showShopDetails={showShopDetails}
+					setShowShopDetails={setShowShopDetails}
+					isModalOpen={isModalOpen}
+					setIsModalOpen={setIsModalOpen}
+				/>
+			</div>
 		</div>
 	);
 }
