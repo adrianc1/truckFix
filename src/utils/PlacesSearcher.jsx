@@ -17,6 +17,8 @@ export function PlacesSearcher({
 	// set ref
 	const lastSearchRef = useRef(null);
 
+	const radius = Math.min(10000 / 2, 50000);
+
 	useEffect(() => {
 		async function searchPlaces() {
 			if (!placesLib || !coreLib || !map || !center) {
@@ -53,6 +55,10 @@ export function PlacesSearcher({
 					'reviews',
 					'editorialSummary',
 				],
+				locationRestriction: {
+					center,
+					radius,
+				},
 				locationBias: center,
 				language: 'en-US',
 				maxResultCount: 5,
