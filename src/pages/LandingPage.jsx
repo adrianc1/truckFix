@@ -92,7 +92,6 @@ const LandingPage = () => {
 	}
 
 	const getUserLocation = async () => {
-		console.log(typedLocation);
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(
 				async (position) => {
@@ -165,6 +164,8 @@ const LandingPage = () => {
 		<div className="mt-24">
 			<section className="w-[95%] mx-auto mt-8">
 				<HeroSection />
+
+				{/* Location form for submission */}
 				<form
 					className="flex w-full flex-col gap-4 mx-auto lg:w-4/5"
 					onSubmit={handleFormSubmit}

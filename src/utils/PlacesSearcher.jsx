@@ -15,19 +15,19 @@ export function PlacesSearcher({
 
 	useEffect(() => {
 		async function searchPlaces() {
-			console.log('PlacesSearcher - checking libraries...', {
-				placesLib: !!placesLib,
-				coreLib: !!coreLib,
-				map: !!map,
-				center,
-			});
+			// console.log('PlacesSearcher - checking libraries...', {
+			// 	placesLib: !!placesLib,
+			// 	coreLib: !!coreLib,
+			// 	map: !!map,
+			// 	center,
+			// });
 
 			if (!placesLib || !coreLib || !map || !center) {
 				console.log('PlacesSearcher - waiting for libraries to load...');
 				return;
 			}
 
-			console.log('PlacesSearcher - starting search with query:', query);
+			// console.log('PlacesSearcher - starting search with query:', query);
 
 			const { Place } = placesLib;
 
@@ -57,9 +57,9 @@ export function PlacesSearcher({
 				if (results && results.length) {
 					// Debug: Check what opening hours data we're getting
 					const testPlace = results[0];
-					console.log('First place opening hours check:', {
-						regularOpeningHours: testPlace.regularOpeningHours,
-					});
+					// console.log('First place opening hours check:', {
+					// 	regularOpeningHours: testPlace.regularOpeningHours,
+					// });
 
 					// Transform to match your data structure
 					const transformedPlaces = results.map((place) => {
@@ -124,13 +124,13 @@ export function PlacesSearcher({
 						};
 					});
 
-					console.log(
-						'PlacesSearcher - transformed places:',
-						transformedPlaces
-					);
+					// console.log(
+					// 	'PlacesSearcher - transformed places:',
+					// 	transformedPlaces
+					// );
 					onPlacesFound(transformedPlaces);
 				} else {
-					console.log('PlacesSearcher - no results found');
+					// console.log('PlacesSearcher - no results found');
 					onPlacesFound([]);
 				}
 			} catch (err) {

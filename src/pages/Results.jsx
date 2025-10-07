@@ -3,6 +3,8 @@ import { useSearchParams } from 'react-router-dom';
 import RepairSearchForm from '../features/shops/RepairSearchForm';
 import BottomSheetModal from '../features/shops/BottomSheetModal';
 import { PlacesSearcher } from '../utils/PlacesSearcher';
+import CurrentLocationMarker from '../components/CurrentLocationMarker';
+import PoiMarkers from '../components/PoiMarkers';
 import {
 	APIProvider,
 	Map,
@@ -36,6 +38,8 @@ export default function Results() {
 		setShops(places);
 		setLoading(false);
 	}, []);
+
+	console.log('new lat', lat, 'new lng', lng);
 
 	useEffect(() => {
 		if (!isNaN(lat) && !isNaN(lng)) {
@@ -79,7 +83,7 @@ export default function Results() {
 				<div style={{ width: '100vw', height: '100vh' }}>
 					<Map
 						defaultZoom={13}
-						defaultCenter={{ lat, lng }}
+						center={{ lat, lng }}
 						mapId={import.meta.env.VITE_MAP_ID}
 						onCameraChanged={(ev) =>
 							console.log(
@@ -102,6 +106,7 @@ export default function Results() {
 							setShowShopDetails={setShowShopDetails}
 							setIsModalOpen={setIsModalOpen}
 						/>
+						<CurrentLocationMarker position={searchLocation} />
 					</Map>
 				</div>
 			</APIProvider>
@@ -121,33 +126,3 @@ export default function Results() {
 		</div>
 	);
 }
-
-const PoiMarkers = ({
-	pois,
-	onMarkerClick,
-	setShowShopDetails,
-	setIsModalOpen,
-}) => {
-	return (
-		<>
-			{pois.map((poi) => (
-				<AdvancedMarker
-					key={poi.place_id}
-					position={poi.geometry.location}
-					onClick={() => {
-						onMarkerClick(poi);
-						setShowShopDetails(true);
-						setIsModalOpen(true);
-						console.log(poi);
-					}}
-				>
-					<Pin
-						background={'#ff6900'}
-						glyphColor={'#000'}
-						borderColor={'#000'}
-					/>
-				</AdvancedMarker>
-			))}
-		</>
-	);
-};
