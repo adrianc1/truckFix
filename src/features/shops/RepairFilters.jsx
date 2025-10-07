@@ -3,12 +3,13 @@ import { useState } from 'react';
 export default function RepairFilters({ setFilterTag }) {
 	const [shopCategories, setShopCategories] = useState([
 		{ category: 'All Services', value: '', isActive: true },
-		{ category: 'DEF System', value: 'DEF', isActive: false },
-		{ category: 'Engine', value: 'Engine', isActive: false },
-		{ category: 'Tires', value: 'Tires', isActive: false },
-		{ category: 'Diesel', value: 'Diesel', isActive: false },
-		{ category: 'Electrical', value: 'Electrical', isActive: false },
-		{ category: 'Truck Stop', value: 'Truck Stop', isActive: false },
+		{ category: 'Brakes', value: 'brakes', isActive: false },
+		{ category: 'Engine', value: 'engine', isActive: false },
+		{ category: 'DEF System', value: 'def', isActive: false },
+		{ category: 'Tires', value: 'tires', isActive: false },
+		{ category: 'Diesel', value: 'diesel', isActive: false },
+		{ category: 'Electrical', value: 'electrical', isActive: false },
+		{ category: 'Roadside', value: 'roadside', isActive: false },
 	]);
 	function handleFilterTagClick(tag) {
 		setFilterTag(tag);

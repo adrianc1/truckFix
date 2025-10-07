@@ -5,12 +5,8 @@ import BottomSheetModal from '../features/shops/BottomSheetModal';
 import { PlacesSearcher } from '../utils/PlacesSearcher';
 import CurrentLocationMarker from '../components/CurrentLocationMarker';
 import PoiMarkers from '../components/PoiMarkers';
-import {
-	APIProvider,
-	Map,
-	AdvancedMarker,
-	Pin,
-} from '@vis.gl/react-google-maps';
+import { APIProvider, Map } from '@vis.gl/react-google-maps';
+import { extractServicesFromShop } from '../utils/serviceExtractor';
 
 export default function Results() {
 	const [filterTag, setFilterTag] = useState('');
@@ -24,7 +20,6 @@ export default function Results() {
 	const [selectedShop, setSelectedShop] = useState(null);
 	const [showShopDetails, setShowShopDetails] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [maxDistance, setMaxDistance] = useState(50);
 	const [mapCenter, setMapCenter] = useState();
 	const [mapKey, setMapKey] = useState(0);
 
@@ -32,7 +27,15 @@ export default function Results() {
 
 	const handlePlacesFound = useCallback((places) => {
 		console.log('Results - received places:', places);
-		setShops(places);
+
+		// Enhance each shop with extracted services
+		const filteredPlaces = places.map((shop) => ({
+			...shop,
+			services: extractServicesFromShop(shop),
+		}));
+
+		console.log('Enhanced places with services:', filteredPlaces);
+		setShops(filteredPlaces);
 		setLoading(false);
 	}, []);
 
