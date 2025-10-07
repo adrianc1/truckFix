@@ -45,11 +45,11 @@ export default function ShopCard({ shop, onShopSelect }) {
 					</span>
 
 					<span
-						className={`is-open text-sm ${
-							shop.opening_hours.open_now ? 'text-green-600' : 'text-red-600'
+						className={`is-open text-sm font-medium ${
+							shop.opening_hours?.open_now ? 'text-green-600' : 'text-red-600'
 						}`}
 					>
-						{shop.opening_hours.open_now ? 'Open Now' : 'Closed'}
+						{shop.opening_hours?.open_now ? 'Open Now' : 'Closed'}
 					</span>
 				</div>
 			</div>

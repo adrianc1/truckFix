@@ -135,10 +135,10 @@ export function PlacesSearcher({
 						};
 					});
 
-					// console.log(
-					// 	'PlacesSearcher - transformed places:',
-					// 	transformedPlaces
-					// );
+					console.log(
+						'PlacesSearcher - transformed places:',
+						transformedPlaces
+					);
 					onPlacesFound(transformedPlaces);
 				} else {
 					// console.log('PlacesSearcher - no results found');
