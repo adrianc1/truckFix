@@ -128,7 +128,7 @@ export default function RepairSearchForm({
 				<div className="relative mt-4">
 					<input
 						type="text"
-						className="border w-full rounded-3xl py-2 pl-10 pr-4 text-gray-500"
+						className="border w-full rounded-3xl py-2 pl-10 pr-4 text-gray-500 bg-white"
 						placeholder="Enter City / Town"
 						value={typedLocation}
 						onChange={handleInputChange}
