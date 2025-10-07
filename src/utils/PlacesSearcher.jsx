@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useMap, useMapsLibrary } from '@vis.gl/react-google-maps';
 import { calculateDistance } from './distanceCalculator';
 
@@ -9,25 +9,32 @@ export function PlacesSearcher({
 	query = 'semi truck repair',
 	searchTrigger,
 }) {
+	// Load libraries
 	const map = useMap();
 	const placesLib = useMapsLibrary('places');
 	const coreLib = useMapsLibrary('core');
 
+	// set ref
+	const lastSearchRef = useRef(null);
+
 	useEffect(() => {
 		async function searchPlaces() {
-			// console.log('PlacesSearcher - checking libraries...', {
-			// 	placesLib: !!placesLib,
-			// 	coreLib: !!coreLib,
-			// 	map: !!map,
-			// 	center,
-			// });
-
 			if (!placesLib || !coreLib || !map || !center) {
 				console.log('PlacesSearcher - waiting for libraries to load...');
 				return;
 			}
 
-			// console.log('PlacesSearcher - starting search with query:', query);
+			// Create a unique key for this search
+			const searchKey = `${center.lat}-${center.lng}-${query}-${searchTrigger}`;
+
+			// Skip if we already did this exact search
+			if (lastSearchRef.current === searchKey) {
+				console.log('[PlacesSearcher] ⏭️ Skipping duplicate search');
+				return;
+			}
+
+			lastSearchRef.current = searchKey;
+			console.log('[PlacesSearcher] 🚀 MAKING API CALL #' + searchTrigger);
 
 			const { Place } = placesLib;
 
@@ -77,7 +84,7 @@ export function PlacesSearcher({
 						let isOpenNow = false;
 
 						if (hours) {
-							console.log('Hours object for', place.displayName, ':', hours);
+							// console.log('Hours object for', place.displayName, ':', hours);
 							// Try different ways to access open status
 							if (typeof hours.isOpen === 'function') {
 								try {

@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import RepairSearchForm from '../features/shops/RepairSearchForm';
 import BottomSheetModal from '../features/shops/BottomSheetModal';
@@ -18,20 +18,17 @@ export default function Results() {
 	const [searchCity, setSearchCity] = useState('');
 	const [searchService, setSearchService] = useState('semi truck repair');
 	const [searchParams] = useSearchParams();
-	const lat = parseFloat(searchParams.get('lat'));
-	const lng = parseFloat(searchParams.get('lng'));
 	const [shops, setShops] = useState([]);
 	const [loading, setLoading] = useState(false);
-	const [searchLocation, setSearchLocation] = useState({ lat, lng });
 	const [searchTrigger, setSearchTrigger] = useState(0);
 	const [selectedShop, setSelectedShop] = useState(null);
 	const [showShopDetails, setShowShopDetails] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [maxDistance, setMaxDistance] = useState(50); // Add this state
+	const [maxDistance, setMaxDistance] = useState(50);
+	const [mapCenter, setMapCenter] = useState();
+	const [mapKey, setMapKey] = useState(0);
 
 	const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-
-	const shopsWithinRange = shops.filter((shop) => shop.distance <= maxDistance);
 
 	const handlePlacesFound = useCallback((places) => {
 		console.log('Results - received places:', places);
@@ -39,23 +36,37 @@ export default function Results() {
 		setLoading(false);
 	}, []);
 
-	console.log('new lat', lat, 'new lng', lng);
+	const searchLocation = useMemo(() => {
+		const lat = parseFloat(searchParams.get('lat'));
+		const lng = parseFloat(searchParams.get('lng'));
+		return !isNaN(lat) && !isNaN(lng) ? { lat, lng } : null;
+	}, [searchParams]);
 
 	useEffect(() => {
-		if (!isNaN(lat) && !isNaN(lng)) {
-			setSearchLocation({ lat, lng });
+		if (searchLocation) {
+			setMapCenter(searchLocation);
+			setMapKey((prev) => prev + 1);
 			setSearchTrigger((prev) => prev + 1);
 		}
-	}, [lat, lng]);
+	}, [searchLocation]);
 
 	useEffect(() => {
-		let filtered = shops.filter((shop) =>
+		console.log('[Results] Filtering shops');
+
+		if (!filterTag) {
+			setFilteredShops(shops);
+			return;
+		}
+
+		const filtered = shops.filter((shop) =>
 			shop.services?.some((service) =>
 				service?.toLowerCase().includes(filterTag.toLowerCase())
 			)
 		);
 		setFilteredShops(filtered);
 	}, [shops, filterTag]);
+
+	console.log('hey i rendered');
 
 	// const handleModalContentClick = (e) => {
 	// 	e.stopPropagation();
@@ -82,8 +93,9 @@ export default function Results() {
 			>
 				<div style={{ width: '100vw', height: '100vh' }}>
 					<Map
+						key={mapKey}
 						defaultZoom={13}
-						center={{ lat, lng }}
+						defaultCenter={mapCenter || searchLocation}
 						mapId={import.meta.env.VITE_MAP_ID}
 						onCameraChanged={(ev) =>
 							console.log(
