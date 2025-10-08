@@ -26,7 +26,6 @@ const Features = () => {
 		const featureElements = document.querySelectorAll('.feature-card');
 		featureElements.forEach((el) => observer.observe(el));
 
-		// Optional cleanup on unmount
 		return () => {
 			featureElements.forEach((el) => observer.unobserve(el));
 		};
@@ -67,26 +66,28 @@ const Features = () => {
 
 	return (
 		<div className="">
-			<h4 className="text-3xl font-bold text-center my-4">
+			<h4 className="text-3xl font-bold dark:text-gray-100 text-center my-4">
 				Everything You Need On The Road
 			</h4>
-			<p className="text-center text-gray-500">
+			<p className="text-center text-gray-500 dark:text-gray-100">
 				TruckFix provides all the tools truckers need to find reliable repairs
 				quickly and get back on schedule.
 			</p>
-			<ul className="mt-8 w-full flex flex-col gap-4 md:flex-row md:flex-wrap md:justify-center md:gap-12">
+			<ul className="mt-8 w-full flex flex-col gap-4 md:flex-row md:flex-wrap md:justify-center md:gap-12 ">
 				{featuresList.map((f, index) => {
 					const IconComponent = f.icon;
 					return (
 						<li
 							key={index}
-							className="feature-card border text-gray-500 border-gray-200 rounded-xl py-6 px-2
+							className="feature-card border text-gray-500 dark:text-gray-100 border-gray-200 rounded-xl py-6 px-2
              w-full md:w-1/4 md:p-4 md:pt-6"
 						>
 							<div className="bg-orange-100 text-orange-500 flex w-fit p-3 rounded-xl mb-4">
 								<IconComponent size={36} />
 							</div>
-							<h6 className="font-semibold text-2xl text-black">{f.title}</h6>
+							<h6 className="font-semibold text-2xl text-black dark:text-gray-100">
+								{f.title}
+							</h6>
 							<p>{f.des}</p>
 						</li>
 					);

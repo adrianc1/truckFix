@@ -6,7 +6,7 @@ const Footer = () => {
 				<img src={Truck} alt="" className="h-32 w-32" />
 				{/* <h6 className="text-2xl font-bold">TruckFix</h6> */}
 			</div>
-			<ul className="w-2/3 flex justify-around">
+			<ul className="w-2/3 flex justify-around dark:text-gray-100">
 				<li>Terms</li>
 				<li>Privacy</li>
 				<li>Cookies</li>

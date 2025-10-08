@@ -4,13 +4,12 @@ import settingsIcon from '../../assets/images/settings.svg';
 import { Link } from 'react-router-dom';
 import Truck from '../../assets/images/TruckFix.png';
 
-const Header = () => {
-	const [darkMode, setDarkMode] = useState(false);
+const Header = ({ darkMode, setDarkMode }) => {
 	const [notifications, setNotifications] = useState(true);
-	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
 	const openSettingsModal = () => {
-		setIsModalOpen(true);
+		setIsSettingsOpen(true);
 	};
 
 	useEffect(() => {
@@ -30,7 +29,7 @@ const Header = () => {
 	};
 	return (
 		<>
-			<header className="fixed mb-24 z-200 top-0 left-0 right-0 flex justify-between items-center py-1 px-4 bg-white/80 backdrop-blur-sm border-b border-gray-300/60">
+			<header className="fixed mb-24 z-200 top-0 left-0 right-0 flex justify-between items-center py-1 px-4 bg-white/80  backdrop-blur-sm border-b border-gray-300/60">
 				<Link to="/" className="flex items-center gap-1 lg:pl-24">
 					<img src={Truck} alt="TruckFix Logo" className="w-16 h-16 m-0 p-0" />
 				</Link>
@@ -51,10 +50,10 @@ const Header = () => {
 					/>
 				</div>
 			</header>
-			{isModalOpen && (
+			{isSettingsOpen && (
 				<div
 					className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
-					onClick={() => setIsModalOpen(false)}
+					onClick={() => setIsSettingsOpen(false)}
 				>
 					{/* Modal */}
 					<div
@@ -63,7 +62,7 @@ const Header = () => {
 					>
 						{/* Close Button */}
 						<button
-							onClick={() => setIsModalOpen(false)}
+							onClick={() => setIsSettingsOpen(false)}
 							className="absolute cursor-pointer top-4 right-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
 							aria-label="Close modal"
 						>
@@ -122,7 +121,7 @@ const Header = () => {
 
 						{/* Save Button */}
 						<button
-							onClick={() => setIsModalOpen(false)}
+							onClick={() => setIsSettingsOpen(false)}
 							className="w-full mt-6 bg-orange-500 hover:bg-orange-600 text-white px-4 py-3 rounded-lg font-medium transition-colors"
 						>
 							Save Changes

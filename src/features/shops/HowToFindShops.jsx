@@ -18,10 +18,10 @@ const HowToFindShops = () => {
 	];
 	return (
 		<div className="">
-			<h4 className="text-3xl font-bold text-center my-4">
+			<h4 className="text-3xl font-bold dark:text-gray-100 text-center my-4">
 				Back On The Road In Three Simple Steps
 			</h4>
-			<p className="text-center text-gray-500">
+			<p className="text-center text-gray-500 dark:text-gray-100">
 				TruckFix provides all the tools truckers need to find reliable repairs
 				quickly and get back on schedule.
 			</p>
@@ -30,12 +30,12 @@ const HowToFindShops = () => {
 					return (
 						<li
 							key={step.id}
-							className="border flex flex-col justify-center items-center text-gray-500 border-gray-200 rounded-xl py-8 px-2 w-full md:w-1/3 "
+							className="border flex flex-col justify-center items-center text-gray-500 dark:text-gray-100 border-gray-200 rounded-xl py-8 px-2 w-full md:w-1/3 "
 						>
-							<div className="bg-orange-500 text-orange-100 flex h-12 w-12 p-4  rounded-full mb-4 justify-center items-center font-bold text-xl">
+							<div className="bg-orange-500 text-orange-100 flex h-12 w-12 p-4 rounded-full mb-4 justify-center items-center font-bold text-xl">
 								{step.id}
 							</div>
-							<h6 className="font-bold text-2xl text-center text-black">
+							<h6 className="font-bold text-2xl text-center text-black dark:text-gray-100">
 								{step.title}
 							</h6>
 							<p className="text-center ">{step.des}</p>
