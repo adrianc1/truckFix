@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 .feature-card {
 	opacity: 0;
 	transform: translateY(20px);
