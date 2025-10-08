@@ -15,7 +15,6 @@ const PoiMarkers = ({
 						onMarkerClick(poi);
 						setShowShopDetails(true);
 						setIsModalOpen(true);
-						console.log(poi);
 					}}
 				>
 					<Pin
