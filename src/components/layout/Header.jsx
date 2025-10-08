@@ -57,7 +57,7 @@ const Header = ({ darkMode, setDarkMode }) => {
 				>
 					{/* Modal */}
 					<div
-						className="bg-white dark:bg-gray-800 rounded-lg shadow-2xl w-full max-w-md p-6 relative"
+						className="bg-white dark:bg-gray-800 rounded-lg shadow-2xl w-full max-w-md p-6 relative z-10000"
 						onClick={(e) => e.stopPropagation()}
 					>
 						{/* Close Button */}
@@ -80,9 +80,6 @@ const Header = ({ darkMode, setDarkMode }) => {
 							<div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
 								<span className="text-gray-900 dark:text-white font-medium">
 									Dark Mode
-									<div className="text-sm text-white">
-										(Currently not functional)
-									</div>
 								</span>
 								<button
 									onClick={toggleDarkMode}
@@ -119,10 +116,9 @@ const Header = ({ darkMode, setDarkMode }) => {
 							</div>
 						</div>
 
-						{/* Save Button */}
 						<button
 							onClick={() => setIsSettingsOpen(false)}
-							className="w-full mt-6 bg-orange-500 hover:bg-orange-600 text-white px-4 py-3 rounded-lg font-medium transition-colors"
+							className="w-full mt-6 bg-orange-500 hover:bg-orange-600 text-white px-4 py-3 rounded-lg font-medium transition-colors cursor-pointer"
 						>
 							Save Changes
 						</button>
