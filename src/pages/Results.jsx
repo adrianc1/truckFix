@@ -111,7 +111,7 @@ export default function Results() {
 							searchTrigger={searchTrigger}
 						/>
 						<PoiMarkers
-							pois={shops}
+							pois={filteredShops}
 							onMarkerClick={setSelectedShop}
 							setShowShopDetails={setShowShopDetails}
 							setIsModalOpen={setIsModalOpen}
