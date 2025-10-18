@@ -3,12 +3,12 @@ import ShopCard from './ShopCard';
 export default function ShopList({ shops = [], handleShopSelect }) {
 	return (
 		<section className="w-full h-auto px-2 mt-4">
-			<h2 className="nearby-shops mb-4 font-bold text-2xl">
+			<h2 className="nearby-shops mb-4 font-bold dark:text-gray-100 text-2xl">
 				Nearby Repair Shops
 			</h2>
 
 			{shops.length === 0 ? (
-				<div className="text-center py-8 text-gray-500">
+				<div className="text-center py-8 text-gray-500 dark:text-gray-100">
 					No shops found matching your criteria.
 				</div>
 			) : (

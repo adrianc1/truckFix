@@ -161,7 +161,7 @@ const LandingPage = () => {
 	};
 
 	return (
-		<div className="mt-24">
+		<div className="pt-24 dark:bg-gray-800">
 			<section className="w-[95%] mx-auto mt-8">
 				<HeroSection />
 
@@ -173,17 +173,17 @@ const LandingPage = () => {
 					<div className="relative mt-4 w-full ">
 						<input
 							type="text"
-							className="border w-full rounded-3xl py-2 pl-10 pr-4 text-gray-500"
+							className="border w-full rounded-3xl py-2 pl-10 pr-4 text-gray-500 dark:text-white"
 							placeholder="Enter City / Town"
 							value={typedLocation}
 							onChange={handleInputChange}
 						/>
 						<MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
 					</div>
-					<span className="self-end gap-1 flex justify-center items-center">
+					<span className="self-end dark:text-white gap-1 flex justify-center items-center">
 						<Navigation className="w-4" />
 
-						<div onClick={getUserLocation} className="pointer cursor-pointer">
+						<div onClick={getUserLocation} className="pointer cursor-pointer ">
 							Use Current Location
 						</div>
 					</span>

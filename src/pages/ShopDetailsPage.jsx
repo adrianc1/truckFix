@@ -5,7 +5,7 @@ const ShopDetailsPage = ({ selectedShop }) => {
   return (
     <div className="px-4 pb-4">
       {/* Shop Rating and Status */}
-      <div className="flex justify-between mb-4">
+      <div className="flex justify-between mb-4 dark:text-white">
         {/* selected shop rating */}
         <span className="rating flex justify-center items-center gap-1">
           <div className="star w-4 h-4">
@@ -22,12 +22,12 @@ const ShopDetailsPage = ({ selectedShop }) => {
               : "text-red-600"
           }`}
         >
-          {selectedShop.regularOpeningHours?.open_now ? "Open Now" : "Closed"}
+          {selectedShop.opening_hours?.open_now ? "Open Now" : "Closed"}
         </span>
       </div>
 
       {/* address block */}
-      <div className="address-block flex flex-col w-full px-3 py-4 border-2 border-gray-200 rounded-xl h-auto mb-3">
+      <div className="address-block dark:text-gray-200 flex flex-col w-full px-3 py-4 border-2 border-gray-200 rounded-xl h-auto mb-3">
         <MapPin className="mb-2" />
         <h6 className="font-bold">Address</h6>
         <span>{selectedShop.formatted_address}</span>
@@ -35,7 +35,7 @@ const ShopDetailsPage = ({ selectedShop }) => {
       </div>
 
       {/* phone block  */}
-      <div className="phone-block flex items-center justify-between w-full px-3 py-4 border-2 border-gray-200 rounded-xl h-auto mb-3">
+      <div className="phone-block dark:text-gray-200 flex items-center justify-between w-full px-3 py-4 border-2 border-gray-200 rounded-xl h-auto mb-3">
         <div className="flex-col">
           <Phone className="mb-2" />
           <h6 className="font-bold">Phone</h6>
@@ -48,9 +48,9 @@ const ShopDetailsPage = ({ selectedShop }) => {
       </div>
 
       {/* Services */}
-      <div className="services-block h-auto flex flex-col w-full px-3 py-4 border-2 border-gray-200 rounded-xl mb-3">
-        <Wrench className="mb-2" />
-        <h6 className="font-bold">Services</h6>
+      <div className="services-block  h-auto flex flex-col w-full px-3 py-4 border-2 border-gray-200 rounded-xl mb-3">
+        <Wrench className="mb-2 dark:text-gray-200" />
+        <h6 className="font-bold dark:text-gray-200">Services</h6>
 
         <div className="flex flex-wrap gap-2 mt-2">
           {selectedShop.services?.map((service, index) => (
@@ -66,7 +66,7 @@ const ShopDetailsPage = ({ selectedShop }) => {
       </div>
 
       {/* hours */}
-      <div className="hours-block flex flex-col w-full px-3 py-4 border-2 border-gray-200 rounded-xl h-auto mb-3">
+      <div className="hours-block dark:text-gray-200 flex flex-col w-full px-3 py-4 border-2 border-gray-200 rounded-xl h-auto mb-3">
         <Clock className="mb-2" />
         <h6 className="font-bold">Hours</h6>
         <ul>
