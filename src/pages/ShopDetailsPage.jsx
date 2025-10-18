@@ -22,7 +22,7 @@ const ShopDetailsPage = ({ selectedShop }) => {
               : "text-red-600"
           }`}
         >
-          {selectedShop.opening_hours?.open_now ? "Open Now" : "Closed"}
+          {selectedShop.regularOpeningHours?.open_now ? "Open Now" : "Closed"}
         </span>
       </div>
 
