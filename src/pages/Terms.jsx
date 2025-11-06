@@ -1,4 +1,5 @@
 export default function TermsContent() {
+	scrollTo({ top: 0, behavior: 'smooth' });
 	return (
 		<div className="space-y-6 mt-24 pl-4 pb-12">
 			<h1 className="text-4xl font-bold text-gray-900 border-b-4 border-orange-500 pb-4">
