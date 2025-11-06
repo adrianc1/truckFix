@@ -1,4 +1,6 @@
 import Truck from '../../assets/images/TruckFix.png';
+import { Link } from 'react-router';
+
 const Footer = () => {
 	return (
 		<footer className="w-full flex flex-col justify-center gap-8 items-center border-t border-gray-300 mt-4">
@@ -7,9 +9,15 @@ const Footer = () => {
 				{/* <h6 className="text-2xl font-bold">TruckFix</h6> */}
 			</div>
 			<ul className="w-2/3 flex justify-around dark:text-gray-100">
-				<li>Terms</li>
-				<li>Privacy</li>
-				<li>Cookies</li>
+				<Link to="terms-of-service">
+					<li>Terms</li>
+				</Link>
+				<Link to="privacy-policy">
+					<li>Privacy</li>
+				</Link>
+				<Link to="cookies">
+					<li>Cookies</li>
+				</Link>
 			</ul>
 			<span className="text-gray-400 mb-2">
 				&copy; 2025 TruckFix. All rights reserved.
