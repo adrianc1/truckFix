@@ -7,7 +7,8 @@ const PoiMarkers = ({
 }) => {
 	return (
 		<>
-			{pois.map((poi) => (
+			{pois.map((poi) => {
+				if (!poi) return;
 				<AdvancedMarker
 					key={poi.place_id}
 					position={poi.geometry.location}
@@ -22,8 +23,8 @@ const PoiMarkers = ({
 						glyphColor={'#000'}
 						borderColor={'#000'}
 					/>
-				</AdvancedMarker>
-			))}
+				</AdvancedMarker>;
+			})}
 		</>
 	);
 };
