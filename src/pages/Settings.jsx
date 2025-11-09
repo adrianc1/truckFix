@@ -81,6 +81,7 @@ export default function SettingsModalDemo() {
 							</div>
 
 							{/* Notifications Toggle */}
+
 							{/* <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                 <span className="text-gray-900 dark:text-white font-medium">
                   Notifications
