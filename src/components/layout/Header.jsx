@@ -96,7 +96,7 @@ const Header = ({ darkMode, setDarkMode }) => {
 								</button>
 							</div>
 							{/* Notifications Toggle */}
-							<div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+							{/* <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
 								<span className="text-gray-900 dark:text-white font-medium">
 									Notifications
 								</span>
@@ -113,7 +113,7 @@ const Header = ({ darkMode, setDarkMode }) => {
 										}`}
 									/>
 								</button>
-							</div>
+							</div> */}
 						</div>
 
 						<button
