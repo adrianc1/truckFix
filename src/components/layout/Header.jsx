@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Truck from '../../assets/images/TruckFix.png';
 
 const Header = ({ darkMode, setDarkMode }) => {
-	const [notifications, setNotifications] = useState(true);
+	// const [notifications, setNotifications] = useState(true);
 	const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
 	const openSettingsModal = () => {
@@ -24,9 +24,9 @@ const Header = ({ darkMode, setDarkMode }) => {
 		setDarkMode(!darkMode);
 	};
 
-	const toggleNotifications = () => {
-		setNotifications(!notifications);
-	};
+	// const toggleNotifications = () => {
+	// 	setNotifications(!notifications);
+	// };
 	return (
 		<>
 			<header className="fixed mb-24 z-200 top-0 left-0 right-0 flex justify-between items-center py-1 px-4 bg-white/80  backdrop-blur-sm border-b border-gray-300/60">
@@ -96,7 +96,7 @@ const Header = ({ darkMode, setDarkMode }) => {
 								</button>
 							</div>
 							{/* Notifications Toggle */}
-							<div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+							{/* <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
 								<span className="text-gray-900 dark:text-white font-medium">
 									Notifications
 								</span>
@@ -113,7 +113,7 @@ const Header = ({ darkMode, setDarkMode }) => {
 										}`}
 									/>
 								</button>
-							</div>
+							</div> */}
 						</div>
 
 						<button
