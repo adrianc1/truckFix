@@ -3,7 +3,6 @@ import { Settings, X } from 'lucide-react';
 
 export default function SettingsModalDemo() {
 	const [darkMode, setDarkMode] = useState(false);
-	const [notifications, setNotifications] = useState(true);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	// Apply dark mode class to document
@@ -54,7 +53,7 @@ export default function SettingsModalDemo() {
 						</button>
 
 						{/* Modal Header */}
-						<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+						<h2 className="text-2xl font-bold text-red-900 dark:text-white mb-6">
 							Settings
 						</h2>
 
@@ -63,7 +62,7 @@ export default function SettingsModalDemo() {
 							{/* Dark Mode Toggle */}
 							<div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
 								<span className="text-gray-900 dark:text-white font-medium">
-									Dark Mode
+									Super Dark Mode
 								</span>
 								<button
 									onClick={toggleDarkMode}
