@@ -1,5 +1,9 @@
-import { useEffect, useRef } from 'react';
-import { useMap, useMapsLibrary } from '@vis.gl/react-google-maps';
+import { useEffect, useRef, useState } from 'react';
+import {
+	limitTiltRange,
+	useMap,
+	useMapsLibrary,
+} from '@vis.gl/react-google-maps';
 import { calculateDistance } from './distanceCalculator';
 import checkIfOpen from './checkIfOpen';
 
@@ -8,24 +12,29 @@ export function PlacesSearcher({
 	center,
 	query = 'semi truck repair',
 	searchTrigger,
+	onSearchCapabilityReady,
 }) {
 	// Load libraries
 	const map = useMap();
 	const placesLib = useMapsLibrary('places');
 	const coreLib = useMapsLibrary('core');
 
+	// set states
+	const [currentLimit, setCurrentLimit] = useState(10);
+	const [radius, setRadius] = useState(15000);
+
 	// set ref for last search
 	const lastSearchRef = useRef(null);
 
 	useEffect(() => {
-		async function searchPlaces() {
+		async function searchPlaces(limit) {
 			if (!placesLib || !coreLib || !map || !center) {
 				console.log('PlacesSearcher - waiting for libraries to load...');
 				return;
 			}
 
 			// Create a unique key for this search
-			const searchKey = `${center.lat}-${center.lng}-${query}-${searchTrigger}`;
+			const searchKey = `${center.lat}-${center.lng}-${query}-${searchTrigger}-${limit}`;
 
 			// Skip if we already did this exact search
 			if (lastSearchRef.current === searchKey) {
@@ -34,7 +43,6 @@ export function PlacesSearcher({
 			}
 
 			lastSearchRef.current = searchKey;
-			console.log('[PlacesSearcher] 🚀 MAKING API CALL #' + searchTrigger);
 
 			const { Place } = placesLib;
 
@@ -55,7 +63,7 @@ export function PlacesSearcher({
 				],
 				locationBias: center,
 				language: 'en-US',
-				maxResultCount: 10,
+				maxResultCount: limit,
 				region: 'us',
 			};
 
@@ -131,8 +139,28 @@ export function PlacesSearcher({
 			}
 		}
 
-		searchPlaces();
-	}, [placesLib, coreLib, map, center, searchTrigger, query]);
+		searchPlaces(currentLimit);
+	}, [placesLib, coreLib, map, center, searchTrigger, query, currentLimit]);
+
+	useEffect(() => {
+		if (placesLib && coreLib && map) {
+			const loadMore = () => {
+				if (currentLimit === 10) {
+					setCurrentLimit(15);
+				} else if (currentLimit === 15) {
+					setCurrentLimit(20);
+				}
+			};
+
+			if (onSearchCapabilityReady) {
+				onSearchCapabilityReady({
+					loadMore,
+					canLoadMore: currentLimit < 20,
+					currentLimit,
+				});
+			}
+		}
+	}, [placesLib, coreLib, map, currentLimit]);
 
 	return null;
 }

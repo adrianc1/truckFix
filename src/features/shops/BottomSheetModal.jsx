@@ -4,18 +4,19 @@ import ShopDetailsPage from '../../pages/ShopDetailsPage';
 import ShopList from './ShopList';
 
 export default function BottomSheetModal({
-	shops,
 	filteredShops,
-	searchCity,
-	setFilteredShops,
 	setSelectedShop,
 	selectedShop,
 	showShopDetails,
 	setShowShopDetails,
 	isModalOpen,
 	setIsModalOpen,
+	searchCapability,
 }) {
 	const modalContentRef = useRef(null);
+	useEffect(() => {
+		console.log('searchCapability:', searchCapability);
+	}, [searchCapability]);
 
 	//   useEffect(() => {
 	//     let filtered = shops.filter((shop) =>
@@ -111,7 +112,7 @@ export default function BottomSheetModal({
 										Repair Shops
 									</h2>
 									<span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
-										{filteredShops.length} found
+										{filteredShops.length} Results
 									</span>
 								</>
 							)}
@@ -135,11 +136,40 @@ export default function BottomSheetModal({
 					{showShopDetails && selectedShop ? (
 						<ShopDetailsPage selectedShop={selectedShop} />
 					) : (
-						<ShopList
-							shops={filteredShops}
-							handleShopSelect={handleShopSelect}
-						/>
+						<>
+							<ShopList
+								shops={filteredShops}
+								handleShopSelect={handleShopSelect}
+							/>
+
+							{/* Show More button only in list view */}
+							<div className="p-4">
+								<button
+									onClick={() => {
+										console.log(
+											'Button clicked, searchCapability:',
+											searchCapability
+										);
+										searchCapability?.loadMore();
+									}}
+									disabled={!searchCapability?.canLoadMore}
+									className="bg-orange-500 flex items-center justify-center gap-4 mx-auto my-4 py-3 w-2/3 text-white rounded-3xl cursor-pointer disabled:bg-gray-300 disabled:cursor-not-allowed"
+								>
+									Show More Results
+									{searchCapability?.canLoadMore &&
+										` (${20 - searchCapability.currentLimit} more available)`}
+								</button>
+							</div>
+						</>
 					)}
+
+					{/* <button
+						onClick={() => searchCapability?.loadMore()}
+						disabled={!searchCapability?.canLoadMore}
+						className="bg-orange-500 flex items-center justify-center gap-4 mx-auto my-4 py-3 w-2/3 text-white rounded-3xl cursor-pointer"
+					>
+						Show More Results
+					</button> */}
 				</div>
 			</div>
 		</>

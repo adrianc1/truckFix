@@ -22,6 +22,7 @@ export default function Results() {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [mapCenter, setMapCenter] = useState();
 	const [mapKey, setMapKey] = useState(0);
+	const [searchCapability, setSearchCapability] = useState(null);
 
 	const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
@@ -96,20 +97,13 @@ export default function Results() {
 						defaultZoom={13}
 						defaultCenter={mapCenter || searchLocation}
 						mapId={import.meta.env.VITE_MAP_ID}
-						onCameraChanged={(ev) =>
-							console.log(
-								'camera changed:',
-								ev.detail.center,
-								'zoom:',
-								ev.detail.zoom
-							)
-						}
 					>
 						<PlacesSearcher
 							onPlacesFound={handlePlacesFound}
 							center={searchLocation}
 							query={'semi truck repair shop'}
 							searchTrigger={searchTrigger}
+							onSearchCapabilityReady={setSearchCapability}
 						/>
 						<PoiMarkers
 							pois={filteredShops}
@@ -133,6 +127,7 @@ export default function Results() {
 				setShowShopDetails={setShowShopDetails}
 				isModalOpen={isModalOpen}
 				setIsModalOpen={setIsModalOpen}
+				searchCapability={searchCapability}
 			/>
 		</div>
 	);
