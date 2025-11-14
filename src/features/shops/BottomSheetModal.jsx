@@ -138,7 +138,7 @@ export default function BottomSheetModal({
 					) : (
 						<>
 							<ShopList
-								shops={filteredShops}
+								shops={filteredShops.sort((a, b) => a.distance - b.distance)}
 								handleShopSelect={handleShopSelect}
 							/>
 							<div className="p-4">
