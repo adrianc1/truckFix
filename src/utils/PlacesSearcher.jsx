@@ -1,9 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import {
-	limitTiltRange,
-	useMap,
-	useMapsLibrary,
-} from '@vis.gl/react-google-maps';
+import { useMap, useMapsLibrary } from '@vis.gl/react-google-maps';
 import { calculateDistance } from './distanceCalculator';
 import checkIfOpen from './checkIfOpen';
 
@@ -19,9 +15,9 @@ export function PlacesSearcher({
 	const placesLib = useMapsLibrary('places');
 	const coreLib = useMapsLibrary('core');
 
-	// set states
-	const [currentLimit, setCurrentLimit] = useState(10);
-	const [radius, setRadius] = useState(15000);
+	// set states for keeping track of shop results
+	const [allPlaces, setAllPlaces] = useState([]);
+	const [displayLimit, setDisplayLimit] = useState(10);
 
 	// set ref for last search
 	const lastSearchRef = useRef(null);
@@ -58,12 +54,11 @@ export function PlacesSearcher({
 					'userRatingCount',
 					'types',
 					'regularOpeningHours',
-					'reviews',
-					'editorialSummary',
+					'internationalPhoneNumber',
 				],
 				locationBias: center,
 				language: 'en-US',
-				maxResultCount: limit,
+				maxResultCount: 20,
 				region: 'us',
 			};
 
@@ -109,8 +104,6 @@ export function PlacesSearcher({
 								},
 								formatted_address: place.formattedAddress || '',
 								rating: place.rating || 0,
-								reviews: place.reviews || [],
-								editorial_summary: place.editorialSummary || null,
 								user_ratings_total: place.userRatingCount || 0,
 								business_status: place.businessStatus || 'OPERATIONAL',
 								services: (place.types || []).filter(Boolean),
@@ -126,41 +119,66 @@ export function PlacesSearcher({
 									: null,
 								source: 'google_places',
 								distance: distance,
+								phone: place.internationalPhoneNumber,
 							};
 						})
 					);
-					onPlacesFound(transformedPlaces);
+					// Sort by distance after transforming data
+					const sortedPlaces = transformedPlaces.sort(
+						(a, b) => a.distance - b.distance
+					);
+
+					// Store all  places
+					setAllPlaces(sortedPlaces);
+					// Only send the first 'displayLimit' to parent for display
+					onPlacesFound(sortedPlaces.slice(0, displayLimit));
 				} else {
+					setAllPlaces([]);
 					onPlacesFound([]);
 				}
 			} catch (err) {
 				console.error('PlacesSearcher - Error searching places:', err);
+				setAllPlaces([]);
 				onPlacesFound([]);
 			}
 		}
 
-		searchPlaces(currentLimit);
-	}, [placesLib, coreLib, map, center, searchTrigger, query, currentLimit]);
+		searchPlaces();
+	}, [placesLib, coreLib, map, center, searchTrigger, query]);
+
+	// When displayLimit changes, send update to parent
+	useEffect(() => {
+		if (allPlaces.length > 0) {
+			onPlacesFound(allPlaces.slice(0, displayLimit));
+		}
+	}, [displayLimit, allPlaces]);
+
+	// Reset when search parameters change
+	useEffect(() => {
+		setAllPlaces([]);
+		setDisplayLimit(10);
+		lastSearchRef.current = null;
+	}, [center, query, searchTrigger]);
 
 	useEffect(() => {
 		if (placesLib && coreLib && map) {
 			const loadMore = () => {
-				if (currentLimit === 10) {
-					setCurrentLimit(15);
-				} else if (currentLimit === 15) {
-					setCurrentLimit(20);
+				if (displayLimit === 10) {
+					setDisplayLimit(15);
+				} else if (displayLimit === 15) {
+					setDisplayLimit(20);
 				}
 			};
 
 			if (onSearchCapabilityReady) {
 				onSearchCapabilityReady({
 					loadMore,
-					canLoadMore: currentLimit < 20,
-					currentLimit,
+					canLoadMore: displayLimit < 20 && allPlaces.length > displayLimit,
+					currentLimit: displayLimit,
 				});
 			}
 		}
-	}, [placesLib, coreLib, map, currentLimit]);
+	}, [placesLib, coreLib, map, displayLimit, allPlaces.length]);
 
 	return null;
 }

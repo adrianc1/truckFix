@@ -141,8 +141,6 @@ export default function BottomSheetModal({
 								shops={filteredShops}
 								handleShopSelect={handleShopSelect}
 							/>
-
-							{/* Show More button only in list view */}
 							<div className="p-4">
 								<button
 									onClick={() => {
@@ -162,14 +160,6 @@ export default function BottomSheetModal({
 							</div>
 						</>
 					)}
-
-					{/* <button
-						onClick={() => searchCapability?.loadMore()}
-						disabled={!searchCapability?.canLoadMore}
-						className="bg-orange-500 flex items-center justify-center gap-4 mx-auto my-4 py-3 w-2/3 text-white rounded-3xl cursor-pointer"
-					>
-						Show More Results
-					</button> */}
 				</div>
 			</div>
 		</>
