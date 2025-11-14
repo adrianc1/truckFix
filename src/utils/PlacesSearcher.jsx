@@ -53,6 +53,7 @@ export function PlacesSearcher({
 					'rating',
 					'userRatingCount',
 					'types',
+					'reviews',
 					'regularOpeningHours',
 					'internationalPhoneNumber',
 				],
@@ -105,6 +106,7 @@ export function PlacesSearcher({
 								formatted_address: place.formattedAddress || '',
 								rating: place.rating || 0,
 								user_ratings_total: place.userRatingCount || 0,
+								reviews: place.reviews || [],
 								business_status: place.businessStatus || 'OPERATIONAL',
 								services: (place.types || []).filter(Boolean),
 								currentOpeningHours: place.regularOpeningHours,
@@ -153,7 +155,7 @@ export function PlacesSearcher({
 		}
 	}, [displayLimit, allPlaces]);
 
-	// Reset when search parameters change
+	// Reset shops when search parameters change
 	useEffect(() => {
 		setAllPlaces([]);
 		setDisplayLimit(10);

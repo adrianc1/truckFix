@@ -153,9 +153,9 @@ export default function BottomSheetModal({
 									disabled={!searchCapability?.canLoadMore}
 									className="bg-orange-500 flex items-center justify-center gap-4 mx-auto my-4 py-3 w-2/3 text-white rounded-3xl cursor-pointer disabled:bg-gray-300 disabled:cursor-not-allowed"
 								>
-									Show More Results
-									{/* {searchCapability?.canLoadMore &&
-										` (${20 - searchCapability.currentLimit} more available)`} */}
+									{searchCapability?.canLoadMore
+										? `Show More Results`
+										: 'No More Results'}
 								</button>
 							</div>
 						</>
