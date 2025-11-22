@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Wrench, Navigation, MapPin } from 'lucide-react';
+import { ArrowRight, MapPin } from 'lucide-react';
 import RepairFilters from './RepairFilters';
 
 export default function RepairSearchForm({
@@ -84,8 +84,6 @@ export default function RepairSearchForm({
 	const handleFormSubmit = async (e) => {
 		e.preventDefault();
 
-		console.log('heyyooo');
-
 		if (!typedLocation.trim()) {
 			alert('Please enter a location');
 			return;
@@ -125,17 +123,22 @@ export default function RepairSearchForm({
 		>
 			<div className="flex flex-col">
 				{/* Location Search Bar */}
-				<div className="relative mt-4">
+				<div className="relative">
 					<input
 						type="text"
-						className="border w-full rounded-3xl py-2 pl-10 pr-4 text-gray-500 bg-white"
+						className="border w-full max-w-md rounded-3xl py-2 pl-10 pr-4 text-gray-500 bg-white"
 						placeholder="Enter City / Town"
 						value={typedLocation}
 						onChange={handleInputChange}
 					/>
 					<MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+					<button
+						type="submit"
+						className="absolute right-2 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-orange-500 hover:bg-orange-600 rounded-full flex items-center justify-center"
+					>
+						<ArrowRight className="w-4 h-4 text-white" />
+					</button>
 				</div>
-				<button>Search City</button>
 			</div>
 
 			<RepairFilters setFilterTag={setFilterTag} />

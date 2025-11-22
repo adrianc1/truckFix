@@ -80,13 +80,6 @@ export default function Results({ darkMode }) {
 
 	return (
 		<div className="mt-14 overflow-y-hidden">
-			<RepairSearchForm
-				setFilterTag={setFilterTag}
-				searchCity={searchCity}
-				setSearchCity={setSearchCity}
-				setSearchService={setSearchService}
-			/>
-
 			<APIProvider
 				apiKey={apiKey}
 				onLoad={() => console.log('Maps API has loaded.')}

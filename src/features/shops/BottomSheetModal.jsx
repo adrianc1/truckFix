@@ -1,4 +1,8 @@
 import { useEffect, useRef } from 'react';
+import { ArrowRight, MapPin } from 'lucide-react';
+import RepairSearchForm from './RepairSearchForm';
+import RepairFilters from './RepairFilters';
+import SearchForm from './SearchForm';
 import { useSwipeable } from 'react-swipeable';
 import ShopDetailsPage from '../../pages/ShopDetailsPage';
 import ShopList from './ShopList';
@@ -12,6 +16,9 @@ export default function BottomSheetModal({
 	isModalOpen,
 	setIsModalOpen,
 	searchCapability,
+	setFilterTag,
+	currentCity, // Add this prop - pass from URL params
+	onCityChange,
 }) {
 	const modalContentRef = useRef(null);
 	useEffect(() => {
@@ -136,7 +143,11 @@ export default function BottomSheetModal({
 					{showShopDetails && selectedShop ? (
 						<ShopDetailsPage selectedShop={selectedShop} />
 					) : (
-						<>
+						<div>
+							<SearchForm />
+							<div className="px-2">
+								<RepairFilters setFilterTag={setFilterTag} />
+							</div>
 							<ShopList
 								shops={filteredShops.sort((a, b) => a.distance - b.distance)}
 								handleShopSelect={handleShopSelect}
@@ -158,7 +169,7 @@ export default function BottomSheetModal({
 										: 'No More Results'}
 								</button>
 							</div>
-						</>
+						</div>
 					)}
 				</div>
 			</div>
