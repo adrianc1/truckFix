@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import RepairSearchForm from '../features/shops/RepairSearchForm';
+import Filters from '../features/shops/Filters';
 import BottomSheetModal from '../features/shops/BottomSheetModal';
 import { PlacesSearcher } from '../utils/PlacesSearcher';
 import CurrentLocationMarker from '../components/CurrentLocationMarker';
@@ -80,6 +80,8 @@ export default function Results({ darkMode }) {
 
 	return (
 		<div className="mt-14 overflow-y-hidden">
+			<Filters setFilterTag={setFilterTag} />
+
 			<APIProvider
 				apiKey={apiKey}
 				onLoad={() => console.log('Maps API has loaded.')}

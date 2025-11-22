@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { ArrowRight, MapPin } from 'lucide-react';
-import RepairSearchForm from './RepairSearchForm';
+import RepairSearchForm from './Filters';
 import RepairFilters from './RepairFilters';
 import SearchForm from './SearchForm';
 import { useSwipeable } from 'react-swipeable';
@@ -145,9 +145,6 @@ export default function BottomSheetModal({
 					) : (
 						<div>
 							<SearchForm />
-							<div className="px-2">
-								<RepairFilters setFilterTag={setFilterTag} />
-							</div>
 							<ShopList
 								shops={filteredShops.sort((a, b) => a.distance - b.distance)}
 								handleShopSelect={handleShopSelect}
