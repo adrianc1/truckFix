@@ -35,7 +35,7 @@ export default function RepairSearchForm({ setFilterTag }) {
 	// };
 
 	return (
-		<div className="absolute mt-8 z-100 w-full flex flex-col justify-center px-2 gap-4">
+		<div className="absolute mt-16 z-100 w-full flex flex-col justify-center px-2 gap-4">
 			<RepairFilters setFilterTag={setFilterTag} />
 		</div>
 	);

@@ -39,12 +39,19 @@ const ShopDetailsPage = ({ selectedShop }) => {
 				<div className="flex-col">
 					<Phone className="mb-2" />
 					<h6 className="font-bold">Phone</h6>
+					<span className="hidden md:block text-gray-600 dark:text-gray-300">
+						{selectedShop.phone}
+					</span>
 				</div>
-				{selectedShop.phone}
+				<div className="flex flex-col">{/* <p>Shop Phone Number:</p> */}</div>
+
 				<div className="flex justify-end items-center pr-4">
-					<button className="border px-4 py-2 rounded-xl bg-orange-500 text-white cursor-pointer">
+					<a
+						className="border px-4 py-2 rounded-xl bg-orange-500 text-white cursor-pointer"
+						href={`tel:${selectedShop.phone}`}
+					>
 						Call Shop Now
-					</button>
+					</a>
 				</div>
 			</div>
 
