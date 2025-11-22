@@ -15,7 +15,7 @@ const App = () => {
 			<Header darkMode={darkMode} setDarkMode={setDarkMode} />
 			<Routes>
 				<Route index element={<LandingPage />} />
-				<Route path="results" element={<Results />} />
+				<Route path="results" element={<Results darkMode={darkMode} />} />
 				<Route path="terms-of-service" element={<Terms />} />
 				<Route path="cookies" element={<CookiesPage />} />
 				<Route path="privacy-policy" element={<PrivacyPolicy />} />

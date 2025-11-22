@@ -8,7 +8,7 @@ import PoiMarkers from '../components/PoiMarkers';
 import { APIProvider, Map } from '@vis.gl/react-google-maps';
 import { extractServicesFromShop } from '../utils/serviceExtractor';
 
-export default function Results() {
+export default function Results({ darkMode }) {
 	const [filterTag, setFilterTag] = useState('');
 	const [filteredShops, setFilteredShops] = useState([]);
 	const [searchCity, setSearchCity] = useState('');
@@ -97,6 +97,7 @@ export default function Results() {
 						defaultZoom={13}
 						defaultCenter={mapCenter || searchLocation}
 						mapId={import.meta.env.VITE_MAP_ID}
+						colorScheme={darkMode ? 'DARK' : ''}
 					>
 						<PlacesSearcher
 							onPlacesFound={handlePlacesFound}

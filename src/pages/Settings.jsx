@@ -18,11 +18,11 @@ export default function SettingsModalDemo() {
 		setDarkMode(!darkMode);
 	};
 
-	const exitSettings = (e) => {
-		e.stopPropagation();
-		setDarkMode(!darkMode);
-		console.log('exi');
-	};
+	// const exitSettings = (e) => {
+	// 	e.stopPropagation();
+	// 	setDarkMode(!darkMode);
+	// 	console.log('exit');
+	// };
 	// const toggleNotifications = () => {
 	// 	setNotifications(!notifications);
 	// };
@@ -41,16 +41,6 @@ export default function SettingsModalDemo() {
 						onClick={(e) => e.stopPropagation()}
 					>
 						{/* Close Button */}
-						<button
-							onClick={(e) => {
-								setIsModalOpen(false);
-								exitSettings(e);
-							}}
-							className="absolute top-4 right-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
-							aria-label="Close modal"
-						>
-							<X className="w-6 h-6" />
-						</button>
 
 						{/* Modal Header */}
 						<h2 className="text-2xl font-bold text-red-900 dark:text-white mb-6">
