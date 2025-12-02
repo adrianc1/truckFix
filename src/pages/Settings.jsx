@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Settings, X } from 'lucide-react';
 
 export default function SettingsModalDemo() {
 	const [darkMode, setDarkMode] = useState(false);
@@ -40,11 +39,9 @@ export default function SettingsModalDemo() {
 						className="bg-white dark:bg-gray-800 rounded-lg shadow-2xl w-full max-w-md p-6 relative"
 						onClick={(e) => e.stopPropagation()}
 					>
-						{/* Close Button */}
-
 						{/* Modal Header */}
 						<h2 className="text-2xl font-bold text-red-900 dark:text-white mb-6">
-							Settings
+							Settings!
 						</h2>
 
 						{/* Settings Options */}
@@ -52,7 +49,7 @@ export default function SettingsModalDemo() {
 							{/* Dark Mode Toggle */}
 							<div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
 								<span className="text-gray-900 dark:text-white font-medium">
-									Super Dark Mode
+									Dark Mode
 								</span>
 								<button
 									onClick={toggleDarkMode}

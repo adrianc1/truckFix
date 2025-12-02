@@ -19,18 +19,21 @@ export default function BottomSheetModal({
 	setFilterTag,
 	currentCity, // Add this prop - pass from URL params
 	onCityChange,
+	searchCity,
+	shops,
+	setFilteredShops,
 }) {
 	const modalContentRef = useRef(null);
 	useEffect(() => {
 		console.log('searchCapability:', searchCapability);
 	}, [searchCapability]);
 
-	//   useEffect(() => {
-	//     let filtered = shops.filter((shop) =>
-	//       shop.formatted_address?.toLowerCase().includes(searchCity.toLowerCase())
-	//     );
-	//     setFilteredShops(filtered);
-	//   }, [shops, searchCity, setFilteredShops]);
+	useEffect(() => {
+		let filtered = shops.filter((shop) =>
+			shop.formatted_address?.toLowerCase().includes(searchCity.toLowerCase())
+		);
+		setFilteredShops(filtered);
+	}, [shops, searchCity, setFilteredShops]);
 
 	// Scroll to top when showing shop details
 	useEffect(() => {
