@@ -6,7 +6,7 @@ import checkIfOpen from './checkIfOpen';
 export function PlacesSearcher({
 	onPlacesFound,
 	center,
-	query = 'semi truck repair',
+	query = 'diesel truck mechanic',
 	searchTrigger,
 	onSearchCapabilityReady,
 }) {
