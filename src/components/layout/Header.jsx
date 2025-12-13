@@ -120,7 +120,7 @@ const Header = ({ darkMode, setDarkMode }) => {
 							onClick={() => setIsSettingsOpen(false)}
 							className="w-full mt-6 bg-orange-500 hover:bg-orange-600 text-white px-4 py-3 rounded-lg font-medium transition-colors cursor-pointer"
 						>
-							Save Changes
+							Save Changes - Updated
 						</button>
 					</div>
 				</div>
