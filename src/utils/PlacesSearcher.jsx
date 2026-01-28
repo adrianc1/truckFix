@@ -79,7 +79,7 @@ export function PlacesSearcher({
 									: place.location.lat,
 								typeof place.location.lng === 'function'
 									? place.location.lng()
-									: place.location.lng
+									: place.location.lng,
 							);
 							const hours = place.regularOpeningHours;
 							let isOpenNow = undefined;
@@ -87,6 +87,12 @@ export function PlacesSearcher({
 							if (hours) {
 								isOpenNow = checkIfOpen(hours);
 							}
+
+							// console.log(
+							// 	'hey this ran',
+							// 	`Author: ${place.reviews[0].authorAttribution.displayName}, Review: ${place.reviews[0].text}, Rating: ${place.reviews[0].rating}`,
+							// );
+							// console.log(place.reviews[0].authorAttribution);
 
 							return {
 								place_id: place.id,
@@ -117,17 +123,17 @@ export function PlacesSearcher({
 									? {
 											weekday_text:
 												place.regularOpeningHours.weekdayDescriptions || [],
-									  }
+										}
 									: null,
 								source: 'google_places',
 								distance: distance,
 								phone: place.internationalPhoneNumber,
 							};
-						})
+						}),
 					);
 					// Sort by distance after transforming data
 					const sortedPlaces = transformedPlaces.sort(
-						(a, b) => a.distance - b.distance
+						(a, b) => a.distance - b.distance,
 					);
 
 					// Store all  places
