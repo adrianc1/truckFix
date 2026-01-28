@@ -1,7 +1,10 @@
-import { Clock, MapPin, Phone, Wrench } from 'lucide-react';
+import { Clock, MapPin, Phone, Wrench, Star } from 'lucide-react';
 import star from '../assets/images/star.svg';
 
 const ShopDetailsPage = ({ selectedShop }) => {
+	console.log('THE SELECTED SHOP:', selectedShop);
+
+	// const reviews = selectedShop.reviews;
 	return (
 		<div className="px-4 pb-4">
 			{/* Shop Rating and Status */}
@@ -81,6 +84,49 @@ const ShopDetailsPage = ({ selectedShop }) => {
 					{selectedShop.current_opening_hours?.weekday_text?.map((d, index) => (
 						<li key={index} className="flex flex-col py-2">
 							{d}
+						</li>
+					))}
+				</ul>
+			</div>
+
+			{/* Reviews */}
+			<div className="hours-block dark:text-gray-200 flex flex-col w-full px-3 py-4 border-2 border-gray-200 rounded-xl h-auto mb-3">
+				<Star className="mb-2" />
+				<h6 className="font-bold">Reviews</h6>
+				<ul className="space-y-4 px-4 py-2">
+					{selectedShop.reviews?.map((review, index) => (
+						<li
+							key={index}
+							className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 flex flex-col gap-3"
+						>
+							{/* Header with author and rating */}
+							<div className="flex items-center justify-between">
+								<div className="flex items-center gap-3">
+									<div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-600 to-white flex items-center justify-center text-black font-semibold">
+										{review.authorAttribution.displayName
+											.charAt(0)
+											.toUpperCase()}
+									</div>
+									<span className="font-semibold text-gray-900">
+										{review.authorAttribution.displayName}
+									</span>
+								</div>
+
+								{/* Star rating */}
+								<div className="flex items-center gap-1 bg-amber-50 px-2 py-1 rounded-full">
+									<svg className="w-4 h-4 fill-amber-400" viewBox="0 0 20 20">
+										<path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+									</svg>
+									<span className="text-sm font-semibold text-amber-700">
+										{review.rating}
+									</span>
+								</div>
+							</div>
+
+							{/* Review text */}
+							<p className="text-gray-700 text-sm leading-relaxed">
+								{review.text}
+							</p>
 						</li>
 					))}
 				</ul>
