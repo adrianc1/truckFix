@@ -16,9 +16,6 @@ export default function BottomSheetModal({
 	isModalOpen,
 	setIsModalOpen,
 	searchCapability,
-	setFilterTag,
-	currentCity, // Add this prop - pass from URL params
-	onCityChange,
 	searchCity,
 	shops,
 	setFilteredShops,
@@ -30,7 +27,7 @@ export default function BottomSheetModal({
 
 	useEffect(() => {
 		let filtered = shops.filter((shop) =>
-			shop.formatted_address?.toLowerCase().includes(searchCity.toLowerCase())
+			shop.formatted_address?.toLowerCase().includes(searchCity.toLowerCase()),
 		);
 		setFilteredShops(filtered);
 	}, [shops, searchCity, setFilteredShops]);
@@ -157,7 +154,7 @@ export default function BottomSheetModal({
 									onClick={() => {
 										console.log(
 											'Button clicked, searchCapability:',
-											searchCapability
+											searchCapability,
 										);
 										searchCapability?.loadMore();
 									}}

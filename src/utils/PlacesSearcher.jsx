@@ -88,12 +88,6 @@ export function PlacesSearcher({
 								isOpenNow = checkIfOpen(hours);
 							}
 
-							// console.log(
-							// 	'hey this ran',
-							// 	`Author: ${place.reviews[0].authorAttribution.displayName}, Review: ${place.reviews[0].text}, Rating: ${place.reviews[0].rating}`,
-							// );
-							// console.log(place.reviews[0].authorAttribution);
-
 							return {
 								place_id: place.id,
 								name: place.displayName,
