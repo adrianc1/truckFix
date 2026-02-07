@@ -6,7 +6,7 @@ import checkIfOpen from './checkIfOpen';
 export function PlacesSearcher({
 	onPlacesFound,
 	center,
-	query = 'diesel truck mechanic',
+	query = 'diesel truck mechanic near me',
 	searchTrigger,
 	onSearchCapabilityReady,
 }) {
@@ -32,7 +32,7 @@ export function PlacesSearcher({
 			// Create a unique key for this search
 			const searchKey = `${center.lat}-${center.lng}-${query}-${searchTrigger}-${limit}`;
 
-			// Skip if we already did this exact search
+			// Skip if already did search
 			if (lastSearchRef.current === searchKey) {
 				console.log('[PlacesSearcher] Skipping duplicate search');
 				return;
