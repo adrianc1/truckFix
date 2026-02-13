@@ -25,7 +25,7 @@ export function PlacesSearcher({
 	useEffect(() => {
 		async function searchPlaces(limit) {
 			if (!placesLib || !coreLib || !map || !center) {
-				console.log('PlacesSearcher - waiting for libraries to load...');
+				// console.log('PlacesSearcher - waiting for libraries to load...');
 				return;
 			}
 
@@ -34,7 +34,7 @@ export function PlacesSearcher({
 
 			// Skip if already did search
 			if (lastSearchRef.current === searchKey) {
-				console.log('[PlacesSearcher] Skipping duplicate search');
+				// console.log('[PlacesSearcher] Skipping duplicate search');
 				return;
 			}
 
@@ -65,7 +65,7 @@ export function PlacesSearcher({
 
 			try {
 				const { places: results } = await Place.searchByText(request);
-				console.log('PlacesSearcher - raw results:', results);
+				// console.log('PlacesSearcher - raw results:', results);
 
 				if (results && results.length) {
 					// Transform to match data structure on details page

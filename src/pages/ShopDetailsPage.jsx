@@ -2,9 +2,6 @@ import { Clock, MapPin, Phone, Wrench, Star } from 'lucide-react';
 import star from '../assets/images/star.svg';
 
 const ShopDetailsPage = ({ selectedShop }) => {
-	console.log('THE SELECTED SHOP:', selectedShop);
-
-	// const reviews = selectedShop.reviews;
 	return (
 		<div className="px-4 pb-4">
 			{/* Shop Rating and Status */}
@@ -127,6 +124,13 @@ const ShopDetailsPage = ({ selectedShop }) => {
 							<p className="text-gray-700 text-sm leading-relaxed">
 								{review.text}
 							</p>
+							{/* Review Date */}
+
+							<span className="text-xs text-gray-500">
+								{review.publishTime
+									? new Date(review.publishTime).toLocaleDateString()
+									: review.relativePublishTimeDescription}
+							</span>
 						</li>
 					))}
 				</ul>
