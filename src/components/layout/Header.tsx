@@ -4,8 +4,13 @@ import settingsIcon from '../../assets/images/settings.svg';
 import { Link } from 'react-router-dom';
 import Truck from '../../assets/images/TruckFix.png';
 
-const Header = ({ darkMode, setDarkMode }) => {
-	// const [notifications, setNotifications] = useState(true);
+const Header = ({
+	darkMode,
+	setDarkMode,
+}: {
+	darkMode: boolean;
+	setDarkMode: (darkMode: boolean) => void;
+}) => {
 	const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
 	const openSettingsModal = () => {
@@ -24,9 +29,6 @@ const Header = ({ darkMode, setDarkMode }) => {
 		setDarkMode(!darkMode);
 	};
 
-	// const toggleNotifications = () => {
-	// 	setNotifications(!notifications);
-	// };
 	return (
 		<>
 			<header className="fixed mb-24 z-200 top-0 left-0 right-0 flex justify-between items-center py-1 px-4 bg-white/80  backdrop-blur-sm border-b border-gray-300/60">
@@ -60,15 +62,6 @@ const Header = ({ darkMode, setDarkMode }) => {
 						className="bg-white dark:bg-gray-800 rounded-lg shadow-2xl w-full max-w-md p-6 relative z-10000"
 						onClick={(e) => e.stopPropagation()}
 					>
-						{/* Close Button */}
-						{/* <button
-							onClick={() => setIsSettingsOpen(false)}
-							className="absolute cursor-pointer top-4 right-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
-							aria-label="Close modal"
-						>
-							<X className="w-6 h-6" />
-						</button> */}
-
 						{/* Modal Header */}
 						<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
 							Settings
@@ -95,25 +88,6 @@ const Header = ({ darkMode, setDarkMode }) => {
 									/>
 								</button>
 							</div>
-							{/* Notifications Toggle */}
-							{/* <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-								<span className="text-gray-900 dark:text-white font-medium">
-									Notifications
-								</span>
-								<button
-									onClick={toggleNotifications}
-									className={`relative w-14 h-7 rounded-full transition-colors cursor-pointer ${
-										notifications ? 'bg-orange-500' : 'bg-gray-300'
-									}`}
-									aria-label="Toggle notifications"
-								>
-									<span
-										className={`absolute top-1 left-1 w-5 h-5 bg-white rounded-full transition-transform duration-200 ${
-											notifications ? 'translate-x-7' : 'translate-x-0'
-										}`}
-									/>
-								</button>
-							</div> */}
 						</div>
 
 						<button

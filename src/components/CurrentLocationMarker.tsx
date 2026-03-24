@@ -1,6 +1,11 @@
 import { AdvancedMarker } from '@vis.gl/react-google-maps';
+import { LatLng } from '../types';
 
-export default function CurrentLocationMarker({ position }) {
+export default function CurrentLocationMarker({
+	position,
+}: {
+	position: LatLng;
+}) {
 	return (
 		<AdvancedMarker position={position} zIndex={1000}>
 			<div className="relative">
