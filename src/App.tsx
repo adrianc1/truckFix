@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Header from './components/layout/Header';
-import Results from './pages/Results';
-import LandingPage from './pages/LandingPage';
-import Terms from './pages/Terms.jsx';
-import CookiesPage from './pages/CookiesPage.jsx';
-import PrivacyPolicy from './pages/PrivacyPolicy.jsx';
+import Header from './components/layout/Header.js';
+import Results from './pages/Results.js';
+import LandingPage from './pages/LandingPage.js';
+import Terms from './pages/Terms.js';
+import CookiesPage from './pages/CookiesPage.js';
+import PrivacyPolicy from './pages/PrivacyPolicy.js';
 
 const App = () => {
 	const [darkMode, setDarkMode] = useState(false);
