@@ -60,23 +60,11 @@ export default function Results({ darkMode }) {
 
 		const filtered = shops.filter((shop) =>
 			shop.services?.some((service) =>
-				service?.toLowerCase().includes(filterTag.toLowerCase())
-			)
+				service?.toLowerCase().includes(filterTag.toLowerCase()),
+			),
 		);
 		setFilteredShops(filtered);
 	}, [shops, filterTag]);
-
-	// swiping behavior
-
-	// const handleModalContentClick = (e) => {
-	// 	e.stopPropagation();
-	// };
-
-	// const handleBackdropClick = (e) => {
-	// 	if (e.target === e.currentTarget) {
-	// 		closeModal();
-	// 	}
-	// };
 
 	return (
 		<div className="mt-14 overflow-y-hidden">

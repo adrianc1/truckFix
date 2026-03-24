@@ -1,7 +1,18 @@
 import { useState } from 'react';
+import { FilterTag } from '../../types';
 
-export default function RepairFilters({ setFilterTag }) {
-	const [shopCategories, setShopCategories] = useState([
+export default function RepairFilters({
+	setFilterTag,
+}: {
+	setFilterTag: (tag: FilterTag) => void;
+}) {
+	const [shopCategories, setShopCategories] = useState<
+		{
+			category: string;
+			value: FilterTag;
+			isActive: boolean;
+		}[]
+	>([
 		{ category: 'All Services', value: '', isActive: true },
 		{ category: 'Brakes', value: 'brakes', isActive: false },
 		{ category: 'Engine', value: 'engine', isActive: false },
@@ -11,7 +22,7 @@ export default function RepairFilters({ setFilterTag }) {
 		{ category: 'Electrical', value: 'electrical', isActive: false },
 		{ category: 'Roadside', value: 'roadside', isActive: false },
 	]);
-	function handleFilterTagClick(tag) {
+	function handleFilterTagClick(tag: FilterTag) {
 		setFilterTag(tag);
 	}
 
@@ -34,8 +45,8 @@ export default function RepairFilters({ setFilterTag }) {
 								prev.map((c) =>
 									c.value == cat.value
 										? { ...c, isActive: true }
-										: { ...c, isActive: false }
-								)
+										: { ...c, isActive: false },
+								),
 							);
 						}}
 					>

@@ -1,6 +1,14 @@
+import { useEffect, useState } from 'react';
 import ShopCard from './ShopCard';
+import { Shop } from '../../types';
 
-export default function ShopList({ shops = [], handleShopSelect }) {
+export default function ShopList({
+	shops = [],
+	handleShopSelect,
+}: {
+	shops: Shop[];
+	handleShopSelect: (shop: Shop) => void;
+}) {
 	return (
 		<section className="w-full h-auto px-2 mt-4">
 			<h2 className="nearby-shops mb-4 font-bold dark:text-gray-100 text-2xl">

@@ -5,7 +5,7 @@ import Footer from '../components/layout/Footer';
 import MapImg from '../assets/images/map.png';
 import SectionTag from '../components/SectionTag';
 import Features from '../features/shops/Features';
-import HowToFindShops from '../features/shops/HowToFindShops';
+import HowToFindShops from '../features/shops/HowToFindShops.tsx';
 import HeroSection from '../components/HeroSection';
 
 const LandingPage = () => {
@@ -24,7 +24,7 @@ const LandingPage = () => {
 			const encodedAddress = encodeURIComponent(address);
 
 			let res = await fetch(
-				`https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${apiKey}`
+				`https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${apiKey}`,
 			);
 
 			if (!res.ok) {
@@ -54,7 +54,7 @@ const LandingPage = () => {
 	async function reverseGeocode(lat, lng) {
 		try {
 			const res = await fetch(
-				`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`
+				`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`,
 			);
 
 			if (!res.ok) {
@@ -69,12 +69,12 @@ const LandingPage = () => {
 					addressComponents.find(
 						(component) =>
 							component.types.includes('locality') ||
-							component.types.includes('administrative_area_level_3')
+							component.types.includes('administrative_area_level_3'),
 					)?.long_name || '';
 
 				const state =
 					addressComponents.find((component) =>
-						component.types.includes('administrative_area_level_1')
+						component.types.includes('administrative_area_level_1'),
 					)?.short_name || '';
 
 				return {
@@ -117,7 +117,7 @@ const LandingPage = () => {
 				(error) => {
 					console.log('Geolocation error:', error);
 					alert('Unable to get your location. Please enter it manually.');
-				}
+				},
 			);
 		} else {
 			alert('Please enable location services');
@@ -136,14 +136,14 @@ const LandingPage = () => {
 			// If using current location, use existing coordinates (no API call needed!)
 			if (isUsingCurrentLocation && coords.lat && coords.lng) {
 				navigate(
-					`/results?lat=${coords.lat}&lng=${coords.lng}&city=${typedLocation}`
+					`/results?lat=${coords.lat}&lng=${coords.lng}&city=${typedLocation}`,
 				);
 			} else {
 				// Only geocode if it's a manually typed address
 				const coordinates = await geocodedLocation(typedLocation);
 				if (coordinates) {
 					navigate(
-						`/results?lat=${coordinates.lat}&lng=${coordinates.lng}&city=${typedLocation}`
+						`/results?lat=${coordinates.lat}&lng=${coordinates.lng}&city=${typedLocation}`,
 					);
 				}
 			}

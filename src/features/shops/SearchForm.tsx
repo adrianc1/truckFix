@@ -4,18 +4,21 @@ import { useNavigate } from 'react-router-dom';
 
 const SearchForm = () => {
 	const [typedLocation, setTypedLocation] = useState('');
-	const [coords, setCoords] = useState({ lat: '', lng: '' });
-	const [isUsingCurrentLocation, setIsUsingCurrentLocation] = useState();
+	const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(
+		null,
+	);
+	const [isUsingCurrentLocation, setIsUsingCurrentLocation] =
+		useState<boolean>(false);
 	const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 	const navigate = useNavigate();
 
-	async function geocodedLocation(address) {
+	async function geocodedLocation(address: string) {
 		try {
 			const encodedAddress = encodeURIComponent(address);
 
 			let res = await fetch(
-				`https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${apiKey}`
+				`https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${apiKey}`,
 			);
 
 			if (!res.ok) {
@@ -42,7 +45,7 @@ const SearchForm = () => {
 		}
 	}
 
-	const handleFormSubmit = async (e) => {
+	const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		if (!typedLocation.trim()) {
@@ -51,17 +54,17 @@ const SearchForm = () => {
 		}
 
 		try {
-			// If using current location, use existing coordinates (no API call needed!)
-			if (isUsingCurrentLocation && coords.lat && coords.lng) {
+			// If using current location, use existing coordinates
+			if (isUsingCurrentLocation && coords?.lat && coords?.lng) {
 				navigate(
-					`/results?lat=${coords.lat}&lng=${coords.lng}&city=${typedLocation}`
+					`/results?lat=${coords.lat}&lng=${coords.lng}&city=${typedLocation}`,
 				);
 			} else {
 				// Only geocode if it's a manually typed address
 				const coordinates = await geocodedLocation(typedLocation);
 				if (coordinates) {
 					navigate(
-						`/results?lat=${coordinates.lat}&lng=${coordinates.lng}&city=${typedLocation}`
+						`/results?lat=${coordinates.lat}&lng=${coordinates.lng}&city=${typedLocation}`,
 					);
 				}
 			}
@@ -70,8 +73,8 @@ const SearchForm = () => {
 		}
 	};
 
-	// Reset the flag when user starts typing manually
-	const handleInputChange = (e) => {
+	// Reset when user starts typing manually
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setTypedLocation(e.target.value);
 		if (isUsingCurrentLocation) {
 			setIsUsingCurrentLocation(false);
@@ -85,7 +88,6 @@ const SearchForm = () => {
 						type="text"
 						className="border w-full rounded-3xl py-2 pl-10 pr-12 text-gray-500 bg-white"
 						placeholder="Enter City / Town"
-						// value={typedLocation}
 						onChange={handleInputChange}
 					/>
 					<MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />

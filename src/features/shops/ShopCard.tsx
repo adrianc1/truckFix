@@ -1,5 +1,12 @@
 import star from '../../assets/images/star.svg';
-export default function ShopCard({ shop, onShopSelect }) {
+import { Shop } from '../../types';
+export default function ShopCard({
+	shop,
+	onShopSelect,
+}: {
+	shop: Shop;
+	onShopSelect: () => void;
+}) {
 	return (
 		<>
 			<div
