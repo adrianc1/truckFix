@@ -1,4 +1,6 @@
-const dummyShops = [
+import { Shop } from '../../types';
+
+const dummyShops: Shop[] = [
 	{
 		place_id: 'dummy_shop_1',
 		name: 'Padda Bros Express Repair',

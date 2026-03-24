@@ -32,6 +32,9 @@ export interface CurrentOpeningHours {
 	open_now: boolean;
 	weekday_text: string[];
 }
+export interface RegularOpeningHours {
+	weekdayDescriptions: string[];
+}
 
 // Main shop object from Google Places API
 export interface Shop {
