@@ -3,12 +3,19 @@ import { useMap, useMapsLibrary } from '@vis.gl/react-google-maps';
 import { calculateDistance } from './distanceCalculator';
 import checkIfOpen from './checkIfOpen';
 
+import { LatLng, SearchCapability, Shop } from '../types';
 export function PlacesSearcher({
 	onPlacesFound,
 	center,
 	query = 'diesel truck mechanic near me',
 	searchTrigger,
 	onSearchCapabilityReady,
+}: {
+	onPlacesFound: (places: Shop[]) => void;
+	center: LatLng;
+	query?: string;
+	searchTrigger: number;
+	onSearchCapabilityReady?: (capability: SearchCapability) => void;
 }) {
 	// Load libraries
 	const map = useMap();
@@ -16,21 +23,20 @@ export function PlacesSearcher({
 	const coreLib = useMapsLibrary('core');
 
 	// set states for keeping track of shop results
-	const [allPlaces, setAllPlaces] = useState([]);
+	const [allPlaces, setAllPlaces] = useState<Shop[]>([]);
 	const [displayLimit, setDisplayLimit] = useState(10);
 
 	// set ref for last search
-	const lastSearchRef = useRef(null);
+	const lastSearchRef = useRef<string | null>(null);
 
 	useEffect(() => {
-		async function searchPlaces(limit) {
+		async function searchPlaces() {
 			if (!placesLib || !coreLib || !map || !center) {
-				// console.log('PlacesSearcher - waiting for libraries to load...');
 				return;
 			}
 
 			// Create a unique key for this search
-			const searchKey = `${center.lat}-${center.lng}-${query}-${searchTrigger}-${limit}`;
+			const searchKey = `${center.lat}-${center.lng}-${query}-${searchTrigger}`;
 
 			// Skip if already did search
 			if (lastSearchRef.current === searchKey) {
@@ -82,7 +88,7 @@ export function PlacesSearcher({
 									: place.location.lng,
 							);
 							const hours = place.regularOpeningHours;
-							let isOpenNow = undefined;
+							let isOpenNow: boolean | undefined = undefined;
 
 							if (hours) {
 								isOpenNow = checkIfOpen(hours);
@@ -104,25 +110,27 @@ export function PlacesSearcher({
 									},
 								},
 								formatted_address: place.formattedAddress || '',
+								vicinity: place.formattedAddress || '',
 								rating: place.rating || 0,
 								user_ratings_total: place.userRatingCount || 0,
 								reviews: place.reviews || [],
 								business_status: place.businessStatus || 'OPERATIONAL',
+								types: place.types || [],
 								services: (place.types || []).filter(Boolean),
-								currentOpeningHours: place.regularOpeningHours,
+								regularOpeningHours: place.regularOpeningHours,
 								opening_hours: {
-									open_now: isOpenNow,
+									open_now: isOpenNow ?? false,
 								},
-								current_opening_hours: place.regularOpeningHours
-									? {
-											weekday_text:
-												place.regularOpeningHours.weekdayDescriptions || [],
-										}
-									: null,
+								current_opening_hours: {
+									open_now: isOpenNow ?? false,
+									weekday_text:
+										place.regularOpeningHours?.weekdayDescriptions ?? [],
+								},
+								photos: [],
 								source: 'google_places',
 								distance: distance,
 								phone: place.internationalPhoneNumber,
-							};
+							} satisfies Shop;
 						}),
 					);
 					// Sort by distance after transforming data

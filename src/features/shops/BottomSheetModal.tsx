@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
-import SearchForm from './SearchForm';
+import SearchForm from './SearchForm.tsx';
 import { useSwipeable } from 'react-swipeable';
-import ShopDetailsPage from '../../pages/ShopDetailsPage';
-import ShopList from './ShopList';
+import ShopDetailsPage from '../../pages/ShopDetailsPage.tsx';
+import ShopList from './ShopList.tsx';
 import { SearchCapability, Shop } from '../../types';
 
 export default function BottomSheetModal({
