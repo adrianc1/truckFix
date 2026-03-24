@@ -9,7 +9,7 @@ const Footer = () => {
 				{/* <h6 className="text-2xl font-bold">TruckFix</h6> */}
 			</div>
 			<ul className="w-2/3 flex justify-around dark:text-gray-100">
-				<Link to="terms-of-service">
+				<Link to="terms-owhf-service">
 					<li>Terms</li>
 				</Link>
 				<Link to="privacy-policy">

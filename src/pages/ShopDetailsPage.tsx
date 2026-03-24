@@ -1,7 +1,8 @@
 import { Clock, MapPin, Phone, Wrench, Star } from 'lucide-react';
 import star from '../assets/images/star.svg';
+import { Shop } from '../types';
 
-const ShopDetailsPage = ({ selectedShop }) => {
+const ShopDetailsPage = ({ selectedShop }: { selectedShop: Shop }) => {
 	return (
 		<div className="px-4 pb-4">
 			{/* Shop Rating and Status */}

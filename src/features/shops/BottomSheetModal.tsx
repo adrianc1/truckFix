@@ -1,11 +1,9 @@
 import { useEffect, useRef } from 'react';
-import { ArrowRight, MapPin } from 'lucide-react';
-import RepairSearchForm from './Filters';
-import RepairFilters from './RepairFilters';
-import SearchForm from './SearchForm';
+import SearchForm from './SearchForm.tsx';
 import { useSwipeable } from 'react-swipeable';
-import ShopDetailsPage from '../../pages/ShopDetailsPage';
-import ShopList from './ShopList';
+import ShopDetailsPage from '../../pages/ShopDetailsPage.tsx';
+import ShopList from './ShopList.tsx';
+import { SearchCapability, Shop } from '../../types';
 
 export default function BottomSheetModal({
 	filteredShops,
@@ -19,8 +17,20 @@ export default function BottomSheetModal({
 	searchCity,
 	shops,
 	setFilteredShops,
+}: {
+	filteredShops: Shop[];
+	setSelectedShop: (shop: Shop | null) => void;
+	selectedShop: Shop | null;
+	showShopDetails: boolean;
+	setShowShopDetails: (show: boolean) => void;
+	isModalOpen: boolean;
+	setIsModalOpen: (open: boolean) => void;
+	searchCapability: SearchCapability;
+	searchCity: string;
+	shops: Shop[];
+	setFilteredShops: (shops: Shop[]) => void;
 }) {
-	const modalContentRef = useRef(null);
+	const modalContentRef = useRef<HTMLDivElement>(null);
 	useEffect(() => {
 		console.log('searchCapability:', searchCapability);
 	}, [searchCapability]);
@@ -54,7 +64,7 @@ export default function BottomSheetModal({
 	};
 
 	// Handle shop selection - transition from list to details
-	const handleShopSelect = (shop) => {
+	const handleShopSelect = (shop: Shop) => {
 		setSelectedShop(shop);
 		setShowShopDetails(true);
 	};

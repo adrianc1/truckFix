@@ -1,9 +1,15 @@
 import { AdvancedMarker, Pin } from '@vis.gl/react-google-maps';
+import { Shop } from '../types';
 const PoiMarkers = ({
 	pois,
 	onMarkerClick,
 	setShowShopDetails,
 	setIsModalOpen,
+}: {
+	pois: Shop[];
+	onMarkerClick: (shop: Shop) => void;
+	setShowShopDetails: (show: boolean) => void;
+	setIsModalOpen: (open: boolean) => void;
 }) => {
 	return (
 		<>

@@ -7,28 +7,34 @@ import CurrentLocationMarker from '../components/CurrentLocationMarker';
 import PoiMarkers from '../components/PoiMarkers';
 import { APIProvider, Map } from '@vis.gl/react-google-maps';
 import { extractServicesFromShop } from '../utils/serviceExtractor';
+import { SearchCapability, Shop } from '../types';
 
-export default function Results({ darkMode }) {
-	const [filterTag, setFilterTag] = useState('');
-	const [filteredShops, setFilteredShops] = useState([]);
-	const [searchCity, setSearchCity] = useState('');
-	const [searchService, setSearchService] = useState('semi truck repair');
+export default function Results({ darkMode }: { darkMode: boolean }) {
+	const [filterTag, setFilterTag] = useState<string>('');
+	const [filteredShops, setFilteredShops] = useState<Shop[]>([]);
+	const [searchCity, setSearchCity] = useState<string>('');
+	const [searchService, setSearchService] =
+		useState<string>('semi truck repair');
 	const [searchParams] = useSearchParams();
-	const [shops, setShops] = useState([]);
-	const [loading, setLoading] = useState(false);
-	const [searchTrigger, setSearchTrigger] = useState(0);
-	const [selectedShop, setSelectedShop] = useState(null);
-	const [showShopDetails, setShowShopDetails] = useState(false);
-	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [mapCenter, setMapCenter] = useState();
-	const [mapKey, setMapKey] = useState(0);
-	const [searchCapability, setSearchCapability] = useState(null);
+	const [shops, setShops] = useState<Shop[]>([]);
+	const [loading, setLoading] = useState<boolean>(false);
+	const [searchTrigger, setSearchTrigger] = useState<number>(0);
+	const [selectedShop, setSelectedShop] = useState<Shop | null>(null);
+	const [showShopDetails, setShowShopDetails] = useState<boolean>(false);
+	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+	const [mapCenter, setMapCenter] = useState<{
+		lat: number;
+		lng: number;
+	} | null>(null);
+	const [mapKey, setMapKey] = useState<number>(0);
+	const [searchCapability, setSearchCapability] =
+		useState<SearchCapability | null>(null);
 
 	const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
-	const handlePlacesFound = useCallback((places) => {
+	const handlePlacesFound = useCallback((places: Shop[]) => {
 		// Update each shop with extracted services
-		const extractServices = places.map((shop) => ({
+		const extractServices = places.map((shop: Shop) => ({
 			...shop,
 			services: extractServicesFromShop(shop),
 		}));
@@ -38,8 +44,8 @@ export default function Results({ darkMode }) {
 	}, []);
 
 	const searchLocation = useMemo(() => {
-		const lat = parseFloat(searchParams.get('lat'));
-		const lng = parseFloat(searchParams.get('lng'));
+		const lat = parseFloat(searchParams.get('lat') ?? '');
+		const lng = parseFloat(searchParams.get('lng') ?? '');
 		return !isNaN(lat) && !isNaN(lng) ? { lat, lng } : null;
 	}, [searchParams]);
 
@@ -58,25 +64,13 @@ export default function Results({ darkMode }) {
 			return;
 		}
 
-		const filtered = shops.filter((shop) =>
+		const filtered = shops.filter((shop: Shop) =>
 			shop.services?.some((service) =>
-				service?.toLowerCase().includes(filterTag.toLowerCase())
-			)
+				service?.toLowerCase().includes(filterTag.toLowerCase()),
+			),
 		);
 		setFilteredShops(filtered);
 	}, [shops, filterTag]);
-
-	// swiping behavior
-
-	// const handleModalContentClick = (e) => {
-	// 	e.stopPropagation();
-	// };
-
-	// const handleBackdropClick = (e) => {
-	// 	if (e.target === e.currentTarget) {
-	// 		closeModal();
-	// 	}
-	// };
 
 	return (
 		<div className="mt-14 overflow-y-hidden">
@@ -90,9 +84,9 @@ export default function Results({ darkMode }) {
 					<Map
 						key={mapKey}
 						defaultZoom={13}
-						defaultCenter={mapCenter || searchLocation}
+						defaultCenter={mapCenter ?? searchLocation ?? { lat: 0, lng: 0 }}
 						mapId={import.meta.env.VITE_MAP_ID}
-						colorScheme={darkMode ? 'DARK' : ''}
+						colorScheme={darkMode ? 'DARK' : undefined}
 					>
 						<PlacesSearcher
 							onPlacesFound={handlePlacesFound}

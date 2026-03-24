@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 export default function SettingsModalDemo() {
-	const [darkMode, setDarkMode] = useState(false);
-	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [darkMode, setDarkMode] = useState<boolean>(false);
+	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
 	// Apply dark mode class to document
 	useEffect(() => {
@@ -16,15 +16,6 @@ export default function SettingsModalDemo() {
 	const toggleDarkMode = () => {
 		setDarkMode(!darkMode);
 	};
-
-	// const exitSettings = (e) => {
-	// 	e.stopPropagation();
-	// 	setDarkMode(!darkMode);
-	// 	console.log('exit');
-	// };
-	// const toggleNotifications = () => {
-	// 	setNotifications(!notifications);
-	// };
 
 	return (
 		<div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
@@ -65,27 +56,6 @@ export default function SettingsModalDemo() {
 									/>
 								</button>
 							</div>
-
-							{/* Notifications Toggle */}
-
-							{/* <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                <span className="text-gray-900 dark:text-white font-medium">
-                  Notifications
-                </span>
-                <button
-                  onClick={toggleNotifications}
-                  className={`relative w-14 h-7 rounded-full transition-colors ${
-                    notifications ? 'bg-orange-500' : 'bg-gray-300'
-                  }`}
-                  aria-label="Toggle notifications"
-                >
-                  <span
-                    className={`absolute top-1 left-1 w-5 h-5 bg-white rounded-full transition-transform duration-200 ${
-                      notifications ? 'translate-x-7' : 'translate-x-0'
-                    }`}
-                  />
-                </button>
-              </div> */}
 						</div>
 
 						{/* Save Button */}

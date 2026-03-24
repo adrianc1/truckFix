@@ -1,3 +1,5 @@
+import { Shop } from '../types';
+
 const SERVICE_KEYWORDS = {
 	def: ['def', 'diesel exhaust fluid', 'emissions'],
 	engine: ['engine', 'motor', 'diesel engine'],
@@ -12,8 +14,8 @@ const SERVICE_KEYWORDS = {
 	dot: ['dot inspection', 'inspection'],
 };
 
-export function extractServicesFromShop(shop) {
-	const services = new Set();
+export function extractServicesFromShop(shop: Shop) {
+	const services = new Set<string>();
 
 	// Combine name and reviews into searchable text
 	const text = [
@@ -31,7 +33,7 @@ export function extractServicesFromShop(shop) {
 		}
 	});
 
-	// Name-based heuristics
+	// additional words based on shop name
 	const name = (shop.name || '').toLowerCase();
 	if (name.includes('mobile') || name.includes('roadside')) {
 		services.add('roadside');
