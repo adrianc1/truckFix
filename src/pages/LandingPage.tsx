@@ -1,25 +1,26 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MapPin, Search, Navigation } from 'lucide-react';
-import Footer from '../components/layout/Footer';
+import Footer from '../components/layout/Footer.tsx';
 import MapImg from '../assets/images/map.png';
-import SectionTag from '../components/SectionTag';
-import Features from '../features/shops/Features';
+import SectionTag from '../components/SectionTag.tsx';
+import Features from '../features/shops/Features.tsx';
 import HowToFindShops from '../features/shops/HowToFindShops.tsx';
-import HeroSection from '../components/HeroSection';
+import HeroSection from '../components/HeroSection.tsx';
 
 const LandingPage = () => {
 	// States
-	const [coords, setCoords] = useState({ lat: '', lng: '' });
-	const [typedLocation, setTypedLocation] = useState('');
-	const [isUsingCurrentLocation, setIsUsingCurrentLocation] = useState(false);
+	const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
+	const [typedLocation, setTypedLocation] = useState<string>('');
+	const [isUsingCurrentLocation, setIsUsingCurrentLocation] =
+		useState<boolean>(false);
 
 	// API Key Import
 	const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 	let navigate = useNavigate();
 
-	async function geocodedLocation(address) {
+	async function geocodedLocation(address: string) {
 		try {
 			const encodedAddress = encodeURIComponent(address);
 
@@ -51,7 +52,7 @@ const LandingPage = () => {
 		}
 	}
 
-	async function reverseGeocode(lat, lng) {
+	async function reverseGeocode(lat: number, lng: number) {
 		try {
 			const res = await fetch(
 				`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`,
@@ -64,7 +65,7 @@ const LandingPage = () => {
 			const data = await res.json();
 
 			if (data.status === 'OK' && data.results.length > 0) {
-				const addressComponents = data.results[0].address_components;
+				const addressComponents: { types: string[]; long_name: string; short_name: string }[] = data.results[0].address_components;
 				const city =
 					addressComponents.find(
 						(component) =>
@@ -124,7 +125,7 @@ const LandingPage = () => {
 		}
 	};
 
-	const handleFormSubmit = async (e) => {
+	const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		if (!typedLocation.trim()) {
@@ -134,7 +135,7 @@ const LandingPage = () => {
 
 		try {
 			// If using current location, use existing coordinates (no API call needed!)
-			if (isUsingCurrentLocation && coords.lat && coords.lng) {
+			if (isUsingCurrentLocation && coords?.lat && coords?.lng) {
 				navigate(
 					`/results?lat=${coords.lat}&lng=${coords.lng}&city=${typedLocation}`,
 				);
@@ -153,7 +154,7 @@ const LandingPage = () => {
 	};
 
 	// Reset the flag when user starts typing manually
-	const handleInputChange = (e) => {
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setTypedLocation(e.target.value);
 		if (isUsingCurrentLocation) {
 			setIsUsingCurrentLocation(false);
