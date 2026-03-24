@@ -22,12 +22,12 @@ export interface ShopReview {
 	publishTime?: string;
 }
 
-// Basic open/closed status (the simple version from Google)
+// Basic open/closed status
 export interface OpeningHours {
 	open_now: boolean;
 }
 
-// Full hours breakdown with per-day text (e.g. "Monday: 6:00 AM – 10:00 PM")
+// Full hours breakdown with / day text (e.g. "Monday: 6:00 AM – 10:00 PM")
 export interface CurrentOpeningHours {
 	open_now: boolean;
 	weekday_text: string[];
@@ -41,7 +41,7 @@ export interface Shop {
 	// Info
 	place_id: string;
 	name: string;
-	source?: string; // "google_places" or undefined for mock data
+	source?: string;
 
 	// Address
 	formatted_address: string;

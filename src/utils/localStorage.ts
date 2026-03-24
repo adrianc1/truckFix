@@ -1,4 +1,4 @@
-export function setItem(key, value) {
+export function setItem(key: string, value: string) {
 	try {
 		window.localStorage.setItem(key, JSON.stringify(value));
 	} catch (error) {
@@ -6,14 +6,14 @@ export function setItem(key, value) {
 	}
 }
 
-export function getItem({ key }) {
+export function getItem<T>({ key }: { key: string }): T | null {
 	const item = localStorage.getItem(key);
 	if (item === null || item === 'undefined') {
 		return null;
 	}
 
 	try {
-		return JSON.parse(item);
+		return JSON.parse(item) as T;
 	} catch (error) {
 		console.log(error);
 	}
