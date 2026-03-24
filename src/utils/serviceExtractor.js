@@ -31,7 +31,7 @@ export function extractServicesFromShop(shop) {
 		}
 	});
 
-	// Name-based heuristics
+	// additional words based on shop name
 	const name = (shop.name || '').toLowerCase();
 	if (name.includes('mobile') || name.includes('roadside')) {
 		services.add('roadside');
