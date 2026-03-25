@@ -76,6 +76,13 @@ export default function Results({ darkMode }: { darkMode: boolean }) {
 		<div className="mt-14 overflow-y-hidden">
 			<Filters setFilterTag={setFilterTag} />
 
+			<PlacesSearcher
+				onPlacesFound={handlePlacesFound}
+				center={searchLocation}
+				query={'semi truck repair shop'}
+				searchTrigger={searchTrigger}
+				onSearchCapabilityReady={setSearchCapability}
+			/>
 			<APIProvider
 				apiKey={apiKey}
 				onLoad={() => console.log('Maps API has loaded.')}
@@ -88,13 +95,6 @@ export default function Results({ darkMode }: { darkMode: boolean }) {
 						mapId={import.meta.env.VITE_MAP_ID}
 						colorScheme={darkMode ? 'DARK' : undefined}
 					>
-						<PlacesSearcher
-							onPlacesFound={handlePlacesFound}
-							center={searchLocation}
-							query={'semi truck repair shop'}
-							searchTrigger={searchTrigger}
-							onSearchCapabilityReady={setSearchCapability}
-						/>
 						<PoiMarkers
 							pois={filteredShops}
 							onMarkerClick={setSelectedShop}
