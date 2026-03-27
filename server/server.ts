@@ -10,7 +10,7 @@ import placesRouter from './routes/places';
 const app = express();
 
 app.use(
-	cors({ origin: ['https://truckfix.netlify.app/', 'http://localhost:5173'] }),
+	cors({ origin: ['https://truckfix.netlify.app', 'http://localhost:5173'] }),
 );
 app.use(express.json());
 
