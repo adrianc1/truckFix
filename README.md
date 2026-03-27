@@ -22,6 +22,9 @@ A mobile-first React app that helps truck drivers find nearby repair shops while
 | Routing   | React Router DOM 7          |
 | Maps      | `@vis.gl/react-google-maps` |
 | Icons     | Lucide React                |
+| Backend   | Node.js + Express           |
+| Database  | PostgreSQL                  |
+| ORM       | Prisma                      |
 
 ## Architecture
 
@@ -39,6 +42,15 @@ src/
 │   └── useShops.tsx               # Custom hook; falls back to mock data
 ├── types/index.ts                 # Shared types (Shop, LatLng, FilterTag…)
 └── data/mocks/shopData.ts         # Mock data for offline development
+
+server/
+├── server.ts                      # Express server — proxies Google Places API (port 3000)
+├── db.ts                          # Prisma client instance
+└── routes/                        # API route handlers
+
+prisma/
+├── schema.prisma                  # DB schema (Shop, ShopHours, ShopService, ShopPhoto)
+└── migrations/                    # Prisma migration history
 ```
 
 **Data flow:** User enters address → geocoded to `{lat, lng}` → navigated to `/results?lat=X&lng=Y&city=Name` → `PlacesSearcher` queries Google Places → results distributed to map + bottom sheet.
@@ -48,7 +60,10 @@ src/
 - [x] Google Places API integration
 - [x] Distance calculation + open/closed detection
 - [x] Filter system
+- [x] Node.js/Express backend (API key protected server-side)
+- [x] PostgreSQL + Prisma ORM (schema defined)
 - [x] TypeScript migration (~91% complete)
-- [ ] Complete TS migration (`App.tsx`, `main.tsx`)
-- [ ] Node.js/Express backend (move API calls server-side to protect API key)
+- [x] Complete TS migration (`App.jsx`, `main.jsx`)
+- [ ] Cache response date to db
+- [ ] Combined saved and new results
 - [ ] Deploy to AWS
