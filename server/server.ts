@@ -9,13 +9,15 @@ import placesRouter from './routes/places';
 
 const app = express();
 
-app.use(cors({ origin: 'http://localhost:5173' }));
+app.use(
+	cors({ origin: ['https://truckfix.netlify.app/', 'http://localhost:5173'] }),
+);
 app.use(express.json());
 
 app.use('/api/shops', shopsRouter);
 app.use('/api/places', placesRouter);
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
 	console.log(`TruckFix server listening on port ${PORT}!`);
 });
