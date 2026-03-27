@@ -1,13 +1,21 @@
-import express, { Request, Response } from 'express';
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env' });
+dotenv.config({ path: '.env.local' });
+
+import express from 'express';
+import cors from 'cors';
+import shopsRouter from './routes/shops';
+import placesRouter from './routes/places';
 
 const app = express();
 
-app.get('/new', (req: Request, res: Response) => res.send('Hello, world!'));
+app.use(cors({ origin: 'http://localhost:5173' }));
+app.use(express.json());
+
+app.use('/api/shops', shopsRouter);
+app.use('/api/places', placesRouter);
 
 const PORT = 3000;
-app.listen(PORT, (error) => {
-	if (error) {
-		throw error;
-	}
+app.listen(PORT, () => {
 	console.log(`TruckFix server listening on port ${PORT}!`);
 });
