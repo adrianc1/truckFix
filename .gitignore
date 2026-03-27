@@ -11,8 +11,10 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+.env.local
 
-# AI tools
+#  tools
 CLAUDE.md
 .cursor/
 .cursorrules
@@ -28,3 +30,5 @@ CLAUDE.md
 *.njsproj
 *.sln
 *.sw?
+
+/src/generated/prisma

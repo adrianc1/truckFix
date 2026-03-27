@@ -10,6 +10,7 @@ app.use(express.json());
 
 // POST /api/places
 app.post('/api/places', async (req: Request, res: Response) => {
+	// req from frontend
 	const {
 		locationBias,
 		maxResultCount,
@@ -17,7 +18,9 @@ app.post('/api/places', async (req: Request, res: Response) => {
 	} = req.body;
 
 	if (!locationBias?.lat || !locationBias?.lng) {
-		res.status(400).json({ error: 'locationBias with lat and lng is required' });
+		res
+			.status(400)
+			.json({ error: 'locationBias with lat and lng is required' });
 		return;
 	}
 
@@ -27,7 +30,7 @@ app.post('/api/places', async (req: Request, res: Response) => {
 		return;
 	}
 
-	const body = {
+	const googleRequestBody = {
 		textQuery,
 		locationBias: {
 			circle: {
@@ -67,7 +70,7 @@ app.post('/api/places', async (req: Request, res: Response) => {
 					'X-Goog-Api-Key': apiKey,
 					'X-Goog-FieldMask': fields,
 				},
-				body: JSON.stringify(body),
+				body: JSON.stringify(googleRequestBody),
 			},
 		);
 
