@@ -57,7 +57,7 @@ export function PlacesSearcher({
 			};
 
 			try {
-				const response = await fetch('/api/places', {
+				const response = await fetch(`${import.meta.env.VITE_API_URL}/api/places`, {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
