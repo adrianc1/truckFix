@@ -90,7 +90,7 @@ export default function BottomSheetModal({
 			{/* Bottom Sheet Modal */}
 			<div
 				className={`
-    fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 shadow-xl rounded-t-2xl border border-gray-300
+    fixed bottom-0 left-0 right-0 bg-white dark:bg-vs-panel shadow-xl rounded-t-2xl border border-gray-300 dark:border-vs-border
     transition-transform duration-300 z-50 flex flex-col
     ${isModalOpen ? 'translate-y-0' : 'translate-y-[calc(100%-80px)]'}
   `}
@@ -103,7 +103,7 @@ export default function BottomSheetModal({
 					onClick={isModalOpen ? closeModal : openModal}
 				>
 					{/* Handle bar */}
-					<div className="w-12 h-1 bg-gray-300 rounded-full mx-auto mb-3"></div>
+					<div className="w-12 h-1 bg-gray-300 dark:bg-vs-border rounded-full mx-auto mb-3"></div>
 
 					{/* Preview content when collapsed */}
 					<div className="flex justify-between items-center">
@@ -119,23 +119,23 @@ export default function BottomSheetModal({
 									>
 										← Back
 									</button>
-									<h2 className="text-lg font-semibold dark:text-gray-100">
+									<h2 className="text-lg font-semibold dark:text-vs-heading">
 										{selectedShop.name}
 									</h2>
 								</>
 							) : (
 								<>
-									<h2 className="text-lg font-semibold dark:text-gray-100">
+									<h2 className="text-lg font-semibold dark:text-vs-heading">
 										Repair Shops
 									</h2>
-									<span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+									<span className="text-sm text-gray-500 dark:text-vs-muted bg-gray-100 dark:bg-vs-card px-2 py-1 rounded-full">
 										{filteredShops.length} Results
 									</span>
 								</>
 							)}
 						</div>
 
-						<div className="text-gray-400 dark:text-gray-100">
+						<div className="text-gray-400 dark:text-vs-muted">
 							{isModalOpen ? '▼' : '▲'}
 						</div>
 					</div>

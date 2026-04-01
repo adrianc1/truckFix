@@ -3,6 +3,7 @@ import { X } from 'lucide-react';
 import settingsIcon from '../../assets/images/settings.svg';
 import { Link } from 'react-router-dom';
 import Truck from '../../assets/images/TruckFix.png';
+import TruckDark from '../../assets/images/TruckFix-Dark_Mode.png';
 
 const Header = ({
 	darkMode,
@@ -31,9 +32,10 @@ const Header = ({
 
 	return (
 		<>
-			<header className="fixed mb-24 z-200 top-0 left-0 right-0 flex justify-between items-center py-1 px-4 bg-white/80  backdrop-blur-sm border-b border-gray-300/60">
+			<header className="fixed mb-24 z-200 top-0 left-0 right-0 flex justify-between items-center py-1 px-4 bg-white/80 dark:bg-vs-card/95 backdrop-blur-sm border-b border-gray-300/60 dark:border-vs-border">
 				<Link to="/" className="flex items-center gap-1 lg:pl-24">
-					<img src={Truck} alt="TruckFix Logo" className="w-16 h-16 m-0 p-0" />
+					<img src={Truck} alt="TruckFix Logo" className="w-16 h-16 m-0 p-0 dark:hidden" />
+					<img src={TruckDark} alt="TruckFix Logo" className="w-16 h-16 m-0 p-0 hidden dark:block" />
 				</Link>
 
 				<div className="absolute left-1/2 transform -translate-x-1/2">
@@ -47,7 +49,7 @@ const Header = ({
 					<img
 						src={settingsIcon}
 						onClick={openSettingsModal}
-						className="w-6 h-6 cursor-pointer"
+						className="w-6 h-6 cursor-pointer dark:invert"
 						alt="Settings Icon"
 					/>
 				</div>
@@ -59,19 +61,19 @@ const Header = ({
 				>
 					{/* Modal */}
 					<div
-						className="bg-white dark:bg-gray-800 rounded-lg shadow-2xl w-full max-w-md p-6 relative z-10000"
+						className="bg-white dark:bg-vs-panel rounded-lg shadow-2xl w-full max-w-md p-6 relative z-10000 dark:border dark:border-vs-border"
 						onClick={(e) => e.stopPropagation()}
 					>
 						{/* Modal Header */}
-						<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+						<h2 className="text-2xl font-bold text-gray-900 dark:text-vs-heading mb-6">
 							Settings
 						</h2>
 
 						{/* Settings Options */}
 						<div className="space-y-4">
 							{/* Dark Mode Toggle */}{' '}
-							<div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-								<span className="text-gray-900 dark:text-white font-medium">
+							<div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-vs-card rounded-lg dark:border dark:border-vs-border">
+								<span className="text-gray-900 dark:text-vs-text font-medium">
 									Dark Mode
 								</span>
 								<button

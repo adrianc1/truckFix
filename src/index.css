@@ -2,6 +2,19 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* VS Code Dark+ color palette */
+@theme {
+  --color-vs-bg: #1e1e1e;
+  --color-vs-panel: #252526;
+  --color-vs-card: #2d2d30;
+  --color-vs-hover: #37373d;
+  --color-vs-border: #3c3c3c;
+  --color-vs-text: #cccccc;
+  --color-vs-muted: #8c8c8c;
+  --color-vs-heading: #d4d4d4;
+  --color-vs-input: #3c3c3c;
+}
+
 .feature-card {
 	opacity: 0;
 	transform: translateY(20px);

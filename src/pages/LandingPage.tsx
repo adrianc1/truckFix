@@ -162,7 +162,7 @@ const LandingPage = () => {
 	};
 
 	return (
-		<div className="pt-24 dark:bg-gray-800">
+		<div className="pt-24 dark:bg-vs-bg">
 			<section className="w-[95%] mx-auto mt-8">
 				<HeroSection />
 
@@ -174,7 +174,7 @@ const LandingPage = () => {
 					<div className="relative mt-4 w-full ">
 						<input
 							type="text"
-							className="border w-full rounded-3xl py-2 pl-10 pr-4 text-gray-500 dark:text-white"
+							className="border w-full rounded-3xl py-2 pl-10 pr-4 text-gray-500 dark:text-vs-text dark:bg-vs-input dark:border-vs-border dark:placeholder-vs-muted"
 							placeholder="Enter City / Town"
 							value={typedLocation}
 							onChange={handleInputChange}

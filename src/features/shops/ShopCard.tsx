@@ -12,15 +12,15 @@ export default function ShopCard({
 			<div
 				key={shop.place_id}
 				onClick={onShopSelect}
-				className="flex w-full px-3 py-4 border-2 border-gray-200 rounded-xl h-auto mb-0.5 dark:text-gray-100"
+				className="flex w-full px-3 py-4 border border-gray-200 dark:border-vs-border rounded-xl h-auto mb-0.5 dark:bg-vs-panel dark:text-vs-text hover:bg-gray-50 dark:hover:bg-vs-hover transition-colors cursor-pointer"
 			>
 				{/* SHOP GENERAL INFORMATION */}
 				<div className="shop-info flex-grow min-w-0 flex flex-col">
-					<h5 className="repair-shop-name font-bold  text-lg mb-1">
+					<h5 className="repair-shop-name font-bold text-lg mb-1 dark:text-vs-heading">
 						{shop.name}
 					</h5>
 
-					<span className="text-gray-700 dark:text-gray-100">
+					<span className="text-gray-700 dark:text-vs-muted">
 						{shop.formatted_address}
 					</span>
 
@@ -54,7 +54,7 @@ export default function ShopCard({
 
 					<span
 						className={`is-open text-sm font-medium ${
-							shop.opening_hours?.open_now ? 'text-green-600' : 'text-red-600'
+							shop.opening_hours?.open_now ? 'text-green-500' : 'text-red-500'
 						}`}
 					>
 						{shop.opening_hours?.open_now ? 'Open Now' : 'Closed'}

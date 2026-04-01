@@ -86,7 +86,7 @@ const SearchForm = () => {
 				<div className="relative">
 					<input
 						type="text"
-						className="border w-full rounded-3xl py-2 pl-10 pr-12 text-gray-500 bg-white"
+						className="border w-full rounded-3xl py-2 pl-10 pr-12 text-gray-500 bg-white dark:bg-vs-input dark:border-vs-border dark:text-vs-text dark:placeholder-vs-muted"
 						placeholder="Enter City / Town"
 						onChange={handleInputChange}
 					/>
