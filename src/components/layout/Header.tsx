@@ -39,7 +39,7 @@ const Header = ({
 				</Link>
 
 				<div className="absolute left-1/2 transform -translate-x-1/2">
-					<h1 className="text-2xl text-center font-bold">
+					<h1 className="text-2xl text-center font-bold dark:text-vs-heading">
 						TRUCK
 						<span className="text-orange-500">FIX</span>
 					</h1>

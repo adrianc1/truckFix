@@ -4,13 +4,13 @@ import { Link } from 'react-router';
 
 const Footer = () => {
 	return (
-		<footer className="w-full flex flex-col justify-center gap-8 items-center border-t border-gray-300 mt-4">
+		<footer className="w-full flex flex-col justify-center gap-8 items-center border-t border-gray-300 dark:border-vs-border mt-4 dark:bg-vs-bg">
 			<div className="flex gap-2 mt-4">
 				<img src={Truck} alt="TruckFix Logo" className="h-32 w-32 dark:hidden" />
 				<img src={TruckDark} alt="TruckFix Logo" className="h-32 w-32 hidden dark:block" />
 			</div>
-			<ul className="w-2/3 flex justify-around dark:text-gray-100">
-				<Link to="terms-owhf-service">
+			<ul className="w-2/3 flex justify-around dark:text-vs-text">
+				<Link to="terms-of-service">
 					<li>Terms</li>
 				</Link>
 				<Link to="privacy-policy">
@@ -20,7 +20,7 @@ const Footer = () => {
 					<li>Cookies</li>
 				</Link>
 			</ul>
-			<span className="text-gray-400 mb-2">
+			<span className="text-gray-400 dark:text-vs-muted mb-2">
 				&copy; 2025 TruckFix. All rights reserved.
 			</span>
 		</footer>

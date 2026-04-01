@@ -118,6 +118,7 @@ export default function Results({ darkMode }: { darkMode: boolean }) {
 				isModalOpen={isModalOpen}
 				setIsModalOpen={setIsModalOpen}
 				searchCapability={searchCapability}
+				loading={loading}
 			/>
 		</div>
 	);

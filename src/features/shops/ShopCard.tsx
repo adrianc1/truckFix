@@ -26,17 +26,17 @@ export default function ShopCard({
 
 					{/* SHOP SERVICES */}
 					<div className="flex flex-wrap gap-1 mt-2">
-						{/* {shop.services.map((service, index) => (
+						{shop.services.map((service, index) => (
 							<span
 								key={index}
-								className="border border-gray-300 rounded-full px-2 py-1 text-xs bg-gray-50 hover:bg-gray-100 transition-colors text-center"
+								className="border border-gray-300 dark:border-vs-border rounded-full px-2 py-1 text-xs bg-gray-50 dark:bg-vs-hover dark:text-vs-muted hover:bg-gray-100 dark:hover:bg-vs-border transition-colors text-center"
 								style={{ minWidth: '60px' }}
 							>
 								{service.length > 12
 									? `${service.substring(0, 12)}...`
 									: service}
 							</span>
-						))} */}
+						))}
 						<span className="rating flex justify-center items-center gap-1">
 							<div className="star w-4 h-4">
 								<img src={star} alt="" className="w-full h-full" />

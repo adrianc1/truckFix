@@ -17,6 +17,7 @@ export default function BottomSheetModal({
 	searchCity,
 	shops,
 	setFilteredShops,
+	loading,
 }: {
 	filteredShops: Shop[];
 	setSelectedShop: (shop: Shop | null) => void;
@@ -29,6 +30,7 @@ export default function BottomSheetModal({
 	searchCity: string;
 	shops: Shop[];
 	setFilteredShops: (shops: Shop[]) => void;
+	loading: boolean;
 }) {
 	const modalContentRef = useRef<HTMLDivElement>(null);
 	useEffect(() => {
@@ -158,6 +160,7 @@ export default function BottomSheetModal({
 							<ShopList
 								shops={filteredShops.sort((a, b) => a.distance - b.distance)}
 								handleShopSelect={handleShopSelect}
+								loading={loading}
 							/>
 							<div className="p-4">
 								<button
