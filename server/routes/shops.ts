@@ -1,20 +1,8 @@
-import { Router, Request, Response } from 'express';
-import prisma from '../db';
-
+import { Router } from 'express';
+import { getShops } from '../controllers/shopsController';
 const router = Router();
 
 // return all verified shops
-router.get('/', async (_req: Request, res: Response) => {
-	const shops = await prisma.shop.findMany({
-		where: { status: 'verified' },
-		include: {
-			hours: true,
-			services: true,
-			photos: true,
-		},
-	});
-
-	res.json(shops);
-});
+router.get('/', getShops);
 
 export default router;

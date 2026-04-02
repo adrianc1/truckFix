@@ -3,6 +3,7 @@ import { calculateDistance } from './distanceCalculator';
 import checkIfOpen from './checkIfOpen';
 
 import { LatLng, SearchCapability, Shop } from '../types';
+
 export function PlacesSearcher({
 	onPlacesFound,
 	center,
@@ -57,13 +58,16 @@ export function PlacesSearcher({
 			};
 
 			try {
-				const response = await fetch(`${import.meta.env.VITE_API_URL}/api/places`, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
+				const response = await fetch(
+					`${import.meta.env.VITE_API_URL}/api/places`,
+					{
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify(request),
 					},
-					body: JSON.stringify(request),
-				});
+				);
 
 				if (!response.ok) {
 					const error = await response.text();
@@ -79,7 +83,7 @@ export function PlacesSearcher({
 				if (results && results.length) {
 					// Transform to match data structure on details page
 					const transformedPlaces = await Promise.all(
-						results.map(async (place) => {
+						results.map(async (place: any) => {
 							const placeLat = place.location.latitude ?? place.location.lat;
 							const placeLng = place.location.longitude ?? place.location.lng;
 							const distance = calculateDistance(
@@ -100,8 +104,14 @@ export function PlacesSearcher({
 								name: place.displayName?.text || place.displayName,
 								geometry: {
 									location: {
-										lat: typeof placeLat === 'function' ? placeLat() : Number(placeLat),
-										lng: typeof placeLng === 'function' ? placeLng() : Number(placeLng),
+										lat:
+											typeof placeLat === 'function'
+												? placeLat()
+												: Number(placeLat),
+										lng:
+											typeof placeLng === 'function'
+												? placeLng()
+												: Number(placeLng),
 									},
 								},
 								formatted_address: place.formattedAddress || '',
@@ -114,7 +124,8 @@ export function PlacesSearcher({
 									authorAttribution: {
 										displayName: r.authorAttribution?.displayName ?? '',
 									},
-									relativePublishTimeDescription: r.relativePublishTimeDescription ?? '',
+									relativePublishTimeDescription:
+										r.relativePublishTimeDescription ?? '',
 									publishTime: r.publishTime,
 								})),
 								business_status: place.businessStatus || 'OPERATIONAL',
