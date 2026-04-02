@@ -10,7 +10,7 @@ datasource db {
 
 model Shop {
   id               String   @id @default(uuid())
-  googlePlaceId    String?  @unique
+  placeId          String?  @unique @map("place_id")
   source           String   @default("manual") // "google" | "manual"
 
   // Core info

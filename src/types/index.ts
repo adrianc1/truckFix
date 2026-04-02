@@ -39,7 +39,7 @@ export interface RegularOpeningHours {
 // Main shop object from Google Places API
 export interface Shop {
 	// Info
-	place_id: string;
+	placeId: string;
 	name: string;
 	source?: string;
 
@@ -47,7 +47,7 @@ export interface Shop {
 	formatted_address: string;
 	vicinity: string;
 
-	//  Location - used by  map
+	//  Location for the map
 	geometry: {
 		location: LatLng;
 	};

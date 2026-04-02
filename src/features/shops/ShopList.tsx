@@ -50,7 +50,7 @@ export default function ShopList({
 				<div className="shop-list-container w-full space-y-3 cursor-pointer">
 					{shops.map((shop) => (
 						<ShopCard
-							key={shop.place_id}
+							key={shop.placeId}
 							shop={shop}
 							onShopSelect={() => handleShopSelect(shop)}
 						/>

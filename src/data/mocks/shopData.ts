@@ -2,7 +2,7 @@ import { Shop } from '../../types';
 
 const dummyShops: Shop[] = [
 	{
-		place_id: 'dummy_shop_1',
+		placeId: 'dummy_shop_1',
 		name: 'Padda Bros Express Repair',
 		vicinity: '951 S S Anaheim Blvd, Anaheim, CA 92805',
 		rating: 4.5,
@@ -57,7 +57,7 @@ const dummyShops: Shop[] = [
 		accepts_large_vehicles: true,
 	},
 	{
-		place_id: 'dummy_shop_2',
+		placeId: 'dummy_shop_2',
 		name: 'Crosby Truck Service',
 		vicinity: '1000 W Olympic Blvd, Los Angeles, CA 90015',
 		rating: 4.2,
@@ -99,7 +99,7 @@ const dummyShops: Shop[] = [
 		accepts_large_vehicles: true,
 	},
 	{
-		place_id: 'dummy_shop_3',
+		placeId: 'dummy_shop_3',
 		name: 'Diesel Depot',
 		vicinity: '3400 E Washington Blvd, Vernon, CA 90058',
 		rating: 4.7,
@@ -146,7 +146,7 @@ const dummyShops: Shop[] = [
 		accepts_large_vehicles: true,
 	},
 	{
-		place_id: 'dummy_shop_4',
+		placeId: 'dummy_shop_4',
 		name: 'Quick Stop Truck Repair',
 		vicinity: '1800 E 49th St, Vernon, CA 90058',
 		rating: 3.9,
@@ -181,7 +181,7 @@ const dummyShops: Shop[] = [
 		accepts_large_vehicles: false,
 	},
 	{
-		place_id: 'dummy_shop_5',
+		placeId: 'dummy_shop_5',
 		name: 'Lone Star Rig Mechanics',
 		vicinity: '1700 E 25th St, Los Angeles, CA 90011',
 		rating: 4.8,
@@ -223,7 +223,7 @@ const dummyShops: Shop[] = [
 		accepts_large_vehicles: true,
 	},
 	{
-		place_id: 'dummy_shop_6',
+		placeId: 'dummy_shop_6',
 		name: 'LA Truck & Diesel Repair',
 		vicinity: '2450 E Washington Blvd, Los Angeles, CA',
 		rating: 4.7,
@@ -265,7 +265,7 @@ const dummyShops: Shop[] = [
 		accepts_large_vehicles: true,
 	},
 	{
-		place_id: 'dummy_shop_7',
+		placeId: 'dummy_shop_7',
 		name: 'Westside Fleet Services',
 		vicinity: '9800 W Pico Blvd, Los Angeles, CA',
 		rating: 4.5,
@@ -307,7 +307,7 @@ const dummyShops: Shop[] = [
 		accepts_large_vehicles: true,
 	},
 	{
-		place_id: 'dummy_shop_8',
+		placeId: 'dummy_shop_8',
 		name: "Hayden's Heavy Duty Garage",
 		vicinity: '1125 S Main St, Los Angeles, CA',
 		rating: 4.9,
@@ -349,7 +349,7 @@ const dummyShops: Shop[] = [
 		accepts_large_vehicles: true,
 	},
 	{
-		place_id: 'dummy_shop_9',
+		placeId: 'dummy_shop_9',
 		name: 'South Bay Rig Repair',
 		vicinity: '1900 E Dominguez St, Carson, CA 90746',
 		rating: 4.6,
@@ -391,7 +391,7 @@ const dummyShops: Shop[] = [
 		accepts_large_vehicles: true,
 	},
 	{
-		place_id: 'dummy_shop_10',
+		placeId: 'dummy_shop_10',
 		name: 'LA Fleet Care',
 		vicinity: '8800 S Alameda St, Los Angeles, CA 90002',
 		rating: 4.4,
@@ -433,7 +433,7 @@ const dummyShops: Shop[] = [
 		accepts_large_vehicles: true,
 	},
 	{
-		place_id: 'dummy_shop_11',
+		placeId: 'dummy_shop_11',
 		name: 'LA Fleet Care',
 		vicinity: '8800 S Alameda St, Los Angeles, CA 90002',
 		rating: 4.4,

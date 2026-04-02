@@ -17,7 +17,7 @@ const PoiMarkers = ({
 				if (!poi) return null;
 				return (
 					<AdvancedMarker
-						key={poi.place_id}
+						key={poi.placeId}
 						position={poi.geometry.location}
 						onClick={() => {
 							onMarkerClick(poi);

@@ -96,7 +96,7 @@ export function PlacesSearcher({
 							}
 
 							return {
-								place_id: place.id,
+								placeId: place.id,
 								name: place.displayName?.text || place.displayName,
 								geometry: {
 									location: {

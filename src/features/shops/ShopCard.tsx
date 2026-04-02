@@ -10,7 +10,7 @@ export default function ShopCard({
 	return (
 		<>
 			<div
-				key={shop.place_id}
+				key={shop.placeId}
 				onClick={onShopSelect}
 				className="flex w-full px-3 py-4 border border-gray-200 dark:border-vs-border rounded-xl h-auto mb-0.5 dark:bg-vs-panel dark:text-vs-text hover:bg-gray-50 dark:hover:bg-vs-hover transition-colors cursor-pointer"
 			>
