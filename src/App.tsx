@@ -8,7 +8,7 @@ import CookiesPage from './pages/CookiesPage.tsx';
 import PrivacyPolicy from './pages/PrivacyPolicy.tsx';
 
 const App = () => {
-	const [darkMode, setDarkMode] = useState(false);
+	const [darkMode, setDarkMode] = useState(true);
 
 	return (
 		<div className="w-full h-full">
