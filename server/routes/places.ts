@@ -1,9 +1,9 @@
-import { Router, Request, Response } from 'express';
-import { searchPlacesAPI } from '../services/placesServices';
+import { Router } from 'express';
+import { searchGooglePlaces } from '../services/placesServices';
 
 const router = Router();
 
 // proxy to Google Places API
-router.post('/', searchPlacesAPI);
+router.post('/', searchGooglePlaces);
 
 export default router;

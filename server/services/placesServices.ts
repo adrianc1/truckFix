@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-const searchPlacesAPI = async (req: Request, res: Response) => {
+const searchGooglePlaces = async (req: Request, res: Response) => {
 	const {
 		locationBias,
 		maxResultCount,
@@ -78,4 +78,4 @@ const searchPlacesAPI = async (req: Request, res: Response) => {
 	}
 };
 
-export { searchPlacesAPI };
+export { searchGooglePlaces };

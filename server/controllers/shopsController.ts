@@ -1,5 +1,7 @@
 import { getAllShops, getNearbyShops } from '../services/shopService';
 import { Request, Response } from 'express';
+
+// get all shops
 const getShops = async (req: Request, res: Response) => {
 	try {
 		const shops = await getAllShops();
@@ -10,6 +12,7 @@ const getShops = async (req: Request, res: Response) => {
 	}
 };
 
+// get nearby shops based on lat, lng, and radius
 const nearbyShops = async (req: Request, res: Response) => {
 	const { lat, lng, radius } = req.query;
 
