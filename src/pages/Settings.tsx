@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 export default function SettingsModalDemo() {
-	const [darkMode, setDarkMode] = useState<boolean>(false);
+	const [darkMode, setDarkMode] = useState<boolean>(true);
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
 	// Apply dark mode class to document
