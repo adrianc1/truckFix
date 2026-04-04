@@ -14,6 +14,7 @@ const getShops = async (req: Request, res: Response) => {
 
 // get nearby shops based on lat, lng, and radius
 const nearbyShops = async (req: Request, res: Response) => {
+	console.log('Received nearby shops request with query:', req.query);
 	const { lat, lng, radius } = req.query;
 
 	if (!lat || !lng || !radius) {
@@ -26,6 +27,7 @@ const nearbyShops = async (req: Request, res: Response) => {
 			Number(lng),
 			Number(radius),
 		);
+		console.log('Nearby shops found:', results);
 		res.json(results);
 	} catch (error) {
 		console.error('Error fetching nearby shops:', error);

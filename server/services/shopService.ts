@@ -36,6 +36,12 @@ const getNearbyShops = async (lat: number, lng: number, radius: number) => {
 				lat: { gte: minLat, lte: maxLat },
 				lng: { gte: minLng, lte: maxLng },
 			},
+			include: {
+				hours: true,
+				services: true,
+				photos: true,
+				reviews: true,
+			},
 		});
 
 		return nearbyShops.filter((shop) => {

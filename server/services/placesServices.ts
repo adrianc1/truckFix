@@ -4,7 +4,7 @@ const searchGooglePlaces = async (req: Request, res: Response) => {
 	const {
 		locationBias,
 		maxResultCount,
-		textQuery = 'diesel truck mechanic',
+		textQuery = 'diesel truck repair shop',
 	} = req.body;
 
 	if (!locationBias?.lat || !locationBias?.lng) {
@@ -54,7 +54,7 @@ const searchGooglePlaces = async (req: Request, res: Response) => {
 		const response = await fetch(
 			'https://places.googleapis.com/v1/places:searchText',
 			{
-				method: 'POST',
+				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
 					'X-Goog-Api-Key': apiKey,
@@ -78,4 +78,6 @@ const searchGooglePlaces = async (req: Request, res: Response) => {
 	}
 };
 
-export { searchGooglePlaces };
+const saveGooglePlace = async () => {};
+
+export { searchGooglePlaces, saveGooglePlace };
