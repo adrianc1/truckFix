@@ -16,6 +16,7 @@ model Shop {
   // Core info
   name             String
   formattedAddress String
+  vicinity         String?
   lat              Float
   lng              Float
   phone            String?
@@ -27,12 +28,19 @@ model Shop {
   rating           Float?
   userRatingsTotal Int?
 
-  // Truck-specific flags (set manually or extracted)
+  // Truck-specific flags 
   specializesInTrucks   Boolean @default(false)
   acceptsLargeVehicles  Boolean @default(false)
+  isMobileService       Boolean @default(false)
+  is24Hours             Boolean @default(false)
+  hasDriverLounge       Boolean @default(false)
+  hasTruckParking       Boolean @default(false)
+  acceptsFleet          Boolean @default(false)
 
   // Verification
   status           String   @default("pending") // "pending" | "verified" | "rejected"
+  isFeatured       Boolean  @default(false)
+  isClaimed        Boolean  @default(false)
 
   // Cache control
   lastSyncedAt     DateTime?
@@ -40,10 +48,13 @@ model Shop {
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 
+  @@index([lat, lng])
+
   // Relations
   hours            ShopHours[]
   services         ShopService[]
   photos           ShopPhoto[]
+  reviews          ShopReview[]
 }
 
 model ShopHours {
@@ -54,6 +65,8 @@ model ShopHours {
   openTime    String? // "08:00"
   closeTime   String? // "18:00"
   isClosed    Boolean @default(false)
+
+  @@unique([shopId, dayOfWeek])
 }
 
 model ShopService {
@@ -71,4 +84,24 @@ model ShopPhoto {
   width          Int?
   height         Int?
   source         String @default("google") // "google" | "manual"
+}
+
+model ShopReview {
+  id          String   @id @default(uuid())
+  shopId      String
+  shop        Shop     @relation(fields: [shopId], references: [id], onDelete: Cascade)
+
+  source      String   // "google" | "platform"
+
+  // Google reviews
+  authorName  String?
+  authorPhoto String?
+  rating      Int      // 1-5
+  text        String?
+  publishedAt DateTime?
+
+  // Platform reviews (source = "platform")
+  userId      String?  // future User relation
+
+  createdAt   DateTime @default(now())
 }
