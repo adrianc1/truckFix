@@ -2,19 +2,18 @@ import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Filters from '../features/shops/Filters';
 import BottomSheetModal from '../features/shops/BottomSheetModal';
-import { PlacesSearcher } from '../utils/PlacesSearcher';
+import { ShopSearcher } from '../utils/ShopSearcher';
 import CurrentLocationMarker from '../components/CurrentLocationMarker';
 import PoiMarkers from '../components/PoiMarkers';
 import { APIProvider, Map } from '@vis.gl/react-google-maps';
 import { extractServicesFromShop } from '../utils/serviceExtractor';
+import { calculateDistance } from '../utils/distanceCalculator';
 import { SearchCapability, Shop } from '../types';
 
 export default function Results({ darkMode }: { darkMode: boolean }) {
 	const [filterTag, setFilterTag] = useState<string>('');
 	const [filteredShops, setFilteredShops] = useState<Shop[]>([]);
 	const [searchCity, setSearchCity] = useState<string>('');
-	const [searchService, setSearchService] =
-		useState<string>('semi truck repair');
 	const [searchParams] = useSearchParams();
 	const [shops, setShops] = useState<Shop[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
@@ -76,13 +75,14 @@ export default function Results({ darkMode }: { darkMode: boolean }) {
 		<div className="mt-14 overflow-y-hidden">
 			<Filters setFilterTag={setFilterTag} />
 
-			<PlacesSearcher
-				onPlacesFound={handlePlacesFound}
-				center={searchLocation}
-				query={'semi truck repair shop'}
-				searchTrigger={searchTrigger}
-				onSearchCapabilityReady={setSearchCapability}
-			/>
+			{searchLocation && (
+				<ShopSearcher
+					onPlacesFound={handlePlacesFound}
+					center={searchLocation}
+					searchTrigger={searchTrigger}
+					onSearchCapabilityReady={setSearchCapability}
+				/>
+			)}
 			<APIProvider
 				apiKey={apiKey}
 				onLoad={() => console.log('Maps API has loaded.')}
@@ -101,7 +101,9 @@ export default function Results({ darkMode }: { darkMode: boolean }) {
 							setShowShopDetails={setShowShopDetails}
 							setIsModalOpen={setIsModalOpen}
 						/>
-						<CurrentLocationMarker position={searchLocation} />
+						{searchLocation && (
+							<CurrentLocationMarker position={searchLocation} />
+						)}
 					</Map>
 				</div>
 			</APIProvider>
