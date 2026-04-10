@@ -1,36 +1,20 @@
-import prisma from 'db';
-import { Request, Response } from 'express';
+import prisma from '../db';
 
 // TODO: implement saving Google Places results to DB and returning them in nearbyShops if they are not already in the DB
 
-// TODO: rewrite without req and res, and instead return the data or throw errors, and let the controller handle the HTTP response
-const searchGooglePlaces = async (req: Request, res: Response) => {
-	const {
-		locationBias,
-		maxResultCount,
-		query = 'diesel truck repair shop',
-	} = req.body;
-
-	if (!locationBias?.lat || !locationBias?.lng) {
-		res
-			.status(400)
-			.json({ error: 'locationBias with lat and lng is required' });
-		return;
-	}
-
+const searchGooglePlaces = async (lat: number, lng: number, maxResultCount: number = 20, query: string = 'diesel truck repair shop') => {
 	const apiKey = process.env.VITE_GOOGLE_MAPS_API_KEY;
 	if (!apiKey) {
-		res.status(500).json({ error: 'GMA key not configured' });
-		return;
+		throw new Error('Google Maps API key not configured');
 	}
 
 	const googleRequestBody = {
-		query,
+		textQuery: query,
 		locationBias: {
 			circle: {
 				center: {
-					latitude: Number(locationBias.lat),
-					longitude: Number(locationBias.lng),
+					latitude: lat,
+					longitude: lng,
 				},
 				radius: 5000,
 			},
@@ -54,32 +38,26 @@ const searchGooglePlaces = async (req: Request, res: Response) => {
 		'places.internationalPhoneNumber',
 	].join(',');
 
-	try {
-		const response = await fetch(
-			'https://places.googleapis.com/v1/places:searchText',
-			{
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-					'X-Goog-Api-Key': apiKey,
-					'X-Goog-FieldMask': fields,
-				},
-				body: JSON.stringify(googleRequestBody),
+	const response = await fetch(
+		'https://places.googleapis.com/v1/places:searchText',
+		{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-Goog-Api-Key': apiKey,
+				'X-Goog-FieldMask': fields,
 			},
-		);
+			body: JSON.stringify(googleRequestBody),
+		},
+	);
 
-		if (!response.ok) {
-			const error = await response.text();
-			res.status(response.status).json({ error });
-			return;
-		}
-
-		const data = await response.json();
-		res.json(data);
-	} catch (err) {
-		console.error('Places API error:', err);
-		res.status(500).json({ error: 'Failed to fetch places' });
+	if (!response.ok) {
+		const error = await response.text();
+		throw new Error(`Google Places API error: ${error}`);
 	}
+
+	const data = await response.json();
+	return data.places ?? [];
 };
 
 const saveGooglePlace = async (unSavedPlaces: any[]) => {

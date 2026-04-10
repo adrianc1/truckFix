@@ -43,7 +43,7 @@ export function ShopSearcher({
 
 				if (!response.ok) {
 					const error = await response.text();
-					console.error('PlacesSearcher - API error:', error);
+					console.error('ShopSearcher - API error:', error);
 					setAllPlaces([]);
 					onPlacesFound([]);
 					return;

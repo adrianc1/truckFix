@@ -29,18 +29,22 @@ const nearbyShops = async (req: Request, res: Response) => {
 		);
 
 		if (results.length === 0) {
-			console.log('No nearby shops found for the given location and radius.');
-		} else if (results.length < 20) {
-			const places = await searchGooglePlaces(req, res);
-			console.log('the new places', places);
 			console.log(
-				`Found ${results.length} nearby shops after combining DB and Google Places results.`,
+				'No nearby shops found in DB, falling back to Google Places.',
 			);
+			const googlePlaces = await searchGooglePlaces(Number(lat), Number(lng));
+			console.log(`Found ${googlePlaces.length} places from Google.`);
+			res.json({ places: googlePlaces });
+		} else if (results.length < 20) {
+			const googlePlaces = await searchGooglePlaces(Number(lat), Number(lng));
+			console.log(
+				`Supplementing ${results.length} DB shops with Google Places results.`,
+			);
+			res.json({ places: results.concat(googlePlaces) });
 		} else {
-			console.log(`Found ${results.length} nearby shops.`);
+			console.log(`Found ${results.length} nearby shops in DB.`);
+			res.json({ places: results });
 		}
-
-		res.json(results);
 	} catch (error) {
 		console.error('Error fetching nearby shops:', error);
 		res.status(500).json({ error: 'Internal server error' });
