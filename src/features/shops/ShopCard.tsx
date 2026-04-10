@@ -20,9 +20,16 @@ export default function ShopCard({
 						{shop.name}
 					</h5>
 
-					<span className="text-gray-700 dark:text-vs-muted">
-						{shop.formatted_address}
-					</span>
+					{shop.formatted_address && (
+						<span className="text-gray-700 dark:text-vs-muted text-sm">
+							{shop.formatted_address}
+						</span>
+					)}
+					{shop.formatted_phone_number && (
+						<span className="text-gray-500 dark:text-vs-muted text-sm">
+							{shop.formatted_phone_number}
+						</span>
+					)}
 
 					{/* SHOP SERVICES */}
 					<div className="flex flex-wrap gap-1 mt-2">
@@ -37,17 +44,16 @@ export default function ShopCard({
 									: service}
 							</span>
 						))}
-						<span className="rating flex justify-center items-center gap-1">
-							<div className="star w-4 h-4">
-								<img src={star} alt="" className="w-full h-full" />
-							</div>
-							{shop.rating}
-						</span>
 					</div>
 				</div>
 
 				{/* Rating and is open */}
 				<div className="rating-status-container flex-shrink-0 w-24 flex flex-col gap-2 justify-center items-center ml-4">
+					<span className="rating flex justify-center items-center gap-1 text-sm font-medium">
+						<img src={star} alt="" className="w-4 h-4" />
+						{shop.rating}
+					</span>
+
 					<span className="bg-orange-500 text-white px-2 py-1 rounded-full text-sm font-medium">
 						{shop.distance.toFixed(1)} mi
 					</span>

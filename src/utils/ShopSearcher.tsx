@@ -43,7 +43,7 @@ export function ShopSearcher({
 
 				if (!response.ok) {
 					const error = await response.text();
-					console.error('PlacesSearcher - API error:', error);
+					console.error('ShopSearcher - API error:', error);
 					setAllPlaces([]);
 					onPlacesFound([]);
 					return;
@@ -52,11 +52,14 @@ export function ShopSearcher({
 				const data = await response.json();
 				const { places: results } = data;
 
+				// sort shops by distance
 				if (results && results.length) {
-					// Store all shops
-					setAllPlaces(results);
+					const sorted: Shop[] = [...results].sort(
+						(a: Shop, b: Shop) => a.distance - b.distance,
+					);
+					setAllPlaces(sorted);
 					// Only send the first 'displayLimit' to parent for display
-					onPlacesFound(results.slice(0, displayLimit));
+					onPlacesFound(sorted.slice(0, displayLimit));
 				} else {
 					setAllPlaces([]);
 					onPlacesFound([]);
@@ -87,17 +90,13 @@ export function ShopSearcher({
 	useEffect(() => {
 		if (allPlaces.length > 0) {
 			const loadMore = () => {
-				if (displayLimit === 10) {
-					setDisplayLimit(15);
-				} else if (displayLimit === 15) {
-					setDisplayLimit(20);
-				}
+				setDisplayLimit((prev) => prev + 10);
 			};
 
 			if (onSearchCapabilityReady) {
 				onSearchCapabilityReady({
 					loadMore,
-					canLoadMore: displayLimit < 20 && allPlaces.length > displayLimit,
+					canLoadMore: allPlaces.length > displayLimit,
 					currentLimit: displayLimit,
 				});
 			}

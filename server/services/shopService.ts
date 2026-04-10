@@ -1,5 +1,5 @@
 import prisma from '../db';
-import { calculateDistance } from '../../src/utils/distanceCalculator';
+import { calculateDistance } from '../utils/distanceCalculator';
 
 const getAllShops = async () => {
 	try {

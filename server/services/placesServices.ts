@@ -1,36 +1,20 @@
-import prisma from 'db';
-import { Request, Response } from 'express';
+import prisma from '../db';
 
 // TODO: implement saving Google Places results to DB and returning them in nearbyShops if they are not already in the DB
 
-// TODO: rewrite without req and res, and instead return the data or throw errors, and let the controller handle the HTTP response
-const searchGooglePlaces = async (req: Request, res: Response) => {
-	const {
-		locationBias,
-		maxResultCount,
-		query = 'diesel truck repair shop',
-	} = req.body;
-
-	if (!locationBias?.lat || !locationBias?.lng) {
-		res
-			.status(400)
-			.json({ error: 'locationBias with lat and lng is required' });
-		return;
-	}
-
+const searchGooglePlaces = async (lat: number, lng: number, maxResultCount: number = 20, query: string = 'diesel truck repair shop') => {
 	const apiKey = process.env.VITE_GOOGLE_MAPS_API_KEY;
 	if (!apiKey) {
-		res.status(500).json({ error: 'GMA key not configured' });
-		return;
+		throw new Error('Google Maps API key not configured');
 	}
 
 	const googleRequestBody = {
-		query,
+		textQuery: query,
 		locationBias: {
 			circle: {
 				center: {
-					latitude: Number(locationBias.lat),
-					longitude: Number(locationBias.lng),
+					latitude: lat,
+					longitude: lng,
 				},
 				radius: 5000,
 			},
@@ -51,39 +35,35 @@ const searchGooglePlaces = async (req: Request, res: Response) => {
 		'places.types',
 		'places.reviews',
 		'places.regularOpeningHours',
+		'places.regularOpeningHours.periods',
 		'places.internationalPhoneNumber',
 	].join(',');
 
-	try {
-		const response = await fetch(
-			'https://places.googleapis.com/v1/places:searchText',
-			{
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-					'X-Goog-Api-Key': apiKey,
-					'X-Goog-FieldMask': fields,
-				},
-				body: JSON.stringify(googleRequestBody),
+	const response = await fetch(
+		'https://places.googleapis.com/v1/places:searchText',
+		{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-Goog-Api-Key': apiKey,
+				'X-Goog-FieldMask': fields,
 			},
-		);
+			body: JSON.stringify(googleRequestBody),
+		},
+	);
 
-		if (!response.ok) {
-			const error = await response.text();
-			res.status(response.status).json({ error });
-			return;
-		}
-
-		const data = await response.json();
-		res.json(data);
-	} catch (err) {
-		console.error('Places API error:', err);
-		res.status(500).json({ error: 'Failed to fetch places' });
+	if (!response.ok) {
+		const error = await response.text();
+		throw new Error(`Google Places API error: ${error}`);
 	}
+
+	const data = await response.json();
+	return data.places ?? [];
 };
 
 const saveGooglePlace = async (unSavedPlaces: any[]) => {
-	const savedPlaces = await prisma.shop.createMany({
+	// Save shops, skipping any that already exist by placeId
+	await prisma.shop.createMany({
 		data: unSavedPlaces.map((place) => ({
 			name: place.displayName.text ?? place.displayName,
 			lat: place.location.latitude,
@@ -100,7 +80,51 @@ const saveGooglePlace = async (unSavedPlaces: any[]) => {
 		skipDuplicates: true,
 	});
 
-	return savedPlaces;
+	// Save hours for each place that has structured periods
+	// We look up each shop by placeId to get its DB id for the relation
+	for (const place of unSavedPlaces) {
+		const periods = place.regularOpeningHours?.periods;
+		if (!periods || periods.length === 0) continue;
+
+		const shop = await prisma.shop.findUnique({
+			where: { placeId: place.id },
+			select: { id: true },
+		});
+		if (!shop) continue;
+
+		// Delete stale hours before reinserting so re-saves stay accurate
+		await prisma.shopHours.deleteMany({ where: { shopId: shop.id } });
+
+		await prisma.shopHours.createMany({
+			data: periods.map((period: any) => ({
+				shopId: shop.id,
+				dayOfWeek: period.open.day,
+				openTime: `${String(period.open.hour).padStart(2, '0')}:${String(period.open.minute).padStart(2, '0')}`,
+				closeTime: period.close
+					? `${String(period.close.hour).padStart(2, '0')}:${String(period.close.minute).padStart(2, '0')}`
+					: null,
+				isClosed: false,
+			})),
+		});
+
+		// Save reviews — delete stale ones first
+		const reviews = place.reviews ?? [];
+		if (reviews.length > 0) {
+			await prisma.shopReview.deleteMany({ where: { shopId: shop.id, source: 'google' } });
+
+			await prisma.shopReview.createMany({
+				data: reviews.map((r: any) => ({
+					shopId: shop.id,
+					source: 'google',
+					authorName: r.authorAttribution?.displayName ?? null,
+					authorPhoto: r.authorAttribution?.photoUri ?? null,
+					rating: r.rating,
+					text: r.text?.text ?? r.text ?? null,
+					publishedAt: r.publishTime ? new Date(r.publishTime) : null,
+				})),
+			});
+		}
+	}
 };
 
 export { searchGooglePlaces, saveGooglePlace };
