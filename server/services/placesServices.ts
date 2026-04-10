@@ -1,10 +1,14 @@
+import prisma from 'db';
 import { Request, Response } from 'express';
 
+// TODO: implement saving Google Places results to DB and returning them in nearbyShops if they are not already in the DB
+
+// TODO: rewrite without req and res, and instead return the data or throw errors, and let the controller handle the HTTP response
 const searchGooglePlaces = async (req: Request, res: Response) => {
 	const {
 		locationBias,
 		maxResultCount,
-		textQuery = 'diesel truck repair shop',
+		query = 'diesel truck repair shop',
 	} = req.body;
 
 	if (!locationBias?.lat || !locationBias?.lng) {
@@ -21,14 +25,14 @@ const searchGooglePlaces = async (req: Request, res: Response) => {
 	}
 
 	const googleRequestBody = {
-		textQuery,
+		query,
 		locationBias: {
 			circle: {
 				center: {
 					latitude: Number(locationBias.lat),
 					longitude: Number(locationBias.lng),
 				},
-				radius: 50000,
+				radius: 5000,
 			},
 		},
 		maxResultCount,
@@ -78,6 +82,25 @@ const searchGooglePlaces = async (req: Request, res: Response) => {
 	}
 };
 
-const saveGooglePlace = async () => {};
+const saveGooglePlace = async (unSavedPlaces: any[]) => {
+	const savedPlaces = await prisma.shop.createMany({
+		data: unSavedPlaces.map((place) => ({
+			name: place.displayName.text ?? place.displayName,
+			lat: place.location.latitude,
+			lng: place.location.longitude,
+			formattedAddress: place.formattedAddress,
+			placeId: place.id,
+			phone: place.internationalPhoneNumber,
+			rating: place.rating,
+			userRatingsTotal: place.userRatingCount,
+			businessStatus: place.businessStatus,
+			source: 'google',
+			status: 'verified',
+		})),
+		skipDuplicates: true,
+	});
+
+	return savedPlaces;
+};
 
 export { searchGooglePlaces, saveGooglePlace };
