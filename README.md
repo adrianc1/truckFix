@@ -10,6 +10,7 @@ A mobile-first React app that helps truck drivers find nearby repair shops while
 - **Service filters** — Filter by Engine, Brakes, Tires, Electrical, and 24/7 availability
 - **Trucker-specific** — Surfaces shops that accommodate large vehicles
 - **Mobile-first** — Designed for use on the road
+- **Hybrid data layer** — Displays manually curated shops alongside Google-sourced results; when local results fall below a threshold, the app automatically calls the Google Places API to fill the gap for drivers, then persists those results (including hours and reviews) to the database for future searches
 
 ## Tech Stack
 
@@ -92,7 +93,8 @@ GET /api/shops/nearby?lat=X&lng=Y&radius=50
 - [x] Node.js/Express backend (API key protected server-side)
 - [x] PostgreSQL + Prisma ORM (schema defined)
 - [x] TypeScript migration (100% complete)
-- [ ] Hybrid data layer — DB first, Google Places as fallback + enrichment
-- [ ] Transform + upsert Google results into DB
+- [x] Hybrid data layer — DB first, Google Places as fallback when results are sparse
+- [x] Persist Google Places results (shops, hours, reviews) to DB on search
+- [x] Unified Shop shape — manual and Google-sourced results normalized server-side
 - [ ] TTL-based cache invalidation via `lastSyncedAt`
 - [ ] Deploy to AWS
