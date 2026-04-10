@@ -90,17 +90,13 @@ export function ShopSearcher({
 	useEffect(() => {
 		if (allPlaces.length > 0) {
 			const loadMore = () => {
-				if (displayLimit === 10) {
-					setDisplayLimit(15);
-				} else if (displayLimit === 15) {
-					setDisplayLimit(20);
-				}
+				setDisplayLimit((prev) => prev + 10);
 			};
 
 			if (onSearchCapabilityReady) {
 				onSearchCapabilityReady({
 					loadMore,
-					canLoadMore: displayLimit < 20 && allPlaces.length > displayLimit,
+					canLoadMore: allPlaces.length > displayLimit,
 					currentLimit: displayLimit,
 				});
 			}
