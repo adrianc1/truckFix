@@ -1,7 +1,7 @@
 import { searchGooglePlaces, saveGooglePlace } from '../services/placesServices';
 import { getAllShops, getNearbyShops } from '../services/shopService';
 import { Request, Response } from 'express';
-import { calculateDistance } from '../../src/utils/distanceCalculator';
+import { calculateDistance } from '../utils/distanceCalculator';
 
 // Transforms a Prisma DB shop into the frontend Shop shape
 function normalizeDbShop(shop: any, userLat: number, userLng: number) {

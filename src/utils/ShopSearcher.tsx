@@ -52,11 +52,14 @@ export function ShopSearcher({
 				const data = await response.json();
 				const { places: results } = data;
 
+				// sort shops by distance
 				if (results && results.length) {
-					// Store all shops
-					setAllPlaces(results);
+					const sorted: Shop[] = [...results].sort(
+						(a: Shop, b: Shop) => a.distance - b.distance,
+					);
+					setAllPlaces(sorted);
 					// Only send the first 'displayLimit' to parent for display
-					onPlacesFound(results.slice(0, displayLimit));
+					onPlacesFound(sorted.slice(0, displayLimit));
 				} else {
 					setAllPlaces([]);
 					onPlacesFound([]);
