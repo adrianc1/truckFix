@@ -35,6 +35,7 @@ const searchGooglePlaces = async (lat: number, lng: number, maxResultCount: numb
 		'places.types',
 		'places.reviews',
 		'places.regularOpeningHours',
+		'places.regularOpeningHours.periods',
 		'places.internationalPhoneNumber',
 	].join(',');
 
@@ -61,7 +62,8 @@ const searchGooglePlaces = async (lat: number, lng: number, maxResultCount: numb
 };
 
 const saveGooglePlace = async (unSavedPlaces: any[]) => {
-	const savedPlaces = await prisma.shop.createMany({
+	// Save shops, skipping any that already exist by placeId
+	await prisma.shop.createMany({
 		data: unSavedPlaces.map((place) => ({
 			name: place.displayName.text ?? place.displayName,
 			lat: place.location.latitude,
@@ -78,7 +80,51 @@ const saveGooglePlace = async (unSavedPlaces: any[]) => {
 		skipDuplicates: true,
 	});
 
-	return savedPlaces;
+	// Save hours for each place that has structured periods
+	// We look up each shop by placeId to get its DB id for the relation
+	for (const place of unSavedPlaces) {
+		const periods = place.regularOpeningHours?.periods;
+		if (!periods || periods.length === 0) continue;
+
+		const shop = await prisma.shop.findUnique({
+			where: { placeId: place.id },
+			select: { id: true },
+		});
+		if (!shop) continue;
+
+		// Delete stale hours before reinserting so re-saves stay accurate
+		await prisma.shopHours.deleteMany({ where: { shopId: shop.id } });
+
+		await prisma.shopHours.createMany({
+			data: periods.map((period: any) => ({
+				shopId: shop.id,
+				dayOfWeek: period.open.day,
+				openTime: `${String(period.open.hour).padStart(2, '0')}:${String(period.open.minute).padStart(2, '0')}`,
+				closeTime: period.close
+					? `${String(period.close.hour).padStart(2, '0')}:${String(period.close.minute).padStart(2, '0')}`
+					: null,
+				isClosed: false,
+			})),
+		});
+
+		// Save reviews — delete stale ones first
+		const reviews = place.reviews ?? [];
+		if (reviews.length > 0) {
+			await prisma.shopReview.deleteMany({ where: { shopId: shop.id, source: 'google' } });
+
+			await prisma.shopReview.createMany({
+				data: reviews.map((r: any) => ({
+					shopId: shop.id,
+					source: 'google',
+					authorName: r.authorAttribution?.displayName ?? null,
+					authorPhoto: r.authorAttribution?.photoUri ?? null,
+					rating: r.rating,
+					text: r.text?.text ?? r.text ?? null,
+					publishedAt: r.publishTime ? new Date(r.publishTime) : null,
+				})),
+			});
+		}
+	}
 };
 
 export { searchGooglePlaces, saveGooglePlace };

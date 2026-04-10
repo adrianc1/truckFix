@@ -41,7 +41,7 @@ const ShopDetailsPage = ({ selectedShop }: { selectedShop: Shop }) => {
 					<Phone className="mb-2" />
 					<h6 className="font-bold dark:text-vs-heading">Phone</h6>
 					<span className="hidden md:block text-gray-600 dark:text-vs-muted">
-						{selectedShop.phone}
+						{selectedShop.formatted_phone_number}
 					</span>
 				</div>
 				<div className="flex flex-col">{/* <p>Shop Phone Number:</p> */}</div>
@@ -49,7 +49,7 @@ const ShopDetailsPage = ({ selectedShop }: { selectedShop: Shop }) => {
 				<div className="flex justify-end items-center pr-4">
 					<a
 						className="border px-4 py-2 rounded-xl bg-orange-500 text-white cursor-pointer"
-						href={`tel:${selectedShop.phone}`}
+						href={`tel:${selectedShop.formatted_phone_number}`}
 					>
 						Call Shop Now
 					</a>

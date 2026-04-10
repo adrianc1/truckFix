@@ -13,11 +13,21 @@ function normalizeDbShop(shop: any, userLat: number, userLng: number) {
 		geometry: { location: { lat: shop.lat, lng: shop.lng } },
 		rating: shop.rating ?? 0,
 		user_ratings_total: shop.userRatingsTotal ?? 0,
-		reviews: [],
+		reviews: (shop.reviews ?? []).map((r: any) => ({
+			rating: r.rating,
+			text: r.text ?? '',
+			authorAttribution: { displayName: r.authorName ?? 'Anonymous' },
+			relativePublishTimeDescription: '',
+			publishTime: r.publishedAt,
+		})),
 		opening_hours: { open_now: false },
 		current_opening_hours: {
 			open_now: false,
-			weekday_text: shop.hours?.map((h: any) => `Day ${h.dayOfWeek}: ${h.openTime}–${h.closeTime}`) ?? [],
+			weekday_text: (shop.hours ?? []).map((h: any) => {
+				const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+				const day = days[h.dayOfWeek] ?? `Day ${h.dayOfWeek}`;
+				return h.isClosed ? `${day}: Closed` : `${day}: ${h.openTime}–${h.closeTime}`;
+			}),
 		},
 		services: shop.services?.map((s: any) => s.service) ?? [],
 		types: [],
@@ -42,7 +52,15 @@ function normalizeGooglePlace(place: any, userLat: number, userLng: number) {
 		geometry: { location: { lat, lng } },
 		rating: place.rating ?? 0,
 		user_ratings_total: place.userRatingCount ?? 0,
-		reviews: place.reviews ?? [],
+		reviews: (place.reviews ?? []).map((r: any) => ({
+			rating: r.rating,
+			text: r.text?.text ?? r.text ?? '',
+			authorAttribution: {
+				displayName: r.authorAttribution?.displayName ?? 'Anonymous',
+			},
+			relativePublishTimeDescription: r.relativePublishTimeDescription ?? '',
+			publishTime: r.publishTime,
+		})),
 		opening_hours: { open_now: false },
 		current_opening_hours: {
 			open_now: false,
