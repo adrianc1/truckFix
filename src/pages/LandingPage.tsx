@@ -10,7 +10,9 @@ import HeroSection from '../components/HeroSection.tsx';
 
 const LandingPage = () => {
 	// States
-	const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
+	const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(
+		null,
+	);
 	const [typedLocation, setTypedLocation] = useState<string>('');
 	const [isUsingCurrentLocation, setIsUsingCurrentLocation] =
 		useState<boolean>(false);
@@ -65,7 +67,11 @@ const LandingPage = () => {
 			const data = await res.json();
 
 			if (data.status === 'OK' && data.results.length > 0) {
-				const addressComponents: { types: string[]; long_name: string; short_name: string }[] = data.results[0].address_components;
+				const addressComponents: {
+					types: string[];
+					long_name: string;
+					short_name: string;
+				}[] = data.results[0].address_components;
 				const city =
 					addressComponents.find(
 						(component) =>
@@ -134,17 +140,17 @@ const LandingPage = () => {
 		}
 
 		try {
-			// If using current location, use existing coordinates (no API call needed!)
+			// If using current location, use existing coordinates )
 			if (isUsingCurrentLocation && coords?.lat && coords?.lng) {
 				navigate(
-					`/results?lat=${coords.lat}&lng=${coords.lng}&city=${typedLocation}`,
+					`/results?lat=${coords.lat}&lng=${coords.lng}&city=${typedLocation}&radius=50`,
 				);
 			} else {
 				// Only geocode if it's a manually typed address
 				const coordinates = await geocodedLocation(typedLocation);
 				if (coordinates) {
 					navigate(
-						`/results?lat=${coordinates.lat}&lng=${coordinates.lng}&city=${typedLocation}`,
+						`/results?lat=${coordinates.lat}&lng=${coordinates.lng}&city=${typedLocation}&radius=50`,
 					);
 				}
 			}

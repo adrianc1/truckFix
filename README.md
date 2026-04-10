@@ -35,7 +35,7 @@ src/
 │   ├── LandingPage.tsx            # Address input + geocoding
 │   └── Results.tsx                # Main results page (state owner)
 ├── utils/
-│   ├── PlacesSearcher.tsx         # Google Places API integration
+│   ├── ShopSearcher.tsx           # Fetches nearby shops from internal API
 │   ├── distanceCalculator.ts      # Haversine distance formula
 │   └── checkIfOpen.ts             # Parse Google opening hours
 ├── features/shops/
@@ -44,16 +44,45 @@ src/
 └── data/mocks/shopData.ts         # Mock data for offline development
 
 server/
-├── server.ts                      # Express server — proxies Google Places API (port 3000)
+├── server.ts                      # Express server (port 3000)
 ├── db.ts                          # Prisma client instance
-└── routes/                        # API route handlers
+├── controllers/
+│   └── shopsController.ts         # Orchestrates hybrid data layer
+├── services/
+│   ├── shopService.ts             # DB queries (Prisma)
+│   └── placesServices.ts          # Google Places API calls
+└── routes/                        # API route definitions
 
 prisma/
-├── schema.prisma                  # DB schema (Shop, ShopHours, ShopService, ShopPhoto)
+├── schema.prisma                  # DB schema (Shop, ShopHours, ShopService, ShopPhoto, ShopReview)
 └── migrations/                    # Prisma migration history
 ```
 
-**Data flow:** User enters address → geocoded to `{lat, lng}` → navigated to `/results?lat=X&lng=Y&city=Name` → `PlacesSearcher` queries Google Places → results distributed to map + bottom sheet.
+### Hybrid Data Layer
+
+The core architectural decision is to treat our PostgreSQL database as the primary data source and Google Places as a fallback and enrichment layer. The goal is richer, truck-specific data that Google alone cannot provide.
+
+```
+GET /api/shops/nearby?lat=X&lng=Y&radius=50
+        │
+        ├─ 1. Query DB for verified shops within radius
+        │
+        ├─ 2. Results sparse (< 3 shops)?
+        │         └─ Call Google Places API
+        │                   └─ Transform raw response → internal Shop shape
+        │                   └─ Upsert into DB (keyed on placeId)
+        │
+        └─ 3. Merge DB + Google results, deduplicate by placeId
+                   └─ Sort by distance, return Shop[]
+```
+
+**Why DB first:**
+- Our schema stores truck-specific flags Google doesn't have (`specializesInTrucks`, `acceptsLargeVehicles`, `hasTruckParking`, etc.)
+- Verified shops (`status: "verified"`) surface before unverified Google results
+- `lastSyncedAt` field controls TTL — stale records are re-fetched from Google automatically
+- Reduces Google API costs over time as the DB fills up
+
+**Data flow:** User enters address → geocoded to `{lat, lng}` → navigated to `/results?lat=X&lng=Y&city=Name&radius=50` → `ShopSearcher` hits `/api/shops/nearby` → server queries DB, supplements with Google if sparse → returns unified `Shop[]` → distributed to map + bottom sheet.
 
 ## Roadmap
 
@@ -62,8 +91,8 @@ prisma/
 - [x] Filter system
 - [x] Node.js/Express backend (API key protected server-side)
 - [x] PostgreSQL + Prisma ORM (schema defined)
-- [x] TypeScript migration (~91% complete)
-- [x] Complete TS migration (`App.jsx`, `main.jsx`)
-- [ ] Cache response date to db
-- [ ] Combined saved and new results
+- [x] TypeScript migration (100% complete)
+- [ ] Hybrid data layer — DB first, Google Places as fallback + enrichment
+- [ ] Transform + upsert Google results into DB
+- [ ] TTL-based cache invalidation via `lastSyncedAt`
 - [ ] Deploy to AWS

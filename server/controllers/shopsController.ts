@@ -1,3 +1,4 @@
+import { searchGooglePlaces } from '../services/placesServices';
 import { getAllShops, getNearbyShops } from '../services/shopService';
 import { Request, Response } from 'express';
 
@@ -26,6 +27,19 @@ const nearbyShops = async (req: Request, res: Response) => {
 			Number(lng),
 			Number(radius),
 		);
+
+		if (results.length === 0) {
+			console.log('No nearby shops found for the given location and radius.');
+		} else if (results.length < 20) {
+			const places = await searchGooglePlaces(req, res);
+			console.log('the new places', places);
+			console.log(
+				`Found ${results.length} nearby shops after combining DB and Google Places results.`,
+			);
+		} else {
+			console.log(`Found ${results.length} nearby shops.`);
+		}
+
 		res.json(results);
 	} catch (error) {
 		console.error('Error fetching nearby shops:', error);
