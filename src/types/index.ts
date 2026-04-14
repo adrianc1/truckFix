@@ -96,6 +96,7 @@ export interface SearchCapability {
 	loadMore: () => void;
 	canLoadMore: boolean;
 	currentLimit: number;
+	totalCount: number;
 }
 
 // service filter values

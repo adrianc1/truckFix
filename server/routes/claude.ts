@@ -1,7 +1,8 @@
 import { Router } from 'express';
+import { breakdownFilters } from '../controllers/claudeController';
+
 const router = Router();
 
-// Call Anthropic API to get a response from Claude
-router.post('/', callBreakdownMode);
+router.post('/breakdown-filters', breakdownFilters);
 
 export default router;

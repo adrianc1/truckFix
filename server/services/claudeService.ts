@@ -1,7 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk';
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-
 export type BreakdownFilters = {
 	isMobileService?: boolean;
 	is24Hours?: boolean;
@@ -10,15 +8,17 @@ export type BreakdownFilters = {
 	urgency: 'high' | 'medium' | 'low';
 };
 
-export const getBreakdownFilters = async (problem: string):                        
-  Promise<BreakdownFilters> => {          
-        const message = await client.messages.create({                               
-                model: 'claude-haiku-4-5-20251001',                                  
-                max_tokens: 256,              
-                messages: [                                                          
-                        {
-                                role: 'user',                                        
-                                content: `A truck driver has broken down and describe
+export const getBreakdownFilters = async (
+	problem: string,
+): Promise<BreakdownFilters> => {
+	const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+	const message = await client.messages.create({
+		model: 'claude-haiku-4-5-20251001',
+		max_tokens: 256,
+		messages: [
+			{
+				role: 'user',
+				content: `A truck driver has broken down and describe
   "${problem}"                                                                       
                                           
   Return a JSON object with these fields:     
@@ -29,11 +29,12 @@ export const getBreakdownFilters = async (problem: string):
   - sortBy: "distance" if urgent, "rating" if not                                    
   - urgency: "high", "medium", or "low"       
                                                                                      
-  Respond with only valid JSON, no explanation.`,
-                        },                                                           
-                ],
-        });                                                                          
-                  
-        const text = message.content[0].type === 'text' ? message.content[0].text : '
-        return JSON.parse(text) as BreakdownFilters;
-  };
+  Respond with only raw valid JSON. No explanation, no markdown, no code blocks.`,
+			},
+		],
+	});
+
+	const raw = message.content[0].type === 'text' ? message.content[0].text : '';
+	const text = raw.replace(/^```json\s*/i, '').replace(/```\s*$/, '').trim();
+	return JSON.parse(text) as BreakdownFilters;
+};
