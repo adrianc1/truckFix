@@ -1,104 +1,124 @@
 # TruckFix
 
-A mobile-first React app that helps truck drivers find nearby repair shops while on the road, powered by Google Maps and Places APIs.
+A fullstack, mobile-first web app that helps truck drivers find nearby repair shops when they break down on the road. Built as a real product with a production database, a hybrid data layer, and an AI-assisted search mode — deployed on Netlify (frontend) and Render (backend + PostgreSQL).
 
-## Features
+## Design Philosophy
 
-- **Location-based search** — Enter an address to find nearby repair shops
-- **Interactive map** — Visual overview of all results with clickable markers
-- **Shop details** — Ratings, hours, open/closed status, distance, and contact info
-- **Service filters** — Filter by Engine, Brakes, Tires, Electrical, and 24/7 availability
-- **Trucker-specific** — Surfaces shops that accommodate large vehicles
-- **Mobile-first** — Designed for use on the road
-- **Hybrid data layer** — Displays manually curated shops alongside Google-sourced results; when local results fall below a threshold, the app automatically calls the Google Places API to fill the gap for drivers, then persists those results (including hours and reviews) to the database for future searches
-- **AI-assisted breakdown mode** — Drivers describe their situation in plain language ("brakes went out, can't move the truck") and an intent extraction layer powered by Claude maps the unstructured input to structured service filters, re-ranking results by relevance without any manual filter interaction
+The target user is a truck driver broken down on the side of a highway - stressed, likely on a phone, possibly in poor conditions. Most truckers are not tech-savvy and don't have time to learn an interface. Every UX decision follows from that: minimal steps to results, no account required, no onboarding, large tap targets, and a bottom sheet that surfaces information without requiring navigation. Breakdown mode exists specifically because a filter UI is the wrong tool in an emergency. Plain language is faster and less error-prone under stress.
+
+## Technical Decisions
+
+This project solves a real logistics problem and makes deliberate architectural tradeoffs:
+
+- **The Google Places API is expensive and returns generic results** — so the app treats it as a fallback, not a primary source. Searches hit a PostgreSQL database first. Google is only called when local results are sparse, and those results are immediately persisted so the database grows with every search.
+- **Truck drivers need different data than regular drivers** — the schema stores flags Google doesn't have tags such as: `specializesInTrucks`, `acceptsLargeVehicles`, `hasTruckParking`, etc. This is data Google Places cannot surface.
+- **A broken-down trucker on the side of a highway can't navigate a filter UI** — so breakdown mode lets them describe their situation in plain language. Claude extracts structured intent from the input and re-ranks results without any manual interaction.
 
 ## Tech Stack
 
-| Layer     | Choice                      |
-| --------- | --------------------------- |
-| Framework | React 19                    |
-| Language  | TypeScript 5 (strict)       |
-| AI        | Anthropic Claude (Haiku)    |
-| Build     | Vite 6                      |
-| Styling   | Tailwind CSS 4              |
-| Routing   | React Router DOM 7          |
-| Maps      | `@vis.gl/react-google-maps` |
-| Icons     | Lucide React                |
-| Backend   | Node.js + Express           |
-| Database  | PostgreSQL                  |
-| ORM       | Prisma                      |
+| Layer      | Choice                      |
+| ---------- | --------------------------- |
+| Framework  | React 19                    |
+| Language   | TypeScript 5 (strict mode)  |
+| Build      | Vite 6                      |
+| Styling    | Tailwind CSS 4              |
+| Maps       | `@vis.gl/react-google-maps` |
+| Backend    | Node.js + Express           |
+| Database   | PostgreSQL (Render)         |
+| ORM        | Prisma                      |
+| AI         | Anthropic Claude Haiku      |
+| Deployment | Netlify + Render            |
 
 ## Architecture
 
 ```
 src/
-├── App.tsx                        # Routes
 ├── pages/
 │   ├── LandingPage.tsx            # Address input + geocoding
-│   └── Results.tsx                # Main results page (state owner)
+│   └── Results.tsx                # Main results page — owns all state, flows down
 ├── utils/
-│   ├── ShopSearcher.tsx           # Fetches nearby shops from internal API
-│   ├── distanceCalculator.ts      # Haversine distance formula
-│   └── checkIfOpen.ts             # Parse Google opening hours
+│   ├── ShopSearcher.tsx           # Fetches from internal API, triggers on location change
+│   ├── distanceCalculator.ts      # Haversine formula
+│   └── checkIfOpen.ts             # Parses structured opening hours
 ├── features/shops/
-│   └── useShops.tsx               # Custom hook; falls back to mock data
-├── types/index.ts                 # Shared types (Shop, LatLng, FilterTag…)
-└── data/mocks/shopData.ts         # Mock data for offline development
+│   ├── BottomSheetModal.tsx       # Swipeable results sheet + breakdown mode UI
+│   └── useShops.tsx               # Hook; falls back to mock data when API unavailable
+├── types/index.ts                 # Single source of truth for shared types
+└── data/mocks/shopData.ts         # Offline development data
 
 server/
-├── server.ts                      # Express server (port 3000)
-├── db.ts                          # Prisma client instance
+├── server.ts                      # Express entry point, CORS, route registration
 ├── controllers/
-│   └── shopsController.ts         # Orchestrates hybrid data layer
+│   └── shopsController.ts         # Orchestrates hybrid DB + Google data layer
 ├── services/
-│   ├── shopService.ts             # DB queries (Prisma)
-│   ├── placesServices.ts          # Google Places API calls
-│   └── claudeService.ts           # AI intent extraction → breakdown filters
-└── routes/                        # API route definitions
+│   ├── shopService.ts             # Haversine bounding box query via Prisma
+│   ├── placesServices.ts          # Google Places API + DB persistence
+│   └── claudeService.ts           # Structured intent extraction from natural language
+└── routes/
 
 prisma/
-├── schema.prisma                  # DB schema (Shop, ShopHours, ShopService, ShopPhoto, ShopReview)
-└── migrations/                    # Prisma migration history
+├── schema.prisma                  # Shop, ShopHours, ShopService, ShopPhoto, ShopReview
+└── migrations/
 ```
 
-### Hybrid Data Layer
+## Hybrid Data Layer
 
-The core architectural decision is to treat our PostgreSQL database as the primary data source and Google Places as a fallback and enrichment layer. The goal is richer, truck-specific data that Google alone cannot provide.
+PostgreSQL is the primary source. Google Places is a write-through cache origin — results are fetched when the DB is sparse and immediately persisted, so the database fills over time and API costs decrease.
 
 ```
-GET /api/shops/nearby?lat=X&lng=Y&radius=50
+GET /api/shops/nearby?lat=X&lng=Y&radius=25
         │
-        ├─ 1. Query DB for verified shops within radius
+        ├─ 1. Haversine bounding box query against DB
         │
-        ├─ 2. Results sparse (< 3 shops)?
-        │         └─ Call Google Places API
-        │                   └─ Transform raw response → internal Shop shape
-        │                   └─ Upsert into DB (keyed on placeId)
+        ├─ 2. Fewer than 20 results?
+        │         └─ Call Google Places API (25mi radius)
+        │                   └─ Normalize to internal Shop shape
+        │                   └─ Upsert into DB keyed on placeId (skipDuplicates)
+        │                   └─ Persist hours, reviews relationally
         │
-        └─ 3. Merge DB + Google results, deduplicate by placeId
-                   └─ Sort by distance, return Shop[]
+        └─ 3. Merge + return unified Shop[]
 ```
 
-**Why DB first:**
-- Our schema stores truck-specific flags Google doesn't have (`specializesInTrucks`, `acceptsLargeVehicles`, `hasTruckParking`, etc.)
-- Verified shops (`status: "verified"`) surface before unverified Google results
-- `lastSyncedAt` field controls TTL — stale records are re-fetched from Google automatically
-- Reduces Google API costs over time as the DB fills up
+**Key decisions:**
 
-**Data flow:** User enters address → geocoded to `{lat, lng}` → navigated to `/results?lat=X&lng=Y&city=Name&radius=50` → `ShopSearcher` hits `/api/shops/nearby` → server queries DB, supplements with Google if sparse → returns unified `Shop[]` → distributed to map + bottom sheet.
+- Deduplication is handled server-side by `placeId` — the same shop from Google and the DB is never returned twice
+- The `Shop` type is defined once in `src/types/index.ts` and both DB and Google results are normalized into it server-side before hitting the frontend
+- Google API keys never reach the client — all third-party calls go through the Express proxy
+- `lastSyncedAt` on each shop is the hook for future TTL-based cache invalidation
+
+## AI Breakdown Mode
+
+When a driver taps "Broken Down?", they describe their situation in plain language. The input is sent to Claude Haiku via a server-side API call. Claude returns a structured JSON filter object:
+
+```ts
+type BreakdownFilters = {
+	isMobileService?: boolean; // true if they can't move the truck
+	is24Hours?: boolean; // true if urgency implies nighttime
+	services?: string[]; // constrained to known service types
+	sortBy: 'distance' | 'rating';
+	urgency: 'high' | 'medium' | 'low';
+};
+```
+
+The prompt constrains `services` to an explicit allowed-values list (`["brakes", "tires", "engine", "diesel", "transmission", "electrical", "hvac", "suspension"]`) to prevent hallucinated values that wouldn't match DB records. If the service filter returns zero results, it falls back to the full shop list sorted by distance — so the UI never shows an empty state.
+
+## Engineering Challenges
+
+**Reducing Google Places API dependency over time** — The app started as a pure Google Places integration, but every search was an API call returning generic data with no truck-specific context. Google also has blind spots: small independent repair shops and rural businesses that serve truckers but have no online presence simply don't appear in results. The solution was to design a relational schema that stores truck-specific flags Google doesn't have, then build a write-through caching layer: the DB is queried first, Google is called only when results are sparse, and those results are immediately persisted with their hours and reviews normalized into relational tables. Manually curated shops can be seeded directly, filling gaps Google never will. Each search makes the DB more complete and the system progressively less dependent on the external API.
+
+**Normalizing two incompatible data shapes into one** — Google Places API responses and Prisma DB records have completely different shapes. Rather than leaking this complexity into the frontend, both are normalized server-side into a single `Shop` type before leaving the Express layer. The frontend has no knowledge of where a result came from.
 
 ## Roadmap
 
-- [x] Google Places API integration
-- [x] Distance calculation + open/closed detection
-- [x] Filter system
-- [x] Node.js/Express backend (API key protected server-side)
-- [x] PostgreSQL + Prisma ORM (schema defined)
-- [x] TypeScript migration (100% complete)
-- [x] Hybrid data layer — DB first, Google Places as fallback when results are sparse
-- [x] Persist Google Places results (shops, hours, reviews) to DB on search
-- [x] Unified Shop shape — manual and Google-sourced results normalized server-side
-- [x] AI-assisted breakdown mode — natural language → structured service filters via Claude
+- [x] Google Places API integration with server-side proxy
+- [x] Haversine distance calculation + open/closed status parsing
+- [x] Service filter system
+- [x] PostgreSQL schema with truck-specific fields
+- [x] TypeScript strict mode throughout
+- [x] Hybrid data layer — DB-first with Google Places as fallback + persistence
+- [x] Unified `Shop` type — DB and Google results normalized server-side
+- [x] AI breakdown mode — natural language → structured filters via Claude
+- [x] Prisma migration history + production deploy pipeline
 - [ ] TTL-based cache invalidation via `lastSyncedAt`
-- [ ] Deploy to AWS
+- [ ] Auth gating for AI features
+- [ ] Migrate to AWS (ECS + RDS + CloudFront)
