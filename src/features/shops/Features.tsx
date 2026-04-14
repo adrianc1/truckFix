@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 import {
 	Navigation,
-	Wrench,
+	// Wrench,
 	Clock,
 	Star,
 	Phone,
 	ShieldCheck,
+	Zap,
 } from 'lucide-react';
 
 const Features = () => {
@@ -37,15 +38,20 @@ const Features = () => {
 			des: 'Find repair shops near your current location or along your planned route',
 			icon: Navigation,
 		},
-		{
-			title: 'Service Specialties',
-			des: 'Filter shops by the services you need, from engine repairs to tire replacements',
-			icon: Wrench,
-		},
+		// {
+		// 	title: 'Service Specialties',
+		// 	des: 'Filter shops by the services you need, from engine repairs to tire replacements',
+		// 	icon: Wrench,
+		// },
 		{
 			title: 'Real-Time Availablity',
 			des: 'See which shops can service you immediately and which require appointments',
 			icon: Clock,
+		},
+		{
+			title: 'AI Breakdown Mode',
+			des: "Broken down and don't know where to start? Describe your issue and our AI instantly finds the closest shops equipped to fix it.",
+			icon: Zap,
 		},
 		{
 			title: 'Verified Reviews',
