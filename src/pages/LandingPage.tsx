@@ -143,14 +143,14 @@ const LandingPage = () => {
 			// If using current location, use existing coordinates )
 			if (isUsingCurrentLocation && coords?.lat && coords?.lng) {
 				navigate(
-					`/results?lat=${coords.lat}&lng=${coords.lng}&city=${typedLocation}&radius=50`,
+					`/results?lat=${coords.lat}&lng=${coords.lng}&city=${typedLocation}&radius=25`,
 				);
 			} else {
 				// Only geocode if it's a manually typed address
 				const coordinates = await geocodedLocation(typedLocation);
 				if (coordinates) {
 					navigate(
-						`/results?lat=${coordinates.lat}&lng=${coordinates.lng}&city=${typedLocation}&radius=50`,
+						`/results?lat=${coordinates.lat}&lng=${coordinates.lng}&city=${typedLocation}&radius=25`,
 					);
 				}
 			}

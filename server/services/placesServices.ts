@@ -16,7 +16,7 @@ const searchGooglePlaces = async (lat: number, lng: number, maxResultCount: numb
 					latitude: lat,
 					longitude: lng,
 				},
-				radius: 5000,
+				radius: 40234, // 25 miles in meters
 			},
 		},
 		maxResultCount,

@@ -36,7 +36,7 @@ export function ShopSearcher({
 
 			try {
 				const response = await fetch(
-					`${import.meta.env.VITE_API_URL}/api/shops/nearby?lat=${center.lat}&lng=${center.lng}&radius=50`,
+					`${import.meta.env.VITE_API_URL}/api/shops/nearby?lat=${center.lat}&lng=${center.lng}&radius=25`,
 				);
 
 				console.log('ShopSearcher - API response:', response);
