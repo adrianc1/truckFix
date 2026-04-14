@@ -26,7 +26,7 @@ export default function BottomSheetModal({
 	setShowShopDetails: (show: boolean) => void;
 	isModalOpen: boolean;
 	setIsModalOpen: (open: boolean) => void;
-	searchCapability: SearchCapability;
+	searchCapability: SearchCapability | null;
 	searchCity: string;
 	shops: Shop[];
 	setFilteredShops: (shops: Shop[]) => void;
