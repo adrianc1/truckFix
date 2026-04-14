@@ -11,6 +11,7 @@ A mobile-first React app that helps truck drivers find nearby repair shops while
 - **Trucker-specific** — Surfaces shops that accommodate large vehicles
 - **Mobile-first** — Designed for use on the road
 - **Hybrid data layer** — Displays manually curated shops alongside Google-sourced results; when local results fall below a threshold, the app automatically calls the Google Places API to fill the gap for drivers, then persists those results (including hours and reviews) to the database for future searches
+- **AI-assisted breakdown mode** — Drivers describe their situation in plain language ("brakes went out, can't move the truck") and an intent extraction layer powered by Claude maps the unstructured input to structured service filters, re-ranking results by relevance without any manual filter interaction
 
 ## Tech Stack
 
@@ -18,6 +19,7 @@ A mobile-first React app that helps truck drivers find nearby repair shops while
 | --------- | --------------------------- |
 | Framework | React 19                    |
 | Language  | TypeScript 5 (strict)       |
+| AI        | Anthropic Claude (Haiku)    |
 | Build     | Vite 6                      |
 | Styling   | Tailwind CSS 4              |
 | Routing   | React Router DOM 7          |
@@ -51,7 +53,8 @@ server/
 │   └── shopsController.ts         # Orchestrates hybrid data layer
 ├── services/
 │   ├── shopService.ts             # DB queries (Prisma)
-│   └── placesServices.ts          # Google Places API calls
+│   ├── placesServices.ts          # Google Places API calls
+│   └── claudeService.ts           # AI intent extraction → breakdown filters
 └── routes/                        # API route definitions
 
 prisma/
@@ -96,5 +99,6 @@ GET /api/shops/nearby?lat=X&lng=Y&radius=50
 - [x] Hybrid data layer — DB first, Google Places as fallback when results are sparse
 - [x] Persist Google Places results (shops, hours, reviews) to DB on search
 - [x] Unified Shop shape — manual and Google-sourced results normalized server-side
+- [x] AI-assisted breakdown mode — natural language → structured service filters via Claude
 - [ ] TTL-based cache invalidation via `lastSyncedAt`
 - [ ] Deploy to AWS
