@@ -8,7 +8,7 @@ import PoiMarkers from '../components/PoiMarkers';
 import { APIProvider, Map } from '@vis.gl/react-google-maps';
 import { extractServicesFromShop } from '../utils/serviceExtractor';
 import { calculateDistance } from '../utils/distanceCalculator';
-import { SearchCapability, Shop } from '../types';
+import { Shop } from '../types';
 
 export default function Results({ darkMode }: { darkMode: boolean }) {
 	const [filterTag, setFilterTag] = useState<string>('');
@@ -26,9 +26,6 @@ export default function Results({ darkMode }: { darkMode: boolean }) {
 		lng: number;
 	} | null>(null);
 	const [mapKey, setMapKey] = useState<number>(0);
-	const [searchCapability, setSearchCapability] =
-		useState<SearchCapability | null>(null);
-
 	const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 	const handlePlacesFound = useCallback((places: Shop[]) => {
@@ -81,7 +78,6 @@ export default function Results({ darkMode }: { darkMode: boolean }) {
 					onPlacesFound={handlePlacesFound}
 					center={searchLocation}
 					searchTrigger={searchTrigger}
-					onSearchCapabilityReady={setSearchCapability}
 				/>
 			)}
 			<APIProvider
@@ -120,7 +116,6 @@ export default function Results({ darkMode }: { darkMode: boolean }) {
 				setShowShopDetails={setShowShopDetails}
 				isModalOpen={isModalOpen}
 				setIsModalOpen={setIsModalOpen}
-				searchCapability={searchCapability}
 				loading={loading}
 			/>
 		</div>

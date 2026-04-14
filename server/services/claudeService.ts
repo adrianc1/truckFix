@@ -1,7 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk';
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-
 export type BreakdownFilters = {
 	isMobileService?: boolean;
 	is24Hours?: boolean;
@@ -13,6 +11,7 @@ export type BreakdownFilters = {
 export const getBreakdownFilters = async (
 	problem: string,
 ): Promise<BreakdownFilters> => {
+	const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 	const message = await client.messages.create({
 		model: 'claude-haiku-4-5-20251001',
 		max_tokens: 256,
@@ -30,12 +29,12 @@ export const getBreakdownFilters = async (
   - sortBy: "distance" if urgent, "rating" if not                                    
   - urgency: "high", "medium", or "low"       
                                                                                      
-  Respond with only valid JSON, no explanation.`,
+  Respond with only raw valid JSON. No explanation, no markdown, no code blocks.`,
 			},
 		],
 	});
 
-	const text =
-		message.content[0].type === 'text' ? message.content[0].text : '';
+	const raw = message.content[0].type === 'text' ? message.content[0].text : '';
+	const text = raw.replace(/^```json\s*/i, '').replace(/```\s*$/, '').trim();
 	return JSON.parse(text) as BreakdownFilters;
 };

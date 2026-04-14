@@ -9,7 +9,6 @@ import HowToFindShops from '../features/shops/HowToFindShops.tsx';
 import HeroSection from '../components/HeroSection.tsx';
 
 const LandingPage = () => {
-	// States
 	const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(
 		null,
 	);
@@ -17,7 +16,6 @@ const LandingPage = () => {
 	const [isUsingCurrentLocation, setIsUsingCurrentLocation] =
 		useState<boolean>(false);
 
-	// API Key Import
 	const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 	let navigate = useNavigate();
@@ -107,17 +105,13 @@ const LandingPage = () => {
 					setCoords(coordinates);
 					setIsUsingCurrentLocation(true);
 
-					// Get the address name and put it in the input field
 					try {
 						const addressInfo = await reverseGeocode(latitude, longitude);
 						const cityName = addressInfo?.cityState || 'Current Location';
 						setCoords(coordinates);
-
-						// Put the city name in the input field
 						setTypedLocation(cityName);
 					} catch (error) {
 						console.error('Reverse geocoding failed:', error);
-						// Put generic text in input field
 						setTypedLocation('Current Location');
 					}
 				},
@@ -140,13 +134,11 @@ const LandingPage = () => {
 		}
 
 		try {
-			// If using current location, use existing coordinates )
 			if (isUsingCurrentLocation && coords?.lat && coords?.lng) {
 				navigate(
 					`/results?lat=${coords.lat}&lng=${coords.lng}&city=${typedLocation}&radius=25`,
 				);
 			} else {
-				// Only geocode if it's a manually typed address
 				const coordinates = await geocodedLocation(typedLocation);
 				if (coordinates) {
 					navigate(

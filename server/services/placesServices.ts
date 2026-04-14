@@ -1,6 +1,5 @@
 import prisma from '../db';
 
-// TODO: implement saving Google Places results to DB and returning them in nearbyShops if they are not already in the DB
 
 const searchGooglePlaces = async (lat: number, lng: number, maxResultCount: number = 20, query: string = 'diesel truck repair shop') => {
 	const apiKey = process.env.VITE_GOOGLE_MAPS_API_KEY;

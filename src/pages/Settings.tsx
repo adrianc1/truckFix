@@ -4,7 +4,6 @@ export default function SettingsModalDemo() {
 	const [darkMode, setDarkMode] = useState<boolean>(true);
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-	// Apply dark mode class to document
 	useEffect(() => {
 		if (darkMode) {
 			document.documentElement.classList.add('dark');

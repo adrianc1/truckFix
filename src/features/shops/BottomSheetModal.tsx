@@ -1,11 +1,11 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import SearchForm from './SearchForm.tsx';
 import { useSwipeable } from 'react-swipeable';
 import ShopDetailsPage from '../../pages/ShopDetailsPage.tsx';
 import ShopList from './ShopList.tsx';
-import { SearchCapability, Shop } from '../../types';
+import { Shop } from '../../types';
 
-export default function BottomSheetModal({
+export default function Modal({
 	filteredShops,
 	setSelectedShop,
 	selectedShop,
@@ -13,7 +13,7 @@ export default function BottomSheetModal({
 	setShowShopDetails,
 	isModalOpen,
 	setIsModalOpen,
-	searchCapability,
+
 	searchCity,
 	shops,
 	setFilteredShops,
@@ -26,16 +26,16 @@ export default function BottomSheetModal({
 	setShowShopDetails: (show: boolean) => void;
 	isModalOpen: boolean;
 	setIsModalOpen: (open: boolean) => void;
-	searchCapability: SearchCapability | null;
 	searchCity: string;
 	shops: Shop[];
 	setFilteredShops: (shops: Shop[]) => void;
 	loading: boolean;
 }) {
 	const modalContentRef = useRef<HTMLDivElement>(null);
-	useEffect(() => {
-		console.log('searchCapability:', searchCapability);
-	}, [searchCapability]);
+	const [isBreakdownOpen, setIsBreakdownOpen] = useState<boolean>(false);
+	const [breakdownInput, setBreakdownInput] = useState<string>('');
+	const [isBreakdownLoading, setIsBreakdownLoading] = useState<boolean>(false);
+	const [breakdownActive, setBreakdownActive] = useState<boolean>(false);
 
 	useEffect(() => {
 		let filtered = shops.filter((shop) =>
@@ -43,6 +43,51 @@ export default function BottomSheetModal({
 		);
 		setFilteredShops(filtered);
 	}, [shops, searchCity, setFilteredShops]);
+
+	// Clear breakdown mode when a new search loads new shops
+	useEffect(() => {
+		setBreakdownActive(false);
+		setIsBreakdownOpen(false);
+		setBreakdownInput('');
+	}, [shops]);
+
+	const handleBreakdownSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		if (!breakdownInput.trim()) return;
+		setIsBreakdownLoading(true);
+		try {
+			const res = await fetch(
+				`${import.meta.env.VITE_API_URL}/api/claude/breakdown-filters`,
+				{
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ problem: breakdownInput }),
+				},
+			);
+			const filters = await res.json();
+
+			let filtered = [...shops];
+			if (filters.services && filters.services.length > 0) {
+				const withServices = filtered.filter((shop) =>
+					filters.services.some((s: string) => shop.services?.includes(s)),
+				);
+				// Only apply service filter if it returns results
+				if (withServices.length > 0) filtered = withServices;
+			}
+			if (filters.sortBy === 'rating') {
+				filtered.sort((a, b) => b.rating - a.rating);
+			} else {
+				filtered.sort((a, b) => a.distance - b.distance);
+			}
+			setFilteredShops(filtered);
+			setBreakdownActive(true);
+			setIsBreakdownOpen(false);
+		} catch (error) {
+			console.error('Breakdown filter error:', error);
+		} finally {
+			setIsBreakdownLoading(false);
+		}
+	};
 
 	// Scroll to top when showing shop details
 	useEffect(() => {
@@ -131,8 +176,18 @@ export default function BottomSheetModal({
 										Repair Shops
 									</h2>
 									<span className="text-sm text-gray-500 dark:text-vs-muted bg-gray-100 dark:bg-vs-card px-2 py-1 rounded-full">
-										{filteredShops.length} Results
+										{shops.length} Results
 									</span>
+									<button
+										onClick={(e) => {
+											e.stopPropagation();
+											setIsBreakdownOpen((prev) => !prev);
+											setIsModalOpen(true);
+										}}
+										className="ml-2 text-xs bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-full font-medium cursor-pointer"
+									>
+										Broken Down?
+									</button>
 								</>
 							)}
 						</div>
@@ -156,29 +211,57 @@ export default function BottomSheetModal({
 						<ShopDetailsPage selectedShop={selectedShop} />
 					) : (
 						<div>
+							{isBreakdownOpen && (
+								<form
+									onSubmit={handleBreakdownSubmit}
+									className="px-4 pt-3 pb-2"
+								>
+									<p className="text-xs text-gray-500 dark:text-vs-muted mb-2">
+										Describe what's happening — we'll find the right shops.
+									</p>
+									<div className="flex gap-2">
+										<input
+											autoFocus
+											type="text"
+											value={breakdownInput}
+											onChange={(e) => setBreakdownInput(e.target.value)}
+											placeholder="e.g. brakes went out, can't move the truck"
+											className="flex-1 border rounded-2xl py-2 px-4 text-sm text-gray-700 dark:bg-vs-input dark:border-vs-border dark:text-vs-text dark:placeholder-vs-muted"
+										/>
+										<button
+											type="submit"
+											disabled={isBreakdownLoading}
+											className="bg-red-500 hover:bg-red-600 disabled:bg-gray-300 text-white text-sm px-4 rounded-2xl font-medium cursor-pointer disabled:cursor-not-allowed"
+										>
+											{isBreakdownLoading ? '...' : 'Go'}
+										</button>
+									</div>
+								</form>
+							)}
+							{breakdownActive && (
+								<div className="mx-4 mt-2 mb-1 flex items-center justify-between bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl px-3 py-2">
+									<span className="text-xs text-red-600 dark:text-red-400 font-medium">
+										Showing {filteredShops.length} results for your situation
+									</span>
+									<button
+										onClick={() => {
+											setBreakdownActive(false);
+											setFilteredShops(
+												[...shops].sort((a, b) => a.distance - b.distance),
+											);
+										}}
+										className="text-xs text-red-400 hover:text-red-600 ml-2"
+									>
+										✕ Clear
+									</button>
+								</div>
+							)}
 							<SearchForm />
 							<ShopList
 								shops={filteredShops.sort((a, b) => a.distance - b.distance)}
 								handleShopSelect={handleShopSelect}
 								loading={loading}
 							/>
-							<div className="p-4">
-								<button
-									onClick={() => {
-										console.log(
-											'Button clicked, searchCapability:',
-											searchCapability,
-										);
-										searchCapability?.loadMore();
-									}}
-									disabled={!searchCapability?.canLoadMore}
-									className="bg-orange-500 flex items-center justify-center gap-4 mx-auto my-4 py-3 w-2/3 text-white rounded-3xl cursor-pointer disabled:bg-gray-300 disabled:cursor-not-allowed"
-								>
-									{searchCapability?.canLoadMore
-										? `Show More Results`
-										: 'No More Results'}
-								</button>
-							</div>
 						</div>
 					)}
 				</div>

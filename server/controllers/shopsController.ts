@@ -76,7 +76,6 @@ function normalizeGooglePlace(place: any, userLat: number, userLng: number) {
 	};
 }
 
-// get all shops
 const getShops = async (req: Request, res: Response) => {
 	try {
 		const shops = await getAllShops();
@@ -87,7 +86,6 @@ const getShops = async (req: Request, res: Response) => {
 	}
 };
 
-// get nearby shops based on lat, lng, and radius
 const nearbyShops = async (req: Request, res: Response) => {
 	const { lat, lng, radius } = req.query;
 
