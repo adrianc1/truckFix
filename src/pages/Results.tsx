@@ -85,7 +85,7 @@ export default function Results({ darkMode }: { darkMode: boolean }) {
 			)}
 			<APIProvider
 				apiKey={apiKey}
-				onLoad={() => console.log('Maps API has loaded.')}
+				onLoad={() => console.log('Maps has loaded.')}
 			>
 				<div style={{ width: '100vw', height: '100vh' }}>
 					<Map

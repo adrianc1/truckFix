@@ -39,8 +39,6 @@ export function ShopSearcher({
 					`${import.meta.env.VITE_API_URL}/api/shops/nearby?lat=${center.lat}&lng=${center.lng}&radius=25`,
 				);
 
-				console.log('ShopSearcher - API response:', response);
-
 				if (!response.ok) {
 					const error = await response.text();
 					console.error('ShopSearcher - API error:', error);
