@@ -226,7 +226,7 @@ export default function Modal({
 											value={breakdownInput}
 											onChange={(e) => setBreakdownInput(e.target.value)}
 											placeholder="e.g. brakes went out, can't move the truck"
-											className="flex-1 border rounded-2xl py-2 px-4 text-sm text-gray-700 dark:bg-vs-input dark:border-vs-border dark:text-vs-text dark:placeholder-vs-muted"
+											className="flex-1 border rounded-2xl py-2 px-4 text-base text-gray-700 dark:bg-vs-input dark:border-vs-border dark:text-vs-text dark:placeholder-vs-muted"
 										/>
 										<button
 											type="submit"
