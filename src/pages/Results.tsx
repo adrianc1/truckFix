@@ -50,6 +50,7 @@ export default function Results({ darkMode }: { darkMode: boolean }) {
 
 	useEffect(() => {
 		if (searchLocation) {
+			setShops([]);
 			setMapCenter(searchLocation);
 			setMapKey((prev) => prev + 1);
 			setSearchTrigger((prev) => prev + 1);
