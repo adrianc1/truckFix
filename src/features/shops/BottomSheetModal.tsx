@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import SearchForm from './SearchForm.tsx';
+import RepairFilters from './RepairFilters.tsx';
 import { useSwipeable } from 'react-swipeable';
 import ShopDetailsPage from '../../pages/ShopDetailsPage.tsx';
 import ShopList from './ShopList.tsx';
-import { Shop } from '../../types';
+import { Shop, FilterTag } from '../../types';
 
 export default function Modal({
 	filteredShops,
@@ -17,6 +18,7 @@ export default function Modal({
 	searchCity,
 	shops,
 	setFilteredShops,
+	setFilterTag,
 	loading,
 }: {
 	filteredShops: Shop[];
@@ -29,6 +31,7 @@ export default function Modal({
 	searchCity: string;
 	shops: Shop[];
 	setFilteredShops: (shops: Shop[]) => void;
+	setFilterTag: (tag: FilterTag) => void;
 	loading: boolean;
 }) {
 	const modalContentRef = useRef<HTMLDivElement>(null);
@@ -172,9 +175,6 @@ export default function Modal({
 								</>
 							) : (
 								<>
-									<h2 className="text-lg font-semibold dark:text-vs-heading">
-										Repair Shops
-									</h2>
 									<span className="text-sm text-gray-500 dark:text-vs-muted bg-gray-100 dark:bg-vs-card px-2 py-1 rounded-full">
 										{shops.length} Results
 									</span>
@@ -257,6 +257,7 @@ export default function Modal({
 								</div>
 							)}
 							<SearchForm />
+							<RepairFilters setFilterTag={setFilterTag} />
 							<ShopList
 								shops={filteredShops.sort((a, b) => a.distance - b.distance)}
 								handleShopSelect={handleShopSelect}

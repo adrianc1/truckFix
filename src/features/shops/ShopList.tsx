@@ -32,10 +32,6 @@ export default function ShopList({
 }) {
 	return (
 		<section className="w-full h-auto px-2 mt-4">
-			<h2 className="nearby-shops mb-4 font-bold dark:text-vs-heading text-2xl">
-				Nearby Repair Shops
-			</h2>
-
 			{loading ? (
 				<div className="shop-list-container w-full space-y-3">
 					{Array.from({ length: 5 }).map((_, i) => (

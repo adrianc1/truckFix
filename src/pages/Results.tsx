@@ -1,6 +1,5 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import Filters from '../features/shops/Filters';
 import BottomSheetModal from '../features/shops/BottomSheetModal';
 import { ShopSearcher } from '../utils/ShopSearcher';
 import CurrentLocationMarker from '../components/CurrentLocationMarker';
@@ -71,8 +70,6 @@ export default function Results({ darkMode }: { darkMode: boolean }) {
 
 	return (
 		<div className="mt-14 overflow-y-hidden">
-			<Filters setFilterTag={setFilterTag} />
-
 			{searchLocation && (
 				<ShopSearcher
 					onPlacesFound={handlePlacesFound}
@@ -110,6 +107,7 @@ export default function Results({ darkMode }: { darkMode: boolean }) {
 				filteredShops={filteredShops}
 				searchCity={searchCity}
 				setFilteredShops={setFilteredShops}
+				setFilterTag={setFilterTag}
 				selectedShop={selectedShop}
 				setSelectedShop={setSelectedShop}
 				showShopDetails={showShopDetails}
