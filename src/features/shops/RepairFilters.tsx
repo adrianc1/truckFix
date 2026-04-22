@@ -3,8 +3,12 @@ import { FilterTag } from '../../types';
 
 export default function RepairFilters({
 	setFilterTag,
+	sortBy,
+	setSortBy,
 }: {
 	setFilterTag: (tag: FilterTag) => void;
+	sortBy: 'distance' | 'rating';
+	setSortBy: (sort: 'distance' | 'rating') => void;
 }) {
 	const [shopCategories, setShopCategories] = useState<
 		{
@@ -28,8 +32,25 @@ export default function RepairFilters({
 
 	return (
 		<>
-			{/* Repair shop categories  */}
-			<div className="flex overflow-x-scroll w-full gap-4 px-2 pb-4 mb-8 z-10 ">
+			{/* Sort buttons */}
+			<div className="flex items-center gap-2 px-2 pb-2 mb-4">
+				<span className="text-xs text-gray-500 dark:text-vs-muted font-medium">Sort:</span>
+				{(['distance', 'rating'] as const).map((option) => (
+					<button
+						key={option}
+						onClick={() => setSortBy(option)}
+						className={`text-xs px-3 py-1 rounded-full border cursor-pointer ${
+							sortBy === option
+								? 'bg-orange-500 text-white border-orange-500'
+								: 'bg-white dark:bg-vs-input border-gray-300 dark:border-vs-border hover:bg-orange-100 dark:text-vs-text'
+						}`}
+					>
+						{option === 'distance' ? 'Nearest' : 'Top Rated'}
+					</button>
+				))}
+			</div>
+			{/* Repair shop categories */}
+			<div className="flex overflow-x-scroll w-full gap-4 px-2 pb-4 mt-4 mb-8 z-10 ">
 				{shopCategories.map((cat, index) => (
 					<button
 						key={index}

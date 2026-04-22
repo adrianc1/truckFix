@@ -19,6 +19,8 @@ export default function Modal({
 	shops,
 	setFilteredShops,
 	setFilterTag,
+	sortBy,
+	setSortBy,
 	loading,
 }: {
 	filteredShops: Shop[];
@@ -32,6 +34,8 @@ export default function Modal({
 	shops: Shop[];
 	setFilteredShops: (shops: Shop[]) => void;
 	setFilterTag: (tag: FilterTag) => void;
+	sortBy: 'distance' | 'rating';
+	setSortBy: (sort: 'distance' | 'rating') => void;
 	loading: boolean;
 }) {
 	const modalContentRef = useRef<HTMLDivElement>(null);
@@ -247,7 +251,11 @@ export default function Modal({
 										onClick={() => {
 											setBreakdownActive(false);
 											setFilteredShops(
-												[...shops].sort((a, b) => a.distance - b.distance),
+												[...shops].sort((a, b) =>
+													sortBy === 'rating'
+														? b.rating - a.rating
+														: a.distance - b.distance,
+												),
 											);
 										}}
 										className="text-xs text-red-400 hover:text-red-600 ml-2"
@@ -257,9 +265,9 @@ export default function Modal({
 								</div>
 							)}
 							<SearchForm />
-							<RepairFilters setFilterTag={setFilterTag} />
+							<RepairFilters setFilterTag={setFilterTag} sortBy={sortBy} setSortBy={setSortBy} />
 							<ShopList
-								shops={filteredShops.sort((a, b) => a.distance - b.distance)}
+								shops={filteredShops}
 								handleShopSelect={handleShopSelect}
 								loading={loading}
 							/>

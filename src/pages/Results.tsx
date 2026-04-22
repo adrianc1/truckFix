@@ -11,6 +11,7 @@ import { Shop } from '../types';
 
 export default function Results({ darkMode }: { darkMode: boolean }) {
 	const [filterTag, setFilterTag] = useState<string>('');
+	const [sortBy, setSortBy] = useState<'distance' | 'rating'>('distance');
 	const [filteredShops, setFilteredShops] = useState<Shop[]>([]);
 	const [searchCity, setSearchCity] = useState<string>('');
 	const [searchParams] = useSearchParams();
@@ -54,19 +55,19 @@ export default function Results({ darkMode }: { darkMode: boolean }) {
 	}, [searchLocation]);
 
 	useEffect(() => {
-		if (!filterTag) {
-			const sortedShops = [...shops].sort((a, b) => a.distance - b.distance);
-			setFilteredShops(sortedShops);
-			return;
-		}
+		const base = filterTag
+			? shops.filter((shop: Shop) =>
+					shop.services?.some((service) =>
+						service?.toLowerCase().includes(filterTag.toLowerCase()),
+					),
+				)
+			: [...shops];
 
-		const filtered = shops.filter((shop: Shop) =>
-			shop.services?.some((service) =>
-				service?.toLowerCase().includes(filterTag.toLowerCase()),
-			),
+		const sorted = base.sort((a, b) =>
+			sortBy === 'rating' ? b.rating - a.rating : a.distance - b.distance,
 		);
-		setFilteredShops(filtered);
-	}, [shops, filterTag]);
+		setFilteredShops(sorted);
+	}, [shops, filterTag, sortBy]);
 
 	return (
 		<div className="mt-14 overflow-y-hidden">
@@ -108,6 +109,8 @@ export default function Results({ darkMode }: { darkMode: boolean }) {
 				searchCity={searchCity}
 				setFilteredShops={setFilteredShops}
 				setFilterTag={setFilterTag}
+				sortBy={sortBy}
+				setSortBy={setSortBy}
 				selectedShop={selectedShop}
 				setSelectedShop={setSelectedShop}
 				showShopDetails={showShopDetails}
