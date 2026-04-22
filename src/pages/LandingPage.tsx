@@ -172,7 +172,7 @@ const LandingPage = () => {
 					<div className="relative mt-4 w-full ">
 						<input
 							type="text"
-							className="border w-full rounded-3xl py-2 pl-10 pr-4 text-gray-500 dark:text-vs-text dark:bg-vs-input dark:border-vs-border dark:placeholder-vs-muted"
+							className="border w-full rounded-xl py-2 pl-10 pr-4 text-gray-500 dark:text-vs-text dark:bg-vs-input dark:border-vs-border dark:placeholder-vs-muted"
 							placeholder="Enter City / Town"
 							value={typedLocation}
 							onChange={handleInputChange}
@@ -186,7 +186,7 @@ const LandingPage = () => {
 							Use Current Location
 						</div>
 					</span>
-					<button className="bg-orange-500 flex items-center justify-center gap-4 py-3 w-full text-white rounded-3xl cursor-pointer">
+					<button className="bg-orange-500 flex items-center justify-center gap-4 py-3 w-full text-white rounded-xl cursor-pointer">
 						<Search size={18} />
 						Find Repairs
 					</button>

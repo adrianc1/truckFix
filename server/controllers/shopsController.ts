@@ -1,4 +1,7 @@
-import { searchGooglePlaces, saveGooglePlace } from '../services/placesServices';
+import {
+	searchGooglePlaces,
+	saveGooglePlace,
+} from '../services/placesServices';
 import { getAllShops, getNearbyShops } from '../services/shopService';
 import { Request, Response } from 'express';
 import { calculateDistance } from '../utils/distanceCalculator';
@@ -24,9 +27,19 @@ function normalizeDbShop(shop: any, userLat: number, userLng: number) {
 		current_opening_hours: {
 			open_now: false,
 			weekday_text: (shop.hours ?? []).map((h: any) => {
-				const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+				const days = [
+					'Sunday',
+					'Monday',
+					'Tuesday',
+					'Wednesday',
+					'Thursday',
+					'Friday',
+					'Saturday',
+				];
 				const day = days[h.dayOfWeek] ?? `Day ${h.dayOfWeek}`;
-				return h.isClosed ? `${day}: Closed` : `${day}: ${h.openTime}–${h.closeTime}`;
+				return h.isClosed
+					? `${day}: Closed`
+					: `${day}: ${h.openTime}–${h.closeTime}`;
 			}),
 		},
 		services: shop.services?.map((s: any) => s.service) ?? [],
@@ -101,22 +114,39 @@ const nearbyShops = async (req: Request, res: Response) => {
 		const results = await getNearbyShops(userLat, userLng, Number(radius));
 
 		if (results.length === 0) {
-			console.log('No nearby shops found in DB, falling back to Google Places.');
+			console.log(
+				'No nearby shops found in DB, falling back to Google Places.',
+			);
 			const googlePlaces = await searchGooglePlaces(userLat, userLng);
-			await saveGooglePlace(googlePlaces);
-			const normalized = googlePlaces.map((p: any) => normalizeGooglePlace(p, userLat, userLng));
-			console.log(`Found ${normalized.length} places from Google. Saved to DB.`);
+			const normalized = googlePlaces.map((p: any) =>
+				normalizeGooglePlace(p, userLat, userLng),
+			);
+			console.log(`Found ${normalized.length} places from Google.`);
 			res.json({ places: normalized });
+			// Save to DB after responding so the client isnt waiting
+			saveGooglePlace(googlePlaces).catch((err) =>
+				console.error('Background DB save failed:', err),
+			);
 		} else if (results.length < 20) {
-			console.log(`Supplementing ${results.length} DB shops with Google Places results.`);
+			console.log(
+				`Supplementing ${results.length} DB shops with Google Places results.`,
+			);
 			const googlePlaces = await searchGooglePlaces(userLat, userLng);
-			await saveGooglePlace(googlePlaces);
-			const dbNormalized = results.map((s) => normalizeDbShop(s, userLat, userLng));
-			const googleNormalized = googlePlaces.map((p: any) => normalizeGooglePlace(p, userLat, userLng));
+			const dbNormalized = results.map((s) =>
+				normalizeDbShop(s, userLat, userLng),
+			);
+			const googleNormalized = googlePlaces.map((p: any) =>
+				normalizeGooglePlace(p, userLat, userLng),
+			);
 			res.json({ places: dbNormalized.concat(googleNormalized) });
+			saveGooglePlace(googlePlaces).catch((err) =>
+				console.error('Background DB save failed:', err),
+			);
 		} else {
 			console.log(`Found ${results.length} nearby shops in DB.`);
-			const normalized = results.map((s) => normalizeDbShop(s, userLat, userLng));
+			const normalized = results.map((s) =>
+				normalizeDbShop(s, userLat, userLng),
+			);
 			res.json({ places: normalized });
 		}
 	} catch (error) {
