@@ -1,6 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { calculateDistance } from './distanceCalculator';
-import checkIfOpen from './checkIfOpen';
 
 import { LatLng, Shop } from '../types';
 
@@ -13,7 +11,6 @@ export function ShopSearcher({
 	onPlacesFound: (places: Shop[]) => void;
 	center: LatLng;
 	searchTrigger: number;
-
 }) {
 	const lastSearchRef = useRef<string | null>(null);
 

@@ -22,7 +22,6 @@ const Footer = () => {
 					<li>Terms</li>
 				</Link>
 				<Link to="privacy-policy">
-					<a href="">Dreaux Digital</a>Dreaux Digital
 					<li>Privacy</li>
 				</Link>
 				<Link to="cookies">

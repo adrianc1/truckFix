@@ -6,6 +6,26 @@ import { getAllShops, getNearbyShops } from '../services/shopService';
 import { Request, Response } from 'express';
 import { calculateDistance } from '../utils/distanceCalculator';
 
+// checkIfOpen expects Mon–Sun order (index 0 = Monday, index 6 = Sunday).
+// DB dayOfWeek follows JS convention: 0 = Sunday, 1 = Monday, ..., 6 = Saturday.
+const MON_SUN_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+function buildWeekdayText(hours: any[]): string[] {
+	// A 24/7 shop is stored as a single period with no closeTime
+	const is24Hours = hours.some((h) => !h.isClosed && !h.closeTime);
+	if (is24Hours) {
+		return MON_SUN_DAYS.map((day) => `${day}: Open 24 hours`);
+	}
+
+	return MON_SUN_DAYS.map((day, i) => {
+		// Convert Mon-Sun index back to DB's Sun-first dayOfWeek
+		const dbDay = i === 6 ? 0 : i + 1;
+		const h = hours.find((h) => h.dayOfWeek === dbDay);
+		if (!h || h.isClosed) return `${day}: Closed`;
+		return `${day}: ${h.openTime}–${h.closeTime}`;
+	});
+}
+
 // Transforms a Prisma DB shop into the frontend Shop shape
 function normalizeDbShop(shop: any, userLat: number, userLng: number) {
 	return {
@@ -26,21 +46,7 @@ function normalizeDbShop(shop: any, userLat: number, userLng: number) {
 		opening_hours: { open_now: false },
 		current_opening_hours: {
 			open_now: false,
-			weekday_text: (shop.hours ?? []).map((h: any) => {
-				const days = [
-					'Sunday',
-					'Monday',
-					'Tuesday',
-					'Wednesday',
-					'Thursday',
-					'Friday',
-					'Saturday',
-				];
-				const day = days[h.dayOfWeek] ?? `Day ${h.dayOfWeek}`;
-				return h.isClosed
-					? `${day}: Closed`
-					: `${day}: ${h.openTime}–${h.closeTime}`;
-			}),
+			weekday_text: buildWeekdayText(shop.hours ?? []),
 		},
 		services: shop.services?.map((s: any) => s.service) ?? [],
 		types: [],
@@ -89,7 +95,7 @@ function normalizeGooglePlace(place: any, userLat: number, userLng: number) {
 	};
 }
 
-const getShops = async (req: Request, res: Response) => {
+const getShops = async (_req: Request, res: Response) => {
 	try {
 		const shops = await getAllShops();
 		res.json(shops);

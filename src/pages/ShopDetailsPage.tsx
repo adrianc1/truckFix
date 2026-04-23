@@ -1,6 +1,7 @@
 import { Clock, MapPin, Phone, Wrench, Star } from 'lucide-react';
 import star from '../assets/images/star.svg';
 import { Shop } from '../types';
+import checkIfOpen from '../utils/checkIfOpen';
 
 const ShopDetailsPage = ({ selectedShop }: { selectedShop: Shop }) => {
 	return (
@@ -18,12 +19,12 @@ const ShopDetailsPage = ({ selectedShop }: { selectedShop: Shop }) => {
 				{/* open or closed */}
 				<span
 					className={`is-open text-sm font-bold ${
-						selectedShop.opening_hours?.open_now
+						checkIfOpen({ weekdayDescriptions: selectedShop.current_opening_hours?.weekday_text ?? [] })
 							? 'text-green-500'
 							: 'text-red-500'
 					}`}
 				>
-					{selectedShop.opening_hours?.open_now ? 'Open Now' : 'Closed'}
+					{checkIfOpen({ weekdayDescriptions: selectedShop.current_opening_hours?.weekday_text ?? [] }) ? 'Open Now' : 'Closed'}
 				</span>
 			</div>
 

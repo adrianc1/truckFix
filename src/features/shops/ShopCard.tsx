@@ -1,5 +1,6 @@
 import star from '../../assets/images/star.svg';
 import { Shop } from '../../types';
+import checkIfOpen from '../../utils/checkIfOpen';
 export default function ShopCard({
 	shop,
 	onShopSelect,
@@ -60,10 +61,10 @@ export default function ShopCard({
 
 					<span
 						className={`is-open text-sm font-medium ${
-							shop.opening_hours?.open_now ? 'text-green-500' : 'text-red-500'
+							checkIfOpen({ weekdayDescriptions: shop.current_opening_hours?.weekday_text ?? [] }) ? 'text-green-500' : 'text-red-500'
 						}`}
 					>
-						{shop.opening_hours?.open_now ? 'Open Now' : 'Closed'}
+						{checkIfOpen({ weekdayDescriptions: shop.current_opening_hours?.weekday_text ?? [] }) ? 'Open Now' : 'Closed'}
 					</span>
 				</div>
 			</div>

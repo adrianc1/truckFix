@@ -3,7 +3,7 @@ import { RegularOpeningHours } from '../types';
 export default function checkIfOpen(
 	regularOpeningHours: RegularOpeningHours | null | undefined,
 ): boolean | undefined {
-	if (!regularOpeningHours?.weekdayDescriptions) {
+	if (!regularOpeningHours?.weekdayDescriptions?.length) {
 		return undefined; // No hours data
 	}
 
@@ -15,7 +15,9 @@ export default function checkIfOpen(
 
 	// Adjust weekdays to Mon - Sun: Sunday(0) -> index 6, Monday(1) -> index 0, etc.
 	const dayIndex: number = currentDay === 0 ? 6 : currentDay - 1;
-	const todayHours: string = regularOpeningHours.weekdayDescriptions[dayIndex];
+	const todayHours: string | undefined = regularOpeningHours.weekdayDescriptions[dayIndex];
+
+	if (!todayHours) return undefined;
 
 	// Check for 24 hours
 	if (todayHours.includes('Open 24 hours')) {
@@ -27,20 +29,28 @@ export default function checkIfOpen(
 		return false;
 	}
 
-	// Parse hours like "Monday: 7:00 AM – 7:00 PM"
-	// or "Monday: 7:00 AM – 7:00 PM, 8:00 PM – 10:00 PM" (multiple periods)
-	const hourRegex =
-		/(\d{1,2}):(\d{2})\s*(AM|PM)\s*[–-]\s*(\d{1,2}):(\d{2})\s*(AM|PM)/gi;
-	const matches = [...todayHours.matchAll(hourRegex)];
+	// Try AM/PM format: "Monday: 9:00 AM – 6:00 PM" (Google Places)
+	const ampmRegex = /(\d{1,2}):(\d{2})\s*(AM|PM)\s*[–-]\s*(\d{1,2}):(\d{2})\s*(AM|PM)/gi;
+	const ampmMatches = [...todayHours.matchAll(ampmRegex)];
 
-	if (matches.length === 0) {
+	// Fall back to 24h format: "Monday: 09:00–18:00" (DB-sourced shops)
+	const h24Regex = /(\d{1,2}):(\d{2})\s*[–-]\s*(\d{1,2}):(\d{2})/g;
+	const h24Matches = ampmMatches.length === 0 ? [...todayHours.matchAll(h24Regex)] : [];
+
+	if (ampmMatches.length === 0 && h24Matches.length === 0) {
 		return undefined;
 	}
 
+	// Normalise 24h matches into the same 6-capture-group shape as AM/PM matches
+	// by injecting sentinel period strings that the AM/PM conversion below ignores
+	type TimeMatch = [string, string, string, string, string, string, string];
+	const matches: TimeMatch[] = ampmMatches.length > 0
+		? (ampmMatches as RegExpMatchArray[]).map((m) => [m[0], m[1], m[2], m[3], m[4], m[5], m[6]] as TimeMatch)
+		: (h24Matches as RegExpMatchArray[]).map((m) => [m[0], m[1], m[2], '24H', m[3], m[4], '24H'] as TimeMatch);
+
 	// Check each time period
 	for (const match of matches) {
-		const [_, openHour, openMin, openPeriod, closeHour, closeMin, closePeriod] =
-			match;
+		const [_, openHour, openMin, openPeriod, closeHour, closeMin, closePeriod] = match;
 
 		// Convert to 24-hour format
 		let openHour24 = parseInt(openHour);
