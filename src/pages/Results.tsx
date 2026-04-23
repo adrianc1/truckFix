@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import checkIfOpen from '../utils/checkIfOpen';
 import BottomSheetModal from '../features/shops/BottomSheetModal';
 import { ShopSearcher } from '../utils/ShopSearcher';
 import CurrentLocationMarker from '../components/CurrentLocationMarker';
@@ -55,13 +56,18 @@ export default function Results({ darkMode }: { darkMode: boolean }) {
 	}, [searchLocation]);
 
 	useEffect(() => {
-		const base = filterTag
-			? shops.filter((shop: Shop) =>
-					shop.services?.some((service) =>
-						service?.toLowerCase().includes(filterTag.toLowerCase()),
-					),
-				)
-			: [...shops];
+		const base =
+			filterTag === 'open_now'
+				? shops.filter((shop: Shop) =>
+						checkIfOpen({ weekdayDescriptions: shop.current_opening_hours?.weekday_text ?? [] }) === true,
+					)
+				: filterTag
+					? shops.filter((shop: Shop) =>
+							shop.services?.some((service) =>
+								service?.toLowerCase().includes(filterTag.toLowerCase()),
+							),
+						)
+					: [...shops];
 
 		const sorted = base.sort((a, b) =>
 			sortBy === 'rating' ? b.rating - a.rating : a.distance - b.distance,

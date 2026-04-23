@@ -18,6 +18,7 @@ export default function RepairFilters({
 		}[]
 	>([
 		{ category: 'All Services', value: '', isActive: true },
+		{ category: 'Open Now', value: 'open_now', isActive: false },
 		{ category: 'Brakes', value: 'brakes', isActive: false },
 		{ category: 'Engine', value: 'engine', isActive: false },
 		{ category: 'DEF System', value: 'def', isActive: false },

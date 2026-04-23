@@ -103,6 +103,7 @@ export interface SearchCapability {
 // empty string "" means "All Services"
 export type FilterTag =
 	| ''
+	| 'open_now'
 	| 'brakes'
 	| 'engine'
 	| 'def'
