@@ -18,16 +18,16 @@ This project solves a real logistics problem and makes deliberate architectural 
 
 | Layer      | Choice                      |
 | ---------- | --------------------------- |
-| Framework  | React 19                    |
-| Language   | TypeScript 5 (strict mode)  |
-| Build      | Vite 6                      |
-| Styling    | Tailwind CSS 4              |
+| Framework  | React                       |
+| Language   | TypeScript   (strict mode)  |
+| Build      | Vite                        |
+| Styling    | Tailwind CSS                |
 | Maps       | `@vis.gl/react-google-maps` |
 | Backend    | Node.js + Express           |
-| Database   | PostgreSQL (Render)         |
+| Database   | PostgreSQL                  |
 | ORM        | Prisma                      |
 | AI         | Anthropic Claude Haiku      |
-| Deployment | Netlify + Render            |
+| Deployment | Netlify + Railway           |
 
 ## Architecture
 
