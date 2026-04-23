@@ -1,7 +1,7 @@
 export default function TermsContent() {
 	scrollTo({ top: 0, behavior: 'smooth' });
 	return (
-		<div className="space-y-6 pt-24 pl-4 pb-12 dark:bg-gray-700">
+		<div className="space-y-6 pt-24 pl-4 pb-12 min-h-screen dark:bg-gray-700">
 			<h1 className="text-4xl font-bold text-gray-900 border-b-4 border-orange-500 pb-4 dark:text-white">
 				Terms of Service
 			</h1>
