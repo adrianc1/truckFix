@@ -11,7 +11,13 @@ import claudeRouter from './routes/claude';
 const app = express();
 
 app.use(
-	cors({ origin: ['https://truckfix.netlify.app', 'http://localhost:5173'] }),
+	cors({
+		origin: [
+			'https://truckfix.netlify.app',
+			'http://localhost:5173',
+			'https://trytruckfix.com',
+		],
+	}),
 );
 app.use(express.json());
 
