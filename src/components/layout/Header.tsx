@@ -92,9 +92,30 @@ const Header = ({
 							</div>
 						</div>
 
+						<div className="mt-6 p-4 bg-gray-50 dark:bg-vs-card rounded-lg dark:border dark:border-vs-border flex flex-col items-center gap-2">
+							<div className="flex justify-around w-full">
+								<a
+									href="mailto:info@trytruckfix.com?subject=List My Shop"
+									className="text-sm font-medium text-orange-500 hover:text-orange-600 transition-colors"
+								>
+									List your shop
+								</a>
+								<span className="text-gray-300 dark:text-vs-border">|</span>
+								<a
+									href="mailto:info@trytruckfix.com?subject=Shop Correction"
+									className="text-sm font-medium text-orange-500 hover:text-orange-600 transition-colors"
+								>
+									Submit a correction
+								</a>
+							</div>
+							<span className="text-xs text-gray-400 dark:text-vs-muted select-all">
+								info@trytruckfix.com
+							</span>
+						</div>
+
 						<button
 							onClick={() => setIsSettingsOpen(false)}
-							className="w-full mt-6 bg-orange-500 hover:bg-orange-600 text-white px-4 py-3 rounded-lg font-medium transition-colors cursor-pointer"
+							className="w-full mt-4 bg-orange-500 hover:bg-orange-600 text-white px-4 py-3 rounded-lg font-medium transition-colors cursor-pointer"
 						>
 							Save Changes
 						</button>

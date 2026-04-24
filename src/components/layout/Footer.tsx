@@ -17,6 +17,26 @@ const Footer = () => {
 					className="h-32 w-32 hidden dark:block"
 				/>
 			</div>
+			<div className="flex flex-col items-center gap-2 text-center">
+				<div className="flex gap-6">
+					<a
+						href="mailto:info@trytruckfix.com?subject=List My Shop"
+						className="text-sm text-orange-500 hover:text-orange-600 transition-colors font-medium"
+					>
+						Want to list your shop?
+					</a>
+					<span className="text-gray-300 dark:text-vs-border">|</span>
+					<a
+						href="mailto:info@trytruckfix.com?subject=Shop Correction"
+						className="text-sm text-orange-500 hover:text-orange-600 transition-colors font-medium"
+					>
+						Submit a correction
+					</a>
+				</div>
+				<span className="text-xs text-gray-400 dark:text-vs-muted select-all">
+					info@trytruckfix.com
+				</span>
+			</div>
 			<ul className="w-2/3 flex justify-around dark:text-vs-text">
 				<Link to="terms-of-service">
 					<li>Terms</li>
