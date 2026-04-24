@@ -38,6 +38,9 @@ const Footer = () => {
 				</span>
 			</div>
 			<ul className="w-2/3 flex justify-around dark:text-vs-text">
+				<Link to="features">
+					<li>Features</li>
+				</Link>
 				<Link to="terms-of-service">
 					<li>Terms</li>
 				</Link>
