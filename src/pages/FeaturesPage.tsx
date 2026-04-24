@@ -6,7 +6,7 @@ import {
 	Star,
 	Phone,
 	ShieldCheck,
-	Zap,
+	Sparkles,
 	Wrench,
 	Truck,
 	MapPin,
@@ -75,7 +75,7 @@ const CORE_FEATURES: {
 		keywords: '24 hour truck repair, open now truck mechanic',
 	},
 	{
-		icon: Zap,
+		icon: Sparkles,
 		title: 'AI Breakdown Mode',
 		description:
 			'Broken down on the side of the highway? Describe your problem in plain English — blown tire, DEF light, engine overheating — and our AI instantly identifies the shops near you that are equipped to fix it.',

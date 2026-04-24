@@ -1,12 +1,11 @@
 import { useEffect } from 'react';
 import {
-	Navigation,
-	// Wrench,
-	Clock,
-	Star,
-	Phone,
-	ShieldCheck,
-	Zap,
+	LocateFixed,
+	AlarmClock,
+	Sparkles,
+	BadgeCheck,
+	PhoneCall,
+	Award,
 } from 'lucide-react';
 
 const Features = () => {
@@ -36,48 +35,43 @@ const Features = () => {
 		{
 			title: 'Nearby Shops',
 			des: 'Find repair shops near your current location or along your planned route',
-			icon: Navigation,
+			icon: LocateFixed,
 		},
-		// {
-		// 	title: 'Service Specialties',
-		// 	des: 'Filter shops by the services you need, from engine repairs to tire replacements',
-		// 	icon: Wrench,
-		// },
 		{
-			title: 'Real-Time Availablity',
+			title: 'Real-Time Availability',
 			des: 'See which shops can service you immediately and which require appointments',
-			icon: Clock,
+			icon: AlarmClock,
 		},
 		{
 			title: 'AI Breakdown Mode',
 			des: "Broken down and don't know where to start? Describe your issue and our AI instantly finds the closest shops equipped to fix it.",
-			icon: Zap,
+			icon: Sparkles,
 		},
 		{
 			title: 'Verified Reviews',
 			des: 'Read reviews from other truckers to find the most reliable repair shops',
-			icon: Star,
+			icon: BadgeCheck,
 		},
 		{
 			title: 'Direct Contact',
-			des: 'Call shops directly through the app or send your location for roadside assitance.',
-			icon: Phone,
+			des: 'Call shops directly through the app or send your location for roadside assistance.',
+			icon: PhoneCall,
 		},
 		{
 			title: 'Quality Guarantee',
-			des: 'All shops in our network are vetted and must maintain high service standards ',
-			icon: ShieldCheck,
+			des: 'All shops in our network are vetted and must maintain high service standards',
+			icon: Award,
 		},
 	];
 
 	return (
 		<div className="">
-			<h4 className="text-3xl font-bold dark:text-vs-heading text-center my-4">
-				Everything You Need On The Road
-			</h4>
+			<h2 className="text-3xl font-bold dark:text-vs-heading text-center my-4">
+				Everything a Truck Driver Needs to Find Repair Fast
+			</h2>
 			<p className="text-center text-gray-500 dark:text-vs-muted">
-				TruckFix provides all the tools truckers need to find reliable repairs
-				quickly and get back on schedule.
+				From diesel engine failures to tire blowouts and DEF system warnings —
+				TruckFix finds the right shop, open right now, closest to you.
 			</p>
 			<ul className="mt-8 w-full flex flex-col gap-4 md:flex-row md:flex-wrap md:justify-center md:gap-12 ">
 				{featuresList.map((f, index) => {
@@ -91,9 +85,9 @@ const Features = () => {
 							<div className="bg-orange-100 text-orange-500 flex w-fit p-3 rounded-xl mb-4">
 								<IconComponent size={36} />
 							</div>
-							<h6 className="font-semibold text-2xl text-black dark:text-vs-heading">
+							<h3 className="font-semibold text-2xl text-black dark:text-vs-heading">
 								{f.title}
-							</h6>
+							</h3>
 							<p>{f.des}</p>
 						</li>
 					);

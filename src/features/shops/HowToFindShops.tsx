@@ -2,28 +2,28 @@ const HowToFindShops = () => {
 	const steps = [
 		{
 			id: 1,
-			title: 'Share Your Location',
-			des: 'Enter your current location or allow the app to detect it automatically.',
+			title: 'Enter Your Location',
+			des: 'Type your city, zip code, or highway exit — or tap "Use Current Location" for instant GPS-based results.',
 		},
 		{
 			id: 2,
-			title: 'Browse Nearby Shops',
-			des: 'View all available shops, their services, ratings, and current wait times.',
+			title: 'Find the Right Shop',
+			des: 'Browse verified diesel and commercial truck repair shops near you, sorted by distance. Filter by open status or service type.',
 		},
 		{
 			id: 3,
-			title: 'Book & Get Service',
-			des: 'Contact the shop directly or book an appointment through the app.',
+			title: 'Call & Get Fixed',
+			des: 'Tap to call the shop directly. Get directions or request mobile roadside service — no account needed.',
 		},
 	];
 	return (
 		<div className="">
-			<h4 className="text-3xl font-bold dark:text-gray-100 text-center my-4">
-				Back On The Road In Three Simple Steps
-			</h4>
+			<h2 className="text-3xl font-bold dark:text-gray-100 text-center my-4">
+				Find a Truck Repair Shop in Three Steps
+			</h2>
 			<p className="text-center text-gray-500 dark:text-gray-100">
-				TruckFix provides all the tools truckers need to find reliable repairs
-				quickly and get back on schedule.
+				No sign-ups, no subscriptions — just the nearest verified semi truck
+				and diesel repair shops, ready when you need them.
 			</p>
 			<ul className="mt-8 flex flex-col gap-4 md:flex-row">
 				{steps.map((step) => {
@@ -35,9 +35,9 @@ const HowToFindShops = () => {
 							<div className="bg-orange-500 text-orange-100 flex h-12 w-12 p-4 rounded-full mb-4 justify-center items-center font-bold text-xl">
 								{step.id}
 							</div>
-							<h6 className="font-bold text-2xl text-center text-black dark:text-gray-100">
+							<h3 className="font-bold text-2xl text-center text-black dark:text-gray-100">
 								{step.title}
-							</h6>
+							</h3>
 							<p className="text-center ">{step.des}</p>
 						</li>
 					);
