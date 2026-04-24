@@ -38,12 +38,35 @@ const Header = ({
 					<img src={TruckDark} alt="TruckFix Logo" className="w-16 h-16 m-0 p-0 hidden dark:block" />
 				</Link>
 
-				<div className="absolute left-1/2 transform -translate-x-1/2">
+				{/* Wordmark — hidden on desktop where nav takes center */}
+				<div className="absolute left-1/2 transform -translate-x-1/2 lg:hidden">
 					<h1 className="text-2xl text-center font-bold dark:text-vs-heading">
 						TRUCK
 						<span className="text-orange-500">FIX</span>
 					</h1>
 				</div>
+
+				{/* Desktop nav */}
+				<nav className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-8">
+					<Link
+						to="/"
+						className="text-sm font-medium text-gray-600 dark:text-vs-text hover:text-orange-500 dark:hover:text-orange-500 transition-colors"
+					>
+						Home
+					</Link>
+					<Link
+						to="/features"
+						className="text-sm font-medium text-gray-600 dark:text-vs-text hover:text-orange-500 dark:hover:text-orange-500 transition-colors"
+					>
+						Features
+					</Link>
+					<Link
+						to="/faq"
+						className="text-sm font-medium text-gray-600 dark:text-vs-text hover:text-orange-500 dark:hover:text-orange-500 transition-colors"
+					>
+						FAQ & Contact
+					</Link>
+				</nav>
 
 				<div className="settings-icon flex justify-center pr-4">
 					<img

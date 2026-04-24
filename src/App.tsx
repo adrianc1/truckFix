@@ -7,6 +7,7 @@ import Terms from './pages/Terms.tsx';
 import CookiesPage from './pages/CookiesPage.tsx';
 import PrivacyPolicy from './pages/PrivacyPolicy.tsx';
 import FeaturesPage from './pages/FeaturesPage.tsx';
+import FAQPage from './pages/FAQPage.tsx';
 
 const App = () => {
 	const [darkMode, setDarkMode] = useState(true);
@@ -21,6 +22,7 @@ const App = () => {
 				<Route path="cookies" element={<CookiesPage />} />
 				<Route path="privacy-policy" element={<PrivacyPolicy />} />
 				<Route path="features" element={<FeaturesPage />} />
+				<Route path="faq" element={<FAQPage />} />
 			</Routes>
 		</div>
 	);

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, Search, Navigation } from 'lucide-react';
+import { MapPin, Search, Navigation, AlertTriangle } from 'lucide-react';
 import Footer from '../components/layout/Footer.tsx';
 import MapImg from '../assets/images/map.png';
 import SectionTag from '../components/SectionTag.tsx';
@@ -201,6 +201,25 @@ const LandingPage = () => {
 						alt=""
 						className="w-full h-full object-cover rounded-2xl"
 					/>
+				</div>
+			</section>
+
+			{/* Breakdown banner */}
+			<section className="w-[95%] mx-auto mt-8 lg:w-4/5">
+				<div className="border border-orange-300 dark:border-orange-500/40 bg-orange-50 dark:bg-orange-500/10 rounded-2xl p-6 flex flex-col md:flex-row items-center gap-5">
+					<div className="text-orange-500 shrink-0">
+						<AlertTriangle size={40} />
+					</div>
+					<div>
+						<h2 className="text-xl font-bold dark:text-vs-heading mb-1">
+							Broken Down Right Now?
+						</h2>
+						<p className="text-sm text-gray-600 dark:text-vs-muted">
+							Enter your location above — or use your current GPS position — and
+							TruckFix will instantly surface the nearest verified shops that can
+							help. No account needed, completely free.
+						</p>
+					</div>
 				</div>
 			</section>
 
