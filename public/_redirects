@@ -1,1 +1,4 @@
+# Redirect Netlify subdomain to primary domain
+https://truckfix.netlify.app/*  https://trytruckfix.com/:splat  301!
+
 /*    /index.html   200
