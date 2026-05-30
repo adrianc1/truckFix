@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, Search, Navigation, AlertTriangle } from 'lucide-react';
+import { Search, Navigation, AlertTriangle } from 'lucide-react';
 import Footer from '../components/layout/Footer.tsx';
 import MapImg from '../assets/images/map.png';
 import SectionTag from '../components/SectionTag.tsx';
@@ -161,51 +161,60 @@ const LandingPage = () => {
 
 	return (
 		<div className="pt-24 dark:bg-vs-bg">
-			<section className="w-[95%] mx-auto mt-8">
+			<section className="w-[95%] mx-auto mt-8 pt-12">
 				<HeroSection />
 
 				{/* Location form for submission */}
 				<form
-					className="flex w-full flex-col gap-4 mx-auto lg:w-4/5"
+					className="flex flex-col gap-3 mx-auto w-full max-w-[760px]"
 					onSubmit={handleFormSubmit}
 				>
-					<div className="relative mt-4 w-full ">
+					<div
+						className="flex items-center overflow-hidden border border-gray-200 bg-white dark:bg-[#2a2a2a] dark:border-[#3a3a3a]"
+						style={{ borderRadius: 12 }}
+					>
+						<button
+							type="button"
+							onClick={getUserLocation}
+							className="h-[54px] px-4 flex items-center gap-1.5 shrink-0 cursor-pointer border-r border-gray-200 dark:border-[#3a3a3a]"
+							style={{ color: '#E8721A', fontSize: 13 }}
+						>
+							<Navigation className="w-4 h-4" />
+							<span className="hidden sm:inline">Use Location</span>
+						</button>
 						<input
 							type="text"
-							className="border w-full rounded-xl py-2 pl-10 pr-4 text-gray-500 dark:text-vs-text dark:bg-vs-input dark:border-vs-border dark:placeholder-vs-muted"
+							className="flex-1 bg-transparent h-[54px] pl-4 pr-4 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none text-sm"
 							placeholder="Enter City / Town"
 							value={typedLocation}
 							onChange={handleInputChange}
 						/>
-						<MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+						<button
+							type="submit"
+							className="h-[54px] px-6 text-white font-medium flex items-center gap-2 shrink-0 cursor-pointer"
+							style={{ backgroundColor: '#E8721A', borderRadius: 0 }}
+						>
+							<Search size={18} />
+							Find Repairs
+						</button>
 					</div>
-					<span className="self-end dark:text-white gap-1 flex justify-center items-center">
-						<Navigation className="w-4" />
-
-						<div onClick={getUserLocation} className="pointer cursor-pointer ">
-							Use Current Location
-						</div>
-					</span>
-					<button className="bg-orange-500 flex items-center justify-center gap-4 py-3 w-full text-white rounded-xl cursor-pointer">
-						<Search size={18} />
-						Find Repairs
-					</button>
 				</form>
 			</section>
 
 			{/* Map on landing page */}
-			<section className="w-[95%] mx-auto mt-8 lg:w-4/5">
-				<div className="h-96 rounded-2xl bg-gray-200 overflow-hidden">
+			<section className="mt-8 px-6" style={{ maxWidth: 1100, margin: '2rem auto 0' }}>
+				<div className="h-96 bg-gray-200 overflow-hidden" style={{ borderRadius: 12 }}>
 					<img
 						src={MapImg}
 						alt=""
-						className="w-full h-full object-cover rounded-2xl"
+						className="w-full h-full object-cover"
+						style={{ borderRadius: 12 }}
 					/>
 				</div>
 			</section>
 
 			{/* Breakdown banner */}
-			<section className="w-[95%] mx-auto mt-8 lg:w-4/5">
+			<section className="mt-8 px-6" style={{ maxWidth: 1100, margin: '2rem auto 0' }}>
 				<div className="border border-orange-300 dark:border-orange-500/40 bg-orange-50 dark:bg-orange-500/10 rounded-2xl p-6 flex flex-col md:flex-row items-center gap-5">
 					<div className="text-orange-500 shrink-0">
 						<AlertTriangle size={40} />
