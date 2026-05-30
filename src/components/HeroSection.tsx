@@ -2,7 +2,7 @@ export default function HeroSection() {
 	return (
 		<div className="hero-text-container md:text-center">
 			<div className="md:flex md:flex-col md:items-center">
-				<h1 className="text-black dark:text-vs-heading font-bold text-3xl md:text-5xl md:inline">
+				<h1 className="text-black dark:text-gray-100 font-bold text-3xl md:text-5xl md:inline">
 					Find Semi Truck & Diesel Repair
 				</h1>
 				<h1 className="text-orange-500 font-bold text-3xl md:text-5xl md:inline md:ml-2 md:mt-4">

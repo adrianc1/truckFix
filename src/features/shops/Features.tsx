@@ -73,7 +73,7 @@ const Features = () => {
 
 	return (
 		<div className="w-full max-w-[740px] mx-auto">
-			<h2 className="text-3xl font-bold dark:text-vs-heading text-center my-4">
+			<h2 className="text-3xl font-bold dark:text-gray-100 text-center my-4">
 				Everything a Truck Driver Needs to Find Repair Fast
 			</h2>
 			<p className="text-center text-gray-500 dark:text-gray-400">

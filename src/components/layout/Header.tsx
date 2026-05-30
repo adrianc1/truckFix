@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { X } from 'lucide-react';
+import { X, Copy, Check } from 'lucide-react';
 import settingsIcon from '../../assets/images/settings.svg';
 import { Link } from 'react-router-dom';
 import Truck from '../../assets/images/TruckFix.png';
@@ -13,6 +13,13 @@ const Header = ({
 	setDarkMode: (darkMode: boolean) => void;
 }) => {
 	const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+	const [copiedContact, setCopiedContact] = useState<string | null>(null);
+
+	const copyEmail = (label: string) => {
+		navigator.clipboard.writeText('info@trytruckfix.com');
+		setCopiedContact(label);
+		setTimeout(() => setCopiedContact(null), 2000);
+	};
 
 	const openSettingsModal = () => {
 		setIsSettingsOpen(true);
@@ -116,24 +123,16 @@ const Header = ({
 						</div>
 
 						<div className="mt-6 p-4 bg-gray-50 dark:bg-vs-card rounded-lg dark:border dark:border-vs-border flex flex-col items-center gap-2">
-							<div className="flex justify-around w-full">
-								<a
-									href="mailto:info@trytruckfix.com?subject=List My Shop"
-									className="text-sm font-medium text-orange-500 hover:text-orange-600 transition-colors"
-								>
-									List your shop
-								</a>
-								<span className="text-gray-300 dark:text-vs-border">|</span>
-								<a
-									href="mailto:info@trytruckfix.com?subject=Shop Correction"
-									className="text-sm font-medium text-orange-500 hover:text-orange-600 transition-colors"
-								>
-									Submit a correction
-								</a>
-							</div>
-							<span className="text-xs text-gray-400 dark:text-vs-muted select-all">
-								info@trytruckfix.com
+							<span className="text-sm text-gray-600 dark:text-gray-300">
+								Add your shop or submit a correction
 							</span>
+							<button
+								onClick={() => copyEmail('contact')}
+								className="flex items-center gap-1.5 text-sm font-medium text-orange-500 hover:text-orange-400 transition-colors cursor-pointer"
+							>
+								{copiedContact === 'contact' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+								{copiedContact === 'contact' ? 'Copied!' : 'info@trytruckfix.com'}
+							</button>
 						</div>
 
 						<button

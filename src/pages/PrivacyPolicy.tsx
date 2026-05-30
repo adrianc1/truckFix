@@ -1,7 +1,16 @@
+import { useState } from 'react';
+import { Copy, Check } from 'lucide-react';
 import Footer from '../components/layout/Footer.tsx';
 
 export default function PrivacyContent() {
 	scrollTo({ top: 0, behavior: 'smooth' });
+	const [copied, setCopied] = useState(false);
+
+	const copyEmail = () => {
+		navigator.clipboard.writeText('info@trytruckfix.com');
+		setCopied(true);
+		setTimeout(() => setCopied(false), 2000);
+	};
 
 	return (
 		<div className="pt-24 dark:bg-vs-bg min-h-screen">
@@ -79,12 +88,13 @@ export default function PrivacyContent() {
 					<p className="text-gray-600 dark:text-vs-text leading-relaxed">
 						If you have any questions about this Privacy Policy, please contact us
 						at{' '}
-						<a
-							href="mailto:info@trytruckfix.com"
-							className="text-orange-500 hover:text-orange-600 transition-colors"
+						<button
+							onClick={copyEmail}
+							className="inline-flex items-center gap-1 text-orange-500 hover:text-orange-400 transition-colors cursor-pointer"
 						>
-							info@trytruckfix.com
-						</a>
+							{copied ? <Check size={13} /> : <Copy size={13} />}
+							{copied ? 'Copied!' : 'info@trytruckfix.com'}
+						</button>
 						.
 					</p>
 				</section>

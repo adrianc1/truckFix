@@ -170,13 +170,13 @@ const LandingPage = () => {
 					onSubmit={handleFormSubmit}
 				>
 					<div
-						className="flex items-center overflow-hidden border border-gray-200 bg-white dark:bg-[#2a2a2a] dark:border-[#3a3a3a]"
+						className="flex items-center overflow-hidden border border-gray-300 bg-white dark:bg-[#2a2a2a] dark:border-[#4a4a4a]"
 						style={{ borderRadius: 12 }}
 					>
 						<button
 							type="button"
 							onClick={getUserLocation}
-							className="h-[54px] px-4 flex items-center gap-1.5 shrink-0 cursor-pointer border-r border-gray-200 dark:border-[#3a3a3a]"
+							className="h-[54px] px-4 flex items-center gap-1.5 shrink-0 cursor-pointer border-r border-gray-300 dark:border-[#4a4a4a]"
 							style={{ color: '#E8721A', fontSize: 13 }}
 						>
 							<Navigation className="w-4 h-4" />

@@ -1,8 +1,20 @@
+import { useState } from 'react';
 import Truck from '../../assets/images/TruckFix.png';
 import TruckDark from '../../assets/images/TruckFix-Dark_Mode.png';
 import { Link } from 'react-router';
+import { Copy, Check } from 'lucide-react';
+
+const EMAIL = 'info@trytruckfix.com';
 
 const Footer = () => {
+	const [copied, setCopied] = useState<string | null>(null);
+
+	const copyEmail = (label: string) => {
+		navigator.clipboard.writeText(EMAIL);
+		setCopied(label);
+		setTimeout(() => setCopied(null), 2000);
+	};
+
 	return (
 		<footer className="w-full flex flex-col justify-center gap-8 items-center pt-12 dark:bg-vs-bg">
 			<div className="flex gap-2 mt-4">
@@ -19,22 +31,24 @@ const Footer = () => {
 			</div>
 			<div className="flex flex-col items-center gap-2 text-center">
 				<div className="flex gap-6">
-					<a
-						href="mailto:info@trytruckfix.com?subject=List My Shop"
-						className="text-sm text-orange-500 hover:text-orange-600 transition-colors font-medium"
+					<button
+						onClick={() => copyEmail('list')}
+						className="flex items-center gap-1.5 text-sm text-orange-500 hover:text-orange-400 transition-colors font-medium cursor-pointer"
 					>
-						Want to list your shop?
-					</a>
+						{copied === 'list' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+						{copied === 'list' ? 'Copied!' : 'Want to list your shop?'}
+					</button>
 					<span className="text-gray-300 dark:text-vs-border">|</span>
-					<a
-						href="mailto:info@trytruckfix.com?subject=Shop Correction"
-						className="text-sm text-orange-500 hover:text-orange-600 transition-colors font-medium"
+					<button
+						onClick={() => copyEmail('correction')}
+						className="flex items-center gap-1.5 text-sm text-orange-500 hover:text-orange-400 transition-colors font-medium cursor-pointer"
 					>
-						Submit a correction
-					</a>
+						{copied === 'correction' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+						{copied === 'correction' ? 'Copied!' : 'Submit a correction'}
+					</button>
 				</div>
 				<span className="text-xs text-gray-400 dark:text-vs-muted select-all">
-					info@trytruckfix.com
+					{EMAIL}
 				</span>
 			</div>
 			<ul className="w-2/3 flex justify-around dark:text-vs-text">

@@ -196,24 +196,6 @@ const FAQPage = () => {
 						incorrect info, or just have a question.
 					</p>
 					<CopyEmailButton />
-					<div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
-						<a
-							href="mailto:info@trytruckfix.com?subject=List My Shop"
-							className="inline-block border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white font-medium px-6 py-3 rounded-xl transition-colors text-sm"
-						>
-							List my shop
-						</a>
-						<a
-							href="mailto:info@trytruckfix.com?subject=Shop Correction"
-							className="inline-block border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white font-medium px-6 py-3 rounded-xl transition-colors text-sm"
-						>
-							Submit a correction
-						</a>
-					</div>
-					<p className="mt-4 text-xs text-gray-400 dark:text-vs-muted">
-						If mailto links don't work in your browser, copy the email above and
-						paste it into your email app.
-					</p>
 				</div>
 			</section>
 
