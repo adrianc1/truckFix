@@ -160,8 +160,8 @@ const LandingPage = () => {
 	};
 
 	return (
-		<div className="pt-24 dark:bg-vs-bg">
-			<section className="w-[95%] mx-auto mt-8 pt-12">
+		<div className="pt-20 bg-[#F7F7F7] dark:bg-vs-bg">
+			<section className="w-[95%] mx-auto pt-4">
 				<HeroSection />
 
 				{/* Location form for submission */}
@@ -170,8 +170,12 @@ const LandingPage = () => {
 					onSubmit={handleFormSubmit}
 				>
 					<div
-						className="flex items-center overflow-hidden border border-gray-300 bg-white dark:bg-[#2a2a2a] dark:border-[#4a4a4a]"
-						style={{ borderRadius: 12 }}
+						className="bg-white dark:bg-[#2a2a2a]"
+						style={{ borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.08)', padding: 8 }}
+					>
+					<div
+						className="flex items-center overflow-hidden border border-gray-200 bg-white dark:bg-[#2a2a2a] dark:border-[#4a4a4a]"
+						style={{ borderRadius: 8 }}
 					>
 						<button
 							type="button"
@@ -198,12 +202,13 @@ const LandingPage = () => {
 							Find Repairs
 						</button>
 					</div>
+					</div>
 				</form>
 			</section>
 
 			{/* Map on landing page */}
-			<section className="mt-8 px-6" style={{ maxWidth: 1100, margin: '2rem auto 0' }}>
-				<div className="h-96 bg-gray-200 overflow-hidden" style={{ borderRadius: 12 }}>
+			<section className="mt-8 px-6" style={{ maxWidth: 1100, margin: '1.25rem auto 0' }}>
+				<div className="h-96 bg-gray-200 overflow-hidden" style={{ borderRadius: 12, boxShadow: '0 4px 20px rgba(0,0,0,0.10)' }}>
 					<img
 						src={MapImg}
 						alt=""

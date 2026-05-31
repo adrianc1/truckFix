@@ -57,19 +57,19 @@ const Header = ({
 				<nav className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-8">
 					<Link
 						to="/"
-						className="text-sm font-medium text-gray-600 dark:text-vs-text hover:text-orange-500 dark:hover:text-orange-500 transition-colors"
+						className="text-sm font-semibold text-gray-700 dark:text-vs-text hover:text-orange-500 dark:hover:text-orange-500 transition-colors"
 					>
 						Home
 					</Link>
 					<Link
 						to="/features"
-						className="text-sm font-medium text-gray-600 dark:text-vs-text hover:text-orange-500 dark:hover:text-orange-500 transition-colors"
+						className="text-sm font-semibold text-gray-700 dark:text-vs-text hover:text-orange-500 dark:hover:text-orange-500 transition-colors"
 					>
 						Features
 					</Link>
 					<Link
 						to="/faq"
-						className="text-sm font-medium text-gray-600 dark:text-vs-text hover:text-orange-500 dark:hover:text-orange-500 transition-colors"
+						className="text-sm font-semibold text-gray-700 dark:text-vs-text hover:text-orange-500 dark:hover:text-orange-500 transition-colors"
 					>
 						FAQ & Contact
 					</Link>

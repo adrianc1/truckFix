@@ -9,7 +9,7 @@ export default function HeroSection() {
 					Near You — Right Now
 				</h1>
 			</div>
-			<p className="mt-4 mb-10 text-gray-500 dark:text-gray-400 mx-auto" style={{ maxWidth: 600 }}>
+			<p className="mt-4 mb-5 text-gray-500 dark:text-gray-400 mx-auto" style={{ maxWidth: 600 }}>
 				TruckFix helps commercial drivers instantly locate nearby diesel
 				mechanics, brake shops, tire repair, DEF system service, and roadside
 				assistance across all 48 states — no sign-up required.

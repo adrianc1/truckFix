@@ -10,7 +10,7 @@ import FeaturesPage from './pages/FeaturesPage.tsx';
 import FAQPage from './pages/FAQPage.tsx';
 
 const App = () => {
-	const [darkMode, setDarkMode] = useState(true);
+	const [darkMode, setDarkMode] = useState(false);
 
 	return (
 		<div className="w-full h-full">
