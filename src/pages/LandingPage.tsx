@@ -195,11 +195,11 @@ const LandingPage = () => {
 						/>
 						<button
 							type="submit"
-							className="h-[54px] px-6 text-white font-medium flex items-center gap-2 shrink-0 cursor-pointer"
+							className="h-[54px] px-4 sm:px-6 text-white font-medium flex items-center gap-2 shrink-0 cursor-pointer"
 							style={{ backgroundColor: '#E8721A', borderRadius: 0 }}
 						>
 							<Search size={18} />
-							Find Repairs
+							<span className="hidden sm:inline">Find Repairs</span>
 						</button>
 					</div>
 					</div>

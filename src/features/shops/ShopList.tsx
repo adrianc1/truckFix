@@ -3,7 +3,7 @@ import { Shop } from '../../types';
 
 function ShopCardSkeleton() {
 	return (
-		<div className="flex w-full px-3 py-4 border border-gray-200 dark:border-vs-border rounded-xl h-auto mb-0.5 animate-pulse">
+		<div className="flex w-full px-5 py-4 h-auto mb-3 bg-white dark:bg-vs-panel animate-pulse" style={{ border: '1px solid #E5E5E5', borderRadius: 12, boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
 			<div className="flex-grow flex flex-col gap-2">
 				<div className="h-5 bg-gray-200 dark:bg-vs-hover rounded w-3/4" />
 				<div className="h-4 bg-gray-200 dark:bg-vs-hover rounded w-full" />
@@ -31,7 +31,7 @@ export default function ShopList({
 	loading?: boolean;
 }) {
 	return (
-		<section className="w-full h-auto px-2 mt-4">
+		<section className="w-full h-auto px-2 mt-3">
 			{loading ? (
 				<div className="shop-list-container w-full space-y-3">
 					{Array.from({ length: 5 }).map((_, i) => (
@@ -43,7 +43,7 @@ export default function ShopList({
 					No shops found matching your criteria.
 				</div>
 			) : (
-				<div className="shop-list-container w-full space-y-3 cursor-pointer">
+				<div className="shop-list-container w-full cursor-pointer">
 					{shops.map((shop) => (
 						<ShopCard
 							key={shop.placeId}

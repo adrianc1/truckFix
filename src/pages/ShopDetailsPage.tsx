@@ -3,6 +3,24 @@ import star from '../assets/images/star.svg';
 import { Shop } from '../types';
 import checkIfOpen from '../utils/checkIfOpen';
 
+function convertTo12Hour(dayString: string): string {
+	if (
+		dayString.includes('AM') ||
+		dayString.includes('PM') ||
+		dayString.includes('Closed') ||
+		dayString.includes('Open 24')
+	) {
+		return dayString;
+	}
+	const converted = dayString.replace(/(\d{1,2}):(\d{2})/g, (_, hours, minutes) => {
+		const h = parseInt(hours, 10);
+		const ampm = h >= 12 ? 'PM' : 'AM';
+		const h12 = h % 12 || 12;
+		return `${h12}:${minutes} ${ampm}`;
+	});
+	return converted.replace('–', ' – ');
+}
+
 const ShopDetailsPage = ({ selectedShop }: { selectedShop: Shop }) => {
 	return (
 		<div className="px-4 pb-4">
@@ -13,23 +31,27 @@ const ShopDetailsPage = ({ selectedShop }: { selectedShop: Shop }) => {
 					<div className="star w-4 h-4">
 						<img src={star} alt="" className="w-full h-full" />
 					</div>
-					{selectedShop.rating}({selectedShop.user_ratings_total} reviews)
+					{selectedShop.rating} ({selectedShop.user_ratings_total} reviews)
 				</span>
 
 				{/* open or closed */}
 				<span
-					className={`is-open text-sm font-bold ${
-						checkIfOpen({ weekdayDescriptions: selectedShop.current_opening_hours?.weekday_text ?? [] })
-							? 'text-green-500'
-							: 'text-red-500'
-					}`}
+					className="is-open font-semibold"
+					style={{
+						fontSize: 13,
+						borderRadius: 999,
+						padding: '2px 12px',
+						...(checkIfOpen({ weekdayDescriptions: selectedShop.current_opening_hours?.weekday_text ?? [] })
+							? { background: '#DCFCE7', color: '#15803D' }
+							: { background: '#FEE2E2', color: '#B91C1C' }),
+					}}
 				>
 					{checkIfOpen({ weekdayDescriptions: selectedShop.current_opening_hours?.weekday_text ?? [] }) ? 'Open Now' : 'Closed'}
 				</span>
 			</div>
 
 			{/* address block */}
-			<div className="address-block dark:text-vs-text flex flex-col w-full px-3 py-4 border-2 border-gray-200 dark:border-vs-border rounded-xl h-auto mb-3 dark:bg-vs-card">
+			<div className="address-block dark:text-vs-text flex flex-col w-full px-3 py-4 border-2 border-gray-200 dark:border-vs-border rounded-xl h-auto mb-3 dark:bg-vs-card" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
 				<MapPin className="mb-2" />
 				<h6 className="font-bold dark:text-vs-heading">Address</h6>
 				<span>{selectedShop.formatted_address}</span>
@@ -37,7 +59,7 @@ const ShopDetailsPage = ({ selectedShop }: { selectedShop: Shop }) => {
 			</div>
 
 			{/* phone block  */}
-			<div className="phone-block dark:text-vs-text flex items-center justify-between w-full px-3 py-4 border-2 border-gray-200 dark:border-vs-border rounded-xl h-auto mb-3 dark:bg-vs-card">
+			<div className="phone-block dark:text-vs-text flex items-center justify-between w-full px-3 py-4 border-2 border-gray-200 dark:border-vs-border rounded-xl h-auto mb-3 dark:bg-vs-card" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
 				<div className="flex-col">
 					<Phone className="mb-2" />
 					<h6 className="font-bold dark:text-vs-heading">Phone</h6>
@@ -58,7 +80,7 @@ const ShopDetailsPage = ({ selectedShop }: { selectedShop: Shop }) => {
 			</div>
 
 			{/* Services */}
-			<div className="services-block h-auto flex flex-col w-full px-3 py-4 border-2 border-gray-200 dark:border-vs-border rounded-xl mb-3 dark:bg-vs-card">
+			<div className="services-block h-auto flex flex-col w-full px-3 py-4 border-2 border-gray-200 dark:border-vs-border rounded-xl mb-3 dark:bg-vs-card" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
 				<Wrench className="mb-2 dark:text-vs-text" />
 				<h6 className="font-bold dark:text-vs-heading">Services</h6>
 
@@ -76,32 +98,33 @@ const ShopDetailsPage = ({ selectedShop }: { selectedShop: Shop }) => {
 			</div>
 
 			{/* hours */}
-			<div className="hours-block dark:text-vs-text flex flex-col w-full px-3 py-4 border-2 border-gray-200 dark:border-vs-border rounded-xl h-auto mb-3 dark:bg-vs-card">
+			<div className="hours-block dark:text-vs-text flex flex-col w-full px-3 py-4 border-2 border-gray-200 dark:border-vs-border rounded-xl h-auto mb-3 dark:bg-vs-card" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
 				<Clock className="mb-2" />
 				<h6 className="font-bold dark:text-vs-heading">Hours</h6>
 				<ul>
 					{selectedShop.current_opening_hours?.weekday_text?.map((d, index) => (
 						<li key={index} className="flex flex-col py-2">
-							{d}
+							{convertTo12Hour(d)}
 						</li>
 					))}
 				</ul>
 			</div>
 
 			{/* Reviews */}
-			<div className="hours-block dark:text-vs-text flex flex-col w-full px-3 py-4 border-2 border-gray-200 dark:border-vs-border rounded-xl h-auto mb-3 dark:bg-vs-card">
+			<div className="hours-block dark:text-vs-text flex flex-col w-full px-3 py-4 border-2 border-gray-200 dark:border-vs-border rounded-xl h-auto mb-3 dark:bg-vs-card" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
 				<Star className="mb-2" />
 				<h6 className="font-bold dark:text-vs-heading">Reviews</h6>
 				<ul className="space-y-4 px-4 py-2">
 					{selectedShop.reviews?.map((review, index) => (
 						<li
 							key={index}
-							className="bg-white dark:bg-vs-hover rounded-2xl shadow-sm border border-gray-100 dark:border-vs-border p-4 flex flex-col gap-3"
+							className="dark:bg-vs-hover rounded-2xl dark:border-vs-border p-4 flex flex-col gap-3"
+							style={{ background: '#FAFAFA', border: '1px solid #EEEEEE' }}
 						>
 							{/* Header with author and rating */}
 							<div className="flex items-center justify-between">
 								<div className="flex items-center gap-3">
-									<div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-600 to-white flex items-center justify-center text-black font-semibold">
+									<div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-white font-semibold">
 										{review.authorAttribution.displayName
 											.charAt(0)
 											.toUpperCase()}

@@ -13,7 +13,8 @@ export default function ShopCard({
 			<div
 				key={shop.placeId}
 				onClick={onShopSelect}
-				className="flex w-full px-3 py-4 border border-gray-200 dark:border-vs-border rounded-xl h-auto mb-0.5 dark:bg-vs-panel dark:text-vs-text hover:bg-gray-50 dark:hover:bg-vs-hover transition-colors cursor-pointer"
+				className="flex w-full px-5 py-4 h-auto mb-3 bg-white dark:bg-vs-panel dark:border-vs-border dark:text-vs-text hover:bg-gray-50 dark:hover:bg-vs-hover transition-colors cursor-pointer"
+				style={{ border: '1px solid #E5E5E5', borderRadius: 12, boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}
 			>
 				{/* SHOP GENERAL INFORMATION */}
 				<div className="shop-info flex-grow min-w-0 flex flex-col">
@@ -37,8 +38,7 @@ export default function ShopCard({
 						{shop.services.map((service, index) => (
 							<span
 								key={index}
-								className="border border-gray-300 dark:border-vs-border rounded-full px-2 py-1 text-xs bg-gray-50 dark:bg-vs-hover dark:text-vs-muted hover:bg-gray-100 dark:hover:bg-vs-border transition-colors text-center"
-								style={{ minWidth: '60px' }}
+								className="rounded-[6px] px-[10px] py-[3px] text-xs bg-[#F0F0F0] text-[#444444] dark:bg-vs-hover dark:text-vs-muted dark:border dark:border-vs-border transition-colors"
 							>
 								{service.length > 12
 									? `${service.substring(0, 12)}...`
@@ -60,8 +60,10 @@ export default function ShopCard({
 					</span>
 
 					<span
-						className={`is-open text-sm font-medium ${
-							checkIfOpen({ weekdayDescriptions: shop.current_opening_hours?.weekday_text ?? [] }) ? 'text-green-500' : 'text-red-500'
+						className={`is-open text-xs font-medium rounded-full px-[10px] py-[2px] ${
+							checkIfOpen({ weekdayDescriptions: shop.current_opening_hours?.weekday_text ?? [] })
+								? 'bg-[#E6F4EA] text-[#2E7D32] dark:bg-green-900/30 dark:text-green-400'
+								: 'bg-red-50 text-red-500 dark:bg-red-900/20 dark:text-red-400'
 						}`}
 					>
 						{checkIfOpen({ weekdayDescriptions: shop.current_opening_hours?.weekday_text ?? [] }) ? 'Open Now' : 'Closed'}
