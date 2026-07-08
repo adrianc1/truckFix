@@ -118,8 +118,7 @@ const ShopDetailsPage = ({ selectedShop }: { selectedShop: Shop }) => {
 					{selectedShop.reviews?.map((review, index) => (
 						<li
 							key={index}
-							className="dark:bg-vs-hover rounded-2xl dark:border-vs-border p-4 flex flex-col gap-3"
-							style={{ background: '#FAFAFA', border: '1px solid #EEEEEE' }}
+							className="bg-[#FAFAFA] border border-[#EEEEEE] dark:bg-vs-hover dark:border-vs-border rounded-2xl p-4 flex flex-col gap-3"
 						>
 							{/* Header with author and rating */}
 							<div className="flex items-center justify-between">
