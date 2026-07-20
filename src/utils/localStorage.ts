@@ -8,6 +8,7 @@ export function setItem(key: string, value: string) {
 
 export function getItem<T>({ key }: { key: string }): T | null {
 	const item = localStorage.getItem(key);
+
 	if (item === null || item === 'undefined') {
 		return null;
 	}
@@ -17,4 +18,6 @@ export function getItem<T>({ key }: { key: string }): T | null {
 	} catch (error) {
 		console.log(error);
 	}
+
+	return JSON.parse(item) as T;
 }

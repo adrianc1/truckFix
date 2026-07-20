@@ -6,7 +6,6 @@ export function ShopSearcher({
 	onPlacesFound,
 	center,
 	searchTrigger,
-	onSearchCapabilityReady,
 }: {
 	onPlacesFound: (places: Shop[]) => void;
 	center: LatLng;
